@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/13 12:15:10 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/13 17:01:44 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 # include "../libft/libft.h"
 # include "../libft/get_next_line.h"
+# include <stdio.h>
+# include <stdlib.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <fcntl.h>
 # include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
 # include <dirent.h>
 # include <stddef.h>
 # include <readline/history.h>
@@ -34,55 +34,56 @@
 
 # define NO_INIT 0
 
-/* ***************************** STRUCTURES ********************************* */
+int	g_exit_status;
 
-int exit_status;
+/* ***************************** STRUCTURES ********************************* */
 
 typedef struct s_count_words
 {
-    int quote_type;
-    int quote_status;
-    int counter;
-} t_count_words;
+	int	q_type;
+	int	q_status;
+	int	count;
+	int	i;
+}	t_count_words;
 
 typedef struct s_fill_array
 {
 	int		s_len;
-    int     quote_simple;
-    int     quote_double;
-    int     i;
-    int     start_index;
-    int     tab_index;    
-}           t_fill_array;
+	int		quote_simple;
+	int		quote_double;
+	int		i;
+	int		str_idx;
+	int		tab_index;
+}	t_fill_array;
 
 typedef struct s_cmd
 {
-	char            *full_cmd;
-	char            *full_path;
-	int             infile;
-	int	            outfile;
-    struct s_cmd    *next;
-    struct s_cmd    *prev;
-}			        t_cmd;
+	char			**full_cmd;
+	char			*full_path;
+	int				infile;
+	int				outfile;
+	struct s_cmd	*next;
+	struct s_cmd	*prev;
+}	t_cmd;
 
 typedef struct s_prompt
 {
-	t_cmd  *cmds;
+	t_cmd	*cmds;
 	char	**envp;
 	pid_t	pid;
-    char    *prompt_text;
+	char	*prompt_text;
 }			t_prompt;
 
 typedef struct s_var
 {
-    char    *line;
-    char    **split;
-    char    **subsplit;
-}           t_var;
+	char	*line;
+	char	**split;
+	char	**subsplit;
+}	t_var;
 
 /* *****************************  main.c  ********************************* */
 
-char    *get_prompt(char **envp);
+char	*get_prompt(char **envp);
 
 /* *************************** node_management ***************************** */
 
@@ -90,23 +91,24 @@ char    *get_prompt(char **envp);
 // void	insert_beginning_stack(t_node **tail, int value);
 // void	add_command_to_list(t_node **head, int value);
 
-void    ft_new_prompt(int sig);
-void    sig_quit(int sig);
+void	ft_new_prompt(int sig);
+void	sig_quit(int sig);
+void	signal_handler(int sig);
 
 /* *****************************  split.c  ********************************* */
 
-void    init_count_words_struct(t_count_words *w);
-int    ft_count_words(const char *str, char *caracter);
+void	init_count_words_struct(t_count_words *w);
+int		ft_count_words(const char *str, char *caracter);
 char	**ft_split_str_with_spaces_and_quotes(char const *s);
-void    ft_fill_array(char **splited, char const *str, char *caracter);
+void	ft_fill_array(char **splited, char const *str, char *caracter);
 
 /* ****************************  subsplit.c  ******************************* */
 
-void    fn_sub_split(t_var *v);
+void	fn_sub_split(t_var *v);
 char	**ft_cmdsubsplit(char const *s, char *set);
 
 /* *****************************  exit.c  *********************************** */
-void    ft_exit(int exit_status);
+void	ft_exit(int exit_status);
 
 /* *****************************  BRANCHE o_pipe  *************************** */
 
@@ -120,7 +122,7 @@ int		export_builtin(t_cmd *cmd, char **envp);
 char	**init_envp(char **envp);
 void	ft_print_tab_model(char **temp);
 char	*get_env(char *name, char **my_envp);
-int		set_env(char *name, char * var, char **my_env);
+int		set_env(char *name, char *var, char **my_env);
 int		unset_builtin(char *name, char **my_envp);
 void	tab_free(char **tab);
 int		mini_cd(t_cmd *cmd, char **my_env);

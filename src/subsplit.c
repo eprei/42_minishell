@@ -3,40 +3,40 @@
 
 static int	ft_count_words_OLD(char *s, char *set, int count);
 
-void    fn_sub_split(t_var *v)
-{   
-    char **aux;
-    int index_split;
-    int index_aux;
-    int index_subsplit;
-    int number_total_subsplits = 0;
-    int j = 0;
+void	fn_sub_split(t_var *v)
+{
+	char **aux;
+	int index_split;
+	int index_aux;
+	int index_subsplit;
+	int number_total_subsplits = 0;
+	int j = 0;
 
-    while (v->split[j] != 0)
-    {
-        number_total_subsplits++;
-        number_total_subsplits += ft_count_words_OLD(v->split[j], ">|<", 0); // trabajar SUBSPLIT
-        printf("number_total_subsplits = %d\tsplit[%d] = %s\n", number_total_subsplits, j, v->split[j]);
-        j++;
-    }
-    aux = malloc(sizeof(char *) * number_total_subsplits);
+	while (v->split[j] != 0)
+	{
+		number_total_subsplits++;
+		number_total_subsplits += ft_count_words_OLD(v->split[j], ">|<", 0); // trabajar SUBSPLIT
+		printf("number_total_subsplits = %d\tsplit[%d] = %s\n", number_total_subsplits, j, v->split[j]);
+		j++;
+	}
+	aux = malloc(sizeof(char *) * number_total_subsplits);
 
-    index_split = 0;
-    index_subsplit = 0;
-    while (v->split[index_split] != 0)
-    {   
-        aux = ft_cmdsubsplit(v->split[index_split], ">|<");
-        index_aux = 0;
-        while (aux[index_aux] != 0)
-        {
-            v->subsplit[index_subsplit] = ft_strdup(aux[index_aux]);
-            // free(aux[index_aux]);
-            aux[index_aux] = NULL;
-            index_subsplit++;
-            index_aux++;
-        }
-        index_split++;
-    }
+	index_split = 0;
+	index_subsplit = 0;
+	while (v->split[index_split] != 0)
+	{
+		aux = ft_cmdsubsplit(v->split[index_split], ">|<");
+		index_aux = 0;
+		while (aux[index_aux] != 0)
+		{
+			v->subsplit[index_subsplit] = ft_strdup(aux[index_aux]);
+			// free(aux[index_aux]);
+			aux[index_aux] = NULL;
+			index_subsplit++;
+			index_aux++;
+		}
+		index_split++;
+	}
 }
 
 static int	ft_count_words_OLD(char *s, char *set, int count)

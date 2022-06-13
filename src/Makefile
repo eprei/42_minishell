@@ -6,7 +6,7 @@
 #    By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 15:01:40 by Emiliano          #+#    #+#              #
-#    Updated: 2022/06/13 12:20:16 by epresa-c         ###   ########.fr        #
+#    Updated: 2022/06/13 16:26:39 by epresa-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,11 @@ all: $(NAME)
 
 $(NAME):
 	@ make -C $(LIBFTPATH)
-	@ CC $(SRCS) -L$(LIBFTPATH) -lft -L/usr/include -lreadline -o $(NAME)
+# mac 42
+	@ CC $(SRCS) -L$(LIBFTPATH) -lft -L/Users/$(USER)/.brew/Cellar/readline/8.1.2/lib -lreadline -I /Users/$(USER)/.brew/Cellar/readline/8.1.2/include -o $(NAME)
+# home mac
+#	@ CC $(SRCS) -L$(LIBFTPATH) -lft -L/usr/include -lreadline -o $(NAME)
+
 
 clean:
 	@rm -rf $(OBJ)
