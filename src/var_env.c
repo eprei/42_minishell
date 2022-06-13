@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 extern int	gstatus;
 
@@ -20,22 +20,22 @@ int	env_var_exist(char *name, char **my_env)
 }
 	
 
-int	export_builtin(t_mini *cmd, char **my_env) //
-{
-	int	is_var;
+// int	export_builtin(t_cmd *cmd, char **my_env) //
+// {
+// 	int	is_var;
 	
-	is_var = env_var_exist(cmd->full_cmd[1], my_env);
-	if (is_var == -1)
-	{
-		my_env = tab_add(my_env, ft_strjoin(cmd->full_cmd[1], cmd->full_cmd[2]));
-	}
-	else
-	{
-		free(my_env[is_var]);
-		my_env[is_var] = ft_strjoin(cmd->full_cmd[1], cmd->full_cmd[2]);
-	}
-	return (0);
-}
+// 	is_var = env_var_exist(cmd->full_cmd[1], my_env);
+// 	if (is_var == -1)
+// 	{
+// 		my_env = tab_add(my_env, ft_strjoin(cmd->full_cmd[1], cmd->full_cmd[2]));
+// 	}
+// 	else
+// 	{
+// 		free(my_env[is_var]);
+// 		my_env[is_var] = ft_strjoin(cmd->full_cmd[1], cmd->full_cmd[2]);
+// 	}
+// 	return (0);
+// }
 
 char	*get_env(char *name, char **my_env)
 {

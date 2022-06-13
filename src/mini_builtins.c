@@ -15,7 +15,7 @@ int	mini_pwd(char **my_env) //OK
 	return (0);
 }
 
-int	mini_cd(t_mini *cmd, char **my_env)
+int	mini_cd(t_cmd *cmd, char **my_env)
 {
 	char *dest;
 	char *buffer;
