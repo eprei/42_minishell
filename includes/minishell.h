@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/13 12:15:10 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/13 17:09:13 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 
 /* ***************************** STRUCTURES ********************************* */
 
-int exit_status;
+int g_exit_status;
 
 typedef struct s_count_words
 {
@@ -57,7 +57,7 @@ typedef struct s_fill_array
 
 typedef struct s_cmd
 {
-	char            *full_cmd;
+	char            **full_cmd;
 	char            *full_path;
 	int             infile;
 	int	            outfile;
@@ -124,5 +124,5 @@ int		set_env(char *name, char * var, char **my_env);
 int		unset_builtin(char *name, char **my_envp);
 void	tab_free(char **tab);
 int		mini_cd(t_cmd *cmd, char **my_env);
-
+void	print_tab(char **tab);
 #endif
