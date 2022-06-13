@@ -6,7 +6,7 @@
 /*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/10 13:23:19 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/06/10 18:32:04 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,24 @@
 
 /* ***************************** STRUCTURES ********************************* */
 
+int exit_status;
+
 typedef struct s_count_words
 {
     int quote_type;
     int quote_status;
     int counter;
 } t_count_words;
+
+typedef struct s_fill_array
+{
+	int		s_len;
+    int     quote_simple;
+    int     quote_double;
+    int     i;
+    int     start_index;
+    int     tab_index;    
+}           t_fill_array;
 
 typedef struct s_cmd
 {
@@ -48,32 +60,26 @@ typedef struct s_cmd
 	int	            outfile;
     struct s_cmd    *next;
     struct s_cmd    *prev;
-}			t_cmd;
+}			        t_cmd;
 
 typedef struct s_prompt
 {
 	t_cmd  *cmds;
 	char	**envp;
 	pid_t	pid;
+    char    *prompt_text;
 }			t_prompt;
 
-// a recuperar en caso de falla
-// typedef struct s_node
-// {
-// 	int				value;
-// 	struct s_node	*next;
-// 	struct s_node	*prev;
-// }	t_node;
-
-// typedef struct s_var
-// {
-// 	t_node	*a_head;
-// 	t_node	*a_tail;
-// 	int		i;
-// }	t_var;
+typedef struct s_var
+{
+    char    *line;
+    char    **split;
+    char    **subsplit;
+}           t_var;
 
 /* *****************************  main.c  ********************************* */
 
+char    *get_prompt(void);
 
 /* *************************** node_management ***************************** */
 
@@ -84,13 +90,19 @@ typedef struct s_prompt
 void    ft_new_prompt(int sig);
 void    sig_quit(int sig);
 
-
 /* *****************************  split.c  ********************************* */
 
 void    init_count_words_struct(t_count_words *w);
 int    ft_count_words(const char *str, char *caracter);
-char	**ft_split_str_with_spaces_and_quotes(char const *s, char *caracter);
-char	**ft_fill_array(char **aux, char const *s, char *set, int i[3]);
+char	**ft_split_str_with_spaces_and_quotes(char const *s);
+void    ft_fill_array(char **splited, char const *str, char *caracter);
 
+/* ****************************  subsplit.c  ******************************* */
+
+void    fn_sub_split(t_var *v);
+char	**ft_cmdsubsplit(char const *s, char *set);
+
+/* *****************************  exit.c  *********************************** */
+void    ft_exit(int exit_status);
 
 #endif

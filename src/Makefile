@@ -6,7 +6,7 @@
 #    By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 15:01:40 by Emiliano          #+#    #+#              #
-#    Updated: 2022/06/10 13:24:55 by Emiliano         ###   ########.fr        #
+#    Updated: 2022/06/10 18:11:13 by Emiliano         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 NAMELIBFT = libft.a
 
-SRCS = main.c signals.c split.c node_management.c exit.c
+SRCS = main.c signals.c split.c subsplit.c exit.c
 
 OBJ = $(SRCS:.c=.o)
 
