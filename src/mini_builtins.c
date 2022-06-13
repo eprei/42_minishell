@@ -1,6 +1,18 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mini_builtins.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/13 13:56:37 by olmartin          #+#    #+#             */
+/*   Updated: 2022/06/13 14:02:13 by olmartin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-extern int gstatus;
+#include "../includes/minishell.h"
+
+//extern int gstatus;
 
 int	mini_pwd(char **my_env) //OK
 {
@@ -24,7 +36,7 @@ int	mini_cd(t_cmd *cmd, char **my_env)
 
 	buffer = ft_strdup(get_env("PWD", my_env)); 
 	dest = cmd->full_cmd[1];
-
+	res = 2;
 	if (dest == NULL)
 		dest = get_env("HOME", my_env);
 	if (dest == NULL)

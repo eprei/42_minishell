@@ -31,7 +31,7 @@ char	**tab_add(char **src, char *add)
 	}
 	dest[i++] = add;
 	dest[i] = NULL;
-	free(src);
+	tab_free(src);
 	return (dest);
 }
 
@@ -48,5 +48,12 @@ void	tab_free(char **tab)
 		free(tab);
 }
 
+void	print_tab(char **tab)
+{
+	int	i;
 
+	i = 0;
+	while (tab[i] != 0)
+		ft_putstr_fd(tab[i++], 1);
+}
 	
