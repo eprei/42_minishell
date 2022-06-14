@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/13 17:09:13 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/14 16:02:46 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,19 +110,30 @@ void    ft_exit(int exit_status);
 
 /* *****************************  BRANCHE o_pipe  *************************** */
 
-int		mini_pwd(char **my_envp);
-char	*here_input(char *limiter);
-void	fd_putendl_fd(char *s, int fd);
-int		tablen(char **t);
-char	**tab_add(char **src, char *add);
+/* *****************************  var_utils.c  *************************** */
+
 int		env_var_exist(char *name, char **envp);
-int		export_builtin(t_cmd *cmd, char **envp);
-char	**init_envp(char **envp);
-void	ft_print_tab_model(char **temp);
 char	*get_env(char *name, char **my_envp);
 int		set_env(char *name, char * var, char **my_env);
+
+/* *****************************  var_env.c  *************************** */
+
+int		export_builtin(t_cmd *cmd, char **envp);
 int		unset_builtin(char *name, char **my_envp);
+void	env_builtin(t_prompt *s_pr);
+
+/* *****************************  utils_tab.c  *************************** */
+
+int		tablen(char **t);
+char	**tab_add(char **src, char *add);
 void	tab_free(char **tab);
-int		mini_cd(t_cmd *cmd, char **my_env);
 void	print_tab(char **tab);
+char	**tab_delone(char **src, char **dest, int to_del);
+
+char	*here_input(char *limiter);
+int		mini_pwd(char **my_envp);
+void	fd_putendl_fd(char *s, int fd);
+char	**init_envp(char **envp);
+void	ft_print_tab_model(char **temp);
+int		mini_cd(t_cmd *cmd, char **my_env);
 #endif

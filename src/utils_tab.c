@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_tab.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/14 15:35:38 by olmartin          #+#    #+#             */
+/*   Updated: 2022/06/14 17:08:45 by olmartin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 int	tablen(char **t)
@@ -27,7 +39,7 @@ char	**tab_add(char **src, char *add)
 	{
 		dest[i] = ft_strdup(src[i]);
 		//test si dup OK ?
-		i++;	
+		i++;
 	}
 	dest[i++] = add;
 	dest[i] = NULL;
@@ -37,15 +49,16 @@ char	**tab_add(char **src, char *add)
 
 void	tab_free(char **tab)
 {
-		int	i;
+	int	i;
 
-		i = 0;
-		while (tab && tab[i])
-		{
-			free(tab[i]);
-			i++;
-		}
-		free(tab);
+	i = 0;
+	while (tab && tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+	tab = NULL;
 }
 
 void	print_tab(char **tab)
@@ -54,6 +67,30 @@ void	print_tab(char **tab)
 
 	i = 0;
 	while (tab[i] != 0)
+	{
 		ft_putstr_fd(tab[i++], 1);
+		ft_putchar_fd('\n', 1);
+	}
 }
-	
+
+char	**tab_delone(char **src, char **dest, int to_del)
+{
+	int	i;
+	int	j;
+	int	len;
+
+	i = 0;
+	j = 0;
+	len = tablen(src);
+	while (i < len && j < len - 1)
+	{
+		if (i != to_del)
+		{
+			dest[j] = ft_strdup(src[i]);
+			j++;
+		}
+		i++;
+	}
+	dest[j] = NULL;
+	return (dest);
+}

@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:21:06 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/13 15:49:29 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/14 11:55:05 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,8 @@ int set_env(char *name, char *value, char **my_env)
         my_env[is_var] = ft_strjoin(temp,value);
     }
     free(temp);
-    return (0);
+    if (env_var_exist(name, my_env) == -1)
+		return (1);
+	else
+		return (0);
 }
