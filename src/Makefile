@@ -29,7 +29,7 @@ all: $(NAME)
 $(NAME):
 	@ make -C $(LIBFTPATH)
 # mac 42
-	@ CC $(SRCS) -L$(LIBFTPATH) -lft -L/Users/$(USER)/.brew/Cellar/readline/8.1.2/lib -lreadline -I /Users/$(USER)/.brew/Cellar/readline/8.1.2/include -o $(NAME)
+	@ CC $(SRCS) -L$(LIBFTPATH) -lft -o $(NAME)
 # home mac
 #	@ CC $(SRCS) -L$(LIBFTPATH) -lft -L/usr/include -lreadline -o $(NAME)
 

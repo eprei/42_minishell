@@ -17,8 +17,7 @@ void	signal_handler(int sig)
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 2);
-		rl_replace_line("", 0);
-		rl_on_new_line();
+
 	}
 	if (sig == SIGQUIT)
 	{

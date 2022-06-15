@@ -1,4 +1,3 @@
-
 #include "../includes/minishell.h"
 
 static int	ft_count_words_OLD(char *s, char *set, int count);
