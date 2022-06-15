@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/13 17:51:27 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:13:34 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,14 @@
 
 void	ft_exit(int exit_status)
 {
-	if (exit_status == 1)
+	g_exit_status = exit_status;
+
+	if (g_exit_status == 1)
 		ft_printf("Error malloc\n");
-	exit(exit_status);
+	// fn_free_t_var;
+	// fn_close_fd;
+	// fn_free_list_chainee;
+			// fn_free_full_cmd
+
+	exit(g_exit_status);
 }

@@ -27,11 +27,11 @@ char	**tab_add(char **src, char *add)
 	{
 		dest[i] = ft_strdup(src[i]);
 		//test si dup OK ?
-		i++;	
+		i++;
 	}
 	dest[i++] = add;
 	dest[i] = NULL;
-	free(src);
+	tab_free(src);
 	return (dest);
 }
 
@@ -40,13 +40,12 @@ void	tab_free(char **tab)
 		int	i;
 
 		i = 0;
-		while (tab && tab[i])
+		while (tab[i])
 		{
 			free(tab[i]);
 			i++;
 		}
 		free(tab);
+		// tab = NULL;
 }
 
-
-	

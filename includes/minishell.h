@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/13 17:01:44 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/15 14:22:44 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_var
 {
 	char	*line;
 	char	**split;
+	char	**tmp;
 	char	**subsplit;
 }	t_var;
 

@@ -6,8 +6,8 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:33 by Emiliano          #+#    #+#             */
+/*   Updated: 2022/06/15 16:52:38 by epresa-c         ###   ########.fr       */
 /*                                                                            */
-/*   Updated: 2022/06/13 17:05:55 by epresa-c         ###   ########.fr       */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
@@ -43,7 +43,7 @@ static char	**tab_add_emi(char **src, char *add) //the only diference with the o
 	{
 		dest[i] = ft_strdup(src[i]);
 		//test si dup OK ?
-		i++;	
+		i++;
 	}
 	dest[i++] = add;
 	dest[i] = NULL;
@@ -65,6 +65,7 @@ void	init_t_var_main(t_var *v)
 {
 	v->line = NULL;
 	v->split = NULL;
+	v->tmp = NULL;
 	v->subsplit = NULL;
 }
 
@@ -81,8 +82,11 @@ void print_tab(char **tab, char *tab_name)
 	int	i;
 
 	i = 0;
-	if (tab == NULL || !tab_name)
+	if (tab == NULL)
+	{
+		ft_printf("ERROR ft_printf: the array %s doesn't exist\n", tab_name);
 		return;
+	}
 	ft_printf("\t Printing %s\n", tab_name);
 	while (tab && tab[i])
 	{
@@ -96,56 +100,46 @@ int	main(int argc, char **argv, char **envp)
 	t_var		v;
 	t_prompt	prompt;
 
+	(void)argv;
 	g_exit_status = 0;
 	init_t_var_main(&v);
-	
-	v.line = ft_strdup("This is \'a test>\' >to see< if|works");
-	printf("v.line = %s\n", v.line);
-	v.split = ft_split_str_with_spaces_and_quotes(v.line);
-	print_tab(v.split, "v.split pre free");
-	tab_free_emi(v.split);
-	print_tab(v.split, "v.split after free");
-
-	if (v.split == NULL)
+	init_t_prompt(&prompt, envp);
+	signal(SIGINT, signal_handler); // ctrl + C
+	signal(SIGQUIT, signal_handler); // ctrl + '\'
+	// CTRL+D = EOF of standard input, wich ends the proces; LEARN HOW TO HANDLE THIS
+	while (argc == 1)
 	{
-		ft_printf("Error token\n");
-		free(v.line);
-	}
-	else
-	{
-		printf("\n");
-		int i = 0;
-		while(v.split[i])
+		v.line = readline(prompt.prompt_text);
+		ft_printf("\nv.line = %s\n\n", v.line);
+		v.split = ft_split_str_with_spaces_and_quotes(v.line); //this functions return NULL if ther's a quote inconsistence
+		if (v.split == NULL)
 		{
-			printf("v.split[%d] = %s\n", i, v.split[i]);
+			ft_printf("Error token\n");
+			free(v.line);
+		}
+		free(v.line);
+		v.line = NULL;
+		print_tab(v.split, "v.split");
+		int i = 0;
+
+		while (v.split[i])
+		{
+			printf("\n");
+			v.tmp = ft_cmdsubsplit(v.split[i], "<|>");
+			int	j = 0;
+			printf("\t****** PRINTING tmp[%d] ******\n", i);
+			while (v.tmp[j] != NULL)
+			{
+				printf("\tj = %d\n", j);
+				printf("tmp[%d] = %s\n", j, v.tmp[j]);
+				v.subsplit = tab_add_emi(v.subsplit, v.tmp[j]);
+				j++;
+			}
+	//		tab_free_emi(tmp);
 			i++;
 		}
-
-	char **subsplited;
-	char **tmp;
-	tmp = NULL;
-	subsplited = NULL;
-	i = 0;
-	while (v.split[i])
-	{
-		printf("\n");
-		tmp = ft_cmdsubsplit(v.split[i], "<|>");
-		int	j = 0;
-		printf("\t****** PRINTING tmp[%d] ******\n", i);
-		while (tmp[j] != NULL)
-		{	
-			printf("\tj = %d\n", j);
-			printf("tmp[%d] = %s\n", j, tmp[j]);
-			subsplited = tab_add_emi(subsplited, tmp[j]);
-			j++;
-		}
-//		tab_free_emi(tmp);	
-		i++;
-	}
-	print_tab(v.split, "v.split pre free");
-	tab_free_emi(v.split);
-	print_tab(v.split, "v.split after free");
-	print_tab(subsplited, "subsplited");
+		print_tab(v.subsplit, "v.subsplit");
+		tab_free(v.subsplit);
 	}
 	return (0);
 }
