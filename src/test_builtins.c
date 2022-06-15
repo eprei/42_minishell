@@ -18,8 +18,8 @@ int main(int argc, char **argv, char **envp)
 	mystruct.full_cmd[0] = ft_strjoin("export" ,"");
 	mystruct.full_cmd[1] = ft_strjoin("TXT", "");
 	mystruct.full_cmd[2] = ft_strjoin("=LALALA","");
-//	my_env = init_envp(envp); //fonction normale
-	my_env = init_test(envp); //version test 4 var
+	my_env = init_envp(envp); //fonction normale
+//	my_env = init_test(envp); //version test 4 var
 	print_tab(my_env);
 	dest = malloc(sizeof(char*) * 5);
 	//printf("delone\n");
@@ -35,15 +35,17 @@ int main(int argc, char **argv, char **envp)
 //	dest = tab_add(my_env, ft_strjoin(mystruct.full_cmd[1], mystruct.full_cmd[2])); 
 // 	a = set_env(ft_strjoin("DDD", ""), ft_strjoin("TOTOTOT", ""), my_env);
 	printf("LA var, nouvelle valeur: %s\n", get_env("DDD", dest));
-*/	export_builtin(&mystruct, my_env);
+	export_builtin(&mystruct, my_env);
 	print_tab(my_env);
 	printf("LA var, nouvelle 2 valeur: %s\n", get_env("TXT", dest));
 //	ft_print_tab_model(my_env);
 //	ft_putendl_fd("Test du putendl\n",0);
-//	
-/*	unset_builtin("TXT", my_env);
+//*/	
+	unset_builtin("HOME", my_env);
+	printf("apres unset\n");
+	print_tab(my_env);
 	printf("LA var, apres unset %sZZ\n", get_env("TXT", my_env));
-	mystruct.full_cmd[1] = "libft/";
+/*	mystruct.full_cmd[1] = "libft/";
 	mini_cd(&mystruct, my_env);
 	mini_pwd(my_env);
 
