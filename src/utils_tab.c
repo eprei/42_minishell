@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:38 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/14 17:08:45 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/15 12:24:11 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ void	tab_free(char **tab)
 		free(tab[i]);
 		i++;
 	}
-	free(tab);
-	tab = NULL;
 }
 
 void	print_tab(char **tab)

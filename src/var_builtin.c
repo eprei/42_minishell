@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 08:51:32 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/15 10:10:29 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/15 14:50:33 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ if (is_var >= 0)
 				return(1);
 		ret  = tab_delone(my_env, ret, is_var);
 		tab_free(my_env);
+		free(my_env);
 		my_env = ret;
 	}
 	return (0);
@@ -63,4 +64,23 @@ if (is_var >= 0)
 void	env_builtin(t_prompt *s_pr)
 {
 	print_tab(s_pr->envp);
+}
+
+void	echo_builtin(t_cmd *cmd)
+{
+	int	len;
+	int	i;
+
+	len = tablen(cmd->full_cmd);
+	i =  1;
+	while (i < len && ft_strncmp(cmd->full_cmd[i], "-n", 3) == 0)
+		i++;
+	while (cmd->full_cmd[i] != NULL)
+	{
+		ft_putstr_fd(cmd->full_cmd[i], 1);
+		if (++i < len)
+			ft_putstr_fd(" ", 1);
+	}
+	if (ft_strncmp(cmd->full_cmd[1], "-n", 3) != 0)
+		ft_putendl_fd("", 1);
 }

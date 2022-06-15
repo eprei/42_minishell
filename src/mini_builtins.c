@@ -6,21 +6,18 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:56:37 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/13 14:02:13 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:27:28 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-//extern int gstatus;
-
-int	mini_pwd(char **my_env) //OK
+int	pwd_builtin(char **my_env)
 {
 	char	*buffer;
 
 	buffer = NULL;
-//	buffer = get_cwd(NULL, 0);
-	buffer = get_env("PWD", my_env); 
+	buffer = get_env("PWD", my_env);
 	if (buffer != NULL)
 		ft_putendl_fd(buffer, 0);
 	free(buffer);
@@ -29,12 +26,11 @@ int	mini_pwd(char **my_env) //OK
 
 int	mini_cd(t_cmd *cmd, char **my_env)
 {
-	char *dest;
-	char *buffer;
+	char	*dest;
+	char	*buffer;
+	int		res;
 
-	int	res;
-
-	buffer = ft_strdup(get_env("PWD", my_env)); 
+	buffer = ft_strdup(get_env("PWD", my_env));
 	dest = cmd->full_cmd[1];
 	res = 2;
 	if (dest == NULL)
@@ -50,4 +46,3 @@ int	mini_cd(t_cmd *cmd, char **my_env)
 	}
 	return (res);
 }
-

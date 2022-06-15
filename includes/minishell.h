@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/14 16:02:46 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/15 17:14:59 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,11 +116,12 @@ int		env_var_exist(char *name, char **envp);
 char	*get_env(char *name, char **my_envp);
 int		set_env(char *name, char * var, char **my_env);
 
-/* *****************************  var_env.c  *************************** */
+/* *****************************  var_builtin.c  *************************** */
 
 int		export_builtin(t_cmd *cmd, char **envp);
 int		unset_builtin(char *name, char **my_envp);
 void	env_builtin(t_prompt *s_pr);
+void	echo_builtin(t_cmd *cmd);
 
 /* *****************************  utils_tab.c  *************************** */
 
@@ -130,10 +131,17 @@ void	tab_free(char **tab);
 void	print_tab(char **tab);
 char	**tab_delone(char **src, char **dest, int to_del);
 
+/* *****************************  here_input.c  *************************** */
+
 char	*here_input(char *limiter);
-int		mini_pwd(char **my_envp);
-void	fd_putendl_fd(char *s, int fd);
+
+/* *****************************  mini_builtin.c  *************************** */
+
+int		pwd_builtin(char **my_envp);
+int		cd_builtin(t_cmd *cmd, char **my_env);
+
+/* *****************************  init_data.c  *************************** */
+
 char	**init_envp(char **envp);
-void	ft_print_tab_model(char **temp);
-int		mini_cd(t_cmd *cmd, char **my_env);
+
 #endif
