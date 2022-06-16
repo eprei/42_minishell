@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/15 17:14:59 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/16 16:49:48 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ typedef struct s_prompt
 {
 	t_cmd  *cmds;
 	char	**envp;
-	pid_t	pid;
+	int		**pipes;
+	pid_t	*pid;
     char    *prompt_text;
 }			t_prompt;
 

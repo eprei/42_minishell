@@ -6,11 +6,11 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 11:50:10 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/15 15:28:39 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/16 13:46:44 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includesminishell.h"
+#include "../includes/minishell.h"
 
 char	*here_input(char *limiter)
 {
