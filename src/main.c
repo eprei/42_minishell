@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:33 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/16 15:03:40 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/16 15:21:26 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			ft_printf("Error token\n");
 			free(v.line);
+			v.line = NULL;
 		}
 		else
 		{
