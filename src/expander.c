@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/03 15:01:33 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/16 16:54:37 by epresa-c         ###   ########.fr       */
+/*   Created: 2022/06/16 16:58:25 by epresa-c          #+#    #+#             */
+/*   Updated: 2022/06/16 17:08:15 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	fn_expander(t_var *v)
 {
-	t_var		v;
-	t_prompt	prompt;
-
-	(void)argv;
-	g_exit_status = 0;
-	init_t_var_main(&v);
-	init_t_prompt(&prompt, envp);
-	signal(SIGINT, signal_handler); // ctrl + C
-	signal(SIGQUIT, signal_handler); // ctrl + '\'
-	// CTRL+D = EOF of standard input, wich ends the proces; LEARN HOW TO HANDLE THIS
-	while (argc == 1)
-	{
-		v.line = readline(prompt.prompt_text);
-		fn_lexer(&v, &prompt);
-	}
-	return (0);
+	print_tab_with_str_name(v->subsplit, "Expander v.sub");
 }

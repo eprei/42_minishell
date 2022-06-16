@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/16 14:55:30 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/16 17:04:08 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,10 @@ typedef struct s_prompt
 {
 	t_cmd	*cmds;
 	char	**envp;
-	pid_t	pid;
+	int		**pipes;
+	pid_t	*pid;
 	char	*prompt_text;
+	int		n_cmds;
 }			t_prompt;
 
 typedef struct s_var
@@ -84,9 +86,9 @@ typedef struct s_var
 	int		j;
 }	t_var;
 
-/* *****************************  main.c  ********************************* */
+/* *****************************  main.c  ********************************** */
 
-char	*get_prompt(char **envp);
+
 
 /* *************************** node_management ***************************** */
 
@@ -95,7 +97,9 @@ char	*get_prompt(char **envp);
 // void	add_command_to_list(t_node **head, int value);
 
 void	ft_new_prompt(int sig);
-void	sig_quit(int sig);
+
+/* ****************************** signals.c ******************************** */
+
 void	signal_handler(int sig);
 
 /* *****************************  split.c  ********************************* */
@@ -111,7 +115,24 @@ void	fn_sub_split(t_var *v);
 char	**ft_cmdsubsplit(char const *s, char *set);
 
 /* *****************************  exit.c  *********************************** */
+
 void	ft_exit(int exit_status);
+
+/* *****************************  lexer.c  *********************************** */
+
+void	free_all_tabs(t_var *v);
+void	fn_lexer(t_var *v, t_prompt *prompt);
+
+/* *****************************  expander.c  ******************************** */
+
+void	fn_expander(t_var *v);
+
+/* **************************  utils_lexer.c  ******************************* */
+
+char	*get_prompt(char **envp);
+void	init_t_var_main(t_var *v);
+void	init_t_prompt(t_prompt *prompt, char **envp);
+void	print_tab_with_str_name(char **tab, char *tab_name);
 
 /* *****************************  BRANCHE o_pipe  *************************** */
 
