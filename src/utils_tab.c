@@ -29,23 +29,56 @@ char	**tab_add(char **src, char *add)
 		//test si dup OK ?
 		i++;
 	}
-	dest[i++] = add;
+	dest[i++] = ft_strdup(add);
 	dest[i] = NULL;
 	tab_free(src);
+	src = NULL;
 	return (dest);
 }
 
 void	tab_free(char **tab)
 {
-		int	i;
+	int	i;
 
-		i = 0;
-		while (tab[i])
-		{
-			free(tab[i]);
-			i++;
-		}
-		free(tab);
-		// tab = NULL;
+	i = 0;
+	while (tab && tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }
 
+void	print_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i] != 0)
+	{
+		ft_putstr_fd(tab[i++], 1);
+		ft_putchar_fd('\n', 1);
+	}
+}
+
+char	**tab_delone(char **src, char **dest, int to_del)
+{
+	int	i;
+	int	j;
+	int	len;
+
+	i = 0;
+	j = 0;
+	len = tablen(src);
+	while (i < len && j < len - 1)
+	{
+		if (i != to_del)
+		{
+			dest[j] = ft_strdup(src[i]);
+			j++;
+		}
+		i++;
+	}
+	dest[j] = NULL;
+	return (dest);
+}

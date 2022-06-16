@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/15 15:13:34 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/16 14:51:35 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,5 @@ void	ft_exit(int exit_status)
 	// fn_close_fd;
 	// fn_free_list_chainee;
 			// fn_free_full_cmd
-
 	exit(g_exit_status);
 }

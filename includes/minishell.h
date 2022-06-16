@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/15 14:22:44 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/16 14:55:30 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ typedef struct s_var
 	char	**split;
 	char	**tmp;
 	char	**subsplit;
+	int		i;
+	int		j;
 }	t_var;
 
 /* *****************************  main.c  ********************************* */
@@ -127,5 +129,9 @@ int		set_env(char *name, char *var, char **my_env);
 int		unset_builtin(char *name, char **my_envp);
 void	tab_free(char **tab);
 int		mini_cd(t_cmd *cmd, char **my_env);
+
+/* ******************************** utils_tab.c ****************************** */
+
+void	print_tab(char **tab);
 
 #endif
