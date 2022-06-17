@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/17 15:10:47 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/17 16:25:28 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,22 +135,52 @@ void	init_t_var_main(t_var *v);
 void	init_t_prompt(t_prompt *prompt, char **envp);
 void	print_tab_with_str_name(char **tab, char *tab_name);
 
-/* *****************************  BRANCHE o_pipe  *************************** */
+/* *****************************  BRANCHE o_build  *************************** */
 
-int		mini_pwd(char **my_envp);
-char	*here_input(char *limiter);
-void	fd_putendl_fd(char *s, int fd);
+/* *****************************  var_utils.c  *************************** */
+
+int		env_var_exist(char *name, char **envp);
+char	*get_env(char *name, char **my_envp);
+int		set_env(char *name, char * var, char **my_env);
+
+/* *****************************  var_builtin.c  *************************** */
+
+int		export_builtin(t_cmd *cmd, char **envp);
+int		unset_builtin(char *name, char **my_envp);
+void	env_builtin(t_prompt *s_pr);
+void	echo_builtin(t_cmd *cmd);
+
+/* *****************************  utils_tab.c  *************************** */
+
 int		tablen(char **t);
 char	**tab_add(char **src, char *add);
-int		env_var_exist(char *name, char **envp);
-int		export_builtin(t_cmd *cmd, char **envp);
-char	**init_envp(char **envp);
-void	ft_print_tab_model(char **temp);
-char	*get_env(char *name, char **my_envp);
-int		set_env(char *name, char *var, char **my_env);
-int		unset_builtin(char *name, char **my_envp);
 void	tab_free(char **tab);
-int		mini_cd(t_cmd *cmd, char **my_env);
+void	print_tab(char **tab);
+char	**tab_delone(char **src, char **dest, int to_del);
+
+/* *****************************  mini_here.c  *************************** */
+
+char	*here_input(char *limiter);
+
+/* *****************************  mini_builtin.c  *************************** */
+
+int		pwd_builtin(char **my_envp);
+int		cd_builtin(t_cmd *cmd, char **my_env);
+
+/* *****************************  init_data.c  *************************** */
+
+char	**init_envp(char **envp);
+
+/* *****************************  pipes_pid.c  *************************** */
+
+void	tab_int_free(int **tab);
+void	create_pipes_pids(t_prompt *s_pr);
+void	close_pipes(t_prompt *s_pr);
+
+/* *****************************  exec.c  *************************** */
+
+void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd);
+void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd);
 
 /* ******************************** utils_tab.c ****************************** */
 

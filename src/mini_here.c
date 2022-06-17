@@ -6,13 +6,13 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 11:50:10 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/02 17:17:10 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/16 13:46:44 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
-char *here_input(char *limiter)
+char	*here_input(char *limiter)
 {
 	char	*str;
 	char	*n_lim;
@@ -40,5 +40,3 @@ char *here_input(char *limiter)
 	free(str);
 	return ("tmp_here");
 }
-
-
