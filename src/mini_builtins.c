@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:56:37 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/16 15:59:02 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/17 10:20:18 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	pwd_builtin(char **my_env)
 int	exec_cd(char *path, char **my_env)
 {
 	char	*cur_dir;
-//a remettre ??	int 	res; 
 
 	cur_dir = getcwd(NULL, 0);
 	if (chdir(path) != 0)
@@ -63,15 +62,5 @@ int	cd_builtin(t_cmd *cmd, char **my_env)
 	else
 		dest = ft_strdup(cmd->full_cmd[1]);
 	res = exec_cd(dest, my_env);
-
 	return (res);
 }
-
-void	exit_builtin(t_prompt *s_pr)
-{
-	(void)s_pr; //ligne a effacer
-	ft_putendl_fd("exit", 1);
-	//ft_close ou free
-	exit (0);
-}
-

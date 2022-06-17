@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/16 16:49:48 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/17 13:29:45 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@
 
 /* ***************************** STRUCTURES ********************************* */
 
-int g_exit_status;
+int	g_exit_status;
 
 typedef struct s_count_words
 {
-    int quote_type;
-    int quote_status;
-    int counter;
+	int	quote_type;
+	int	quote_status;
+	int	counter;
 } t_count_words;
 
 typedef struct s_fill_array
@@ -72,6 +72,7 @@ typedef struct s_prompt
 	int		**pipes;
 	pid_t	*pid;
     char    *prompt_text;
+	int		n_cmds;
 }			t_prompt;
 
 typedef struct s_var
@@ -109,7 +110,7 @@ char	**ft_cmdsubsplit(char const *s, char *set);
 /* *****************************  exit.c  *********************************** */
 void    ft_exit(int exit_status);
 
-/* *****************************  BRANCHE o_pipe  *************************** */
+/* *****************************  BRANCHE o_build  *************************** */
 
 /* *****************************  var_utils.c  *************************** */
 
@@ -132,7 +133,7 @@ void	tab_free(char **tab);
 void	print_tab(char **tab);
 char	**tab_delone(char **src, char **dest, int to_del);
 
-/* *****************************  here_input.c  *************************** */
+/* *****************************  mini_here.c  *************************** */
 
 char	*here_input(char *limiter);
 
@@ -144,5 +145,16 @@ int		cd_builtin(t_cmd *cmd, char **my_env);
 /* *****************************  init_data.c  *************************** */
 
 char	**init_envp(char **envp);
+
+/* *****************************  pipes_pid.c  *************************** */
+
+void	tab_int_free(int **tab);
+void	create_pipes_pids(t_prompt *s_pr);
+void	close_pipes(t_prompt *s_pr);
+
+/* *****************************  exec.c  *************************** */
+
+void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd);
+void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd);
 
 #endif

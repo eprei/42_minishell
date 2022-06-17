@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:38 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/15 12:24:11 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/17 09:40:36 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ char	**tab_add(char **src, char *add)
 	while (i < len)
 	{
 		dest[i] = ft_strdup(src[i]);
-		//test si dup OK ?
+		if (dest[i] == NULL)
+			perror("Duplication failed\n");
 		i++;
 	}
 	dest[i++] = add;
@@ -55,6 +56,7 @@ void	tab_free(char **tab)
 	while (tab && tab[i])
 	{
 		free(tab[i]);
+		tab[i] = NULL;
 		i++;
 	}
 }
