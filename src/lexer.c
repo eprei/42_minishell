@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:01:32 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/16 17:06:33 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:44:27 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,21 @@ void	free_all_tabs(t_var *v)
 	v->subsplit = NULL;
 }
 
+void	print_error_token(t_var *v)
+{
+	ft_printf("Error token\n");
+	free(v->line);
+	v->line = NULL;
+}
+
 void	fn_lexer(t_var *v, t_prompt *prompt)
 {
 	(void)prompt;
 	v->split = ft_split_str_with_spaces_and_quotes(v->line); //this functions return NULL if ther's a quote inconsistence
 	if (v->split == NULL)
 	{
-		ft_printf("Error token\n");
-		free(v->line);
-		v->line = NULL;
-		return;
+		print_error_token(v);
+		return ;
 	}
 	else
 	{
@@ -49,9 +54,7 @@ void	fn_lexer(t_var *v, t_prompt *prompt)
 			v->tmp = NULL;
 			v->i++;
 		}
-		fn_expander(v);
-		//fn_parsing(&v, &prompt);
-		// print_tab_with_str_name(v->subsplit, "v->subsplit final");
-		free_all_tabs(v);
+//		fn_expander(v);
+		print_tab_with_str_name(v->subsplit, "v->subsplit final");
 	}
 }

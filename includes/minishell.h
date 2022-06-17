@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/16 17:04:08 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:10:47 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_cmd
 	char			*full_path;
 	int				infile;
 	int				outfile;
+	int				is_builtin;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }	t_cmd;

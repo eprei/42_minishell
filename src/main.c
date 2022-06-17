@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:33 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/16 16:54:37 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:48:21 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		v.line = readline(prompt.prompt_text);
 		fn_lexer(&v, &prompt);
+		//fn_parsing(&v, &prompt);
+		free_all_tabs(&v);
 	}
 	return (0);
 }

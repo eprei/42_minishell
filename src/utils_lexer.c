@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:34:47 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/16 17:02:34 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:47:13 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,13 @@ void	init_t_prompt(t_prompt *prompt, char **envp)
 	prompt->n_cmds = 0;
 }
 
-void print_tab_with_str_name(char **tab, char *tab_name)
+void	print_tab_with_str_name(char **tab, char *tab_name)
 {
 	int	i;
 
 	i = 0;
 	if (tab == NULL)
-	{
-		ft_printf("ERROR ft_printf: the array %s doesn't exist\n", tab_name);
-		return;
-	}
+		return ;
 	ft_printf("\t Printing %s\n", tab_name);
 	while (tab && tab[i])
 	{
