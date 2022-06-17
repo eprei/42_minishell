@@ -1,0 +1,5 @@
+**/.DS_Store
+**/a.out
+**/a.out.dSym/*
+src/crash_test.c
+

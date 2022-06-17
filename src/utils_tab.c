@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_tab.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/14 15:35:38 by olmartin          #+#    #+#             */
+/*   Updated: 2022/06/17 16:25:24 by epresa-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 int	tablen(char **t)
@@ -26,7 +38,8 @@ char	**tab_add(char **src, char *add)
 	while (i < len)
 	{
 		dest[i] = ft_strdup(src[i]);
-		//test si dup OK ?
+		if (dest[i] == NULL)
+			perror("Duplication failed\n");
 		i++;
 	}
 	dest[i++] = ft_strdup(add);
@@ -44,9 +57,9 @@ void	tab_free(char **tab)
 	while (tab && tab[i])
 	{
 		free(tab[i]);
+		tab[i] = NULL;
 		i++;
 	}
-	free(tab);
 }
 
 void	print_tab(char **tab)
