@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:34:47 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/17 17:04:26 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/20 17:19:42 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,5 @@ void	print_tab_with_str_name(char **tab, char *tab_name)
 		ft_printf("%s[%d] = %s\n", tab_name, i, tab[i]);
 		i++;
 	}
+	ft_printf("\n");
 }

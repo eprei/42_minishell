@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:01:32 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/18 11:37:55 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/06/20 11:59:18 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	fn_lexer(t_var *v, t_prompt *prompt)
 			v->tmp = NULL;
 			v->i++;
 		}
-		// fn_expander(v);
+		fn_expander(v, prompt);
 		print_tab_with_str_name(v->subsplit, "v->subsplit final");
 	}
 }

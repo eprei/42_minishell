@@ -29,7 +29,6 @@ void	fn_sub_split(t_var *v)
 		while (aux[index_aux] != 0)
 		{
 			v->subsplit[index_subsplit] = ft_strdup(aux[index_aux]);
-			// free(aux[index_aux]);
 			aux[index_aux] = NULL;
 			index_subsplit++;
 			index_aux++;

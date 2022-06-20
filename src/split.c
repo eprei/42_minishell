@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:52:31 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/13 17:02:49 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/20 14:51:45 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,39 +49,39 @@ int	ft_count_words(const char *str, char *caracter)
 	return (w.count);
 }
 
-void	init_fill_array_struct(t_fill_array *f, char const *str)
+void	init_quote_parsing_struct(t_quote_parsing *q, char const *str)
 	{
-	f->i = 0;
-	f->quote_simple = CLOSED;
-	f->quote_double = CLOSED;
-	f->str_idx = 0;
-	f->tab_index = 0;
-	f->s_len = ft_strlen(str);
+	q->i = 0;
+	q->quote_simple = CLOSED;
+	q->quote_double = CLOSED;
+	q->str_idx = 0;
+	q->tab_index = 0;
+	q->s_len = ft_strlen(str);
 }
 
-void	ft_fill_array(char **splited, char const *str, char *caracter)
+void	ft_fill_split(char **splited, char const *str, char *caracter)
 {
-	t_fill_array	f;
+	t_quote_parsing	q;
 
-	init_fill_array_struct(&f, str);
-	while (str[f.i] != '\0')
+	init_quote_parsing_struct(&q, str);
+	while (str[q.i] != '\0')
 	{
-		while (str[f.i] == *caracter && str[f.i] != '\0')
-			f.i++;
-		f.str_idx = f.i;
-		while ((str[f.i] != *caracter || f.quote_simple == OPEN \
-		|| f.quote_double == OPEN) && str[f.i] != '\0')
+		while (str[q.i] == *caracter && str[q.i] != '\0')
+			q.i++;
+		q.str_idx = q.i;
+		while ((str[q.i] != *caracter || q.quote_simple == OPEN \
+		|| q.quote_double == OPEN) && str[q.i] != '\0')
 		{
-			f.quote_simple = (f.quote_simple + \
-			(!f.quote_double && str[f.i] == '\'')) % 2;
-			f.quote_double = (f.quote_double + \
-			(!f.quote_simple && str[f.i] == '\"')) % 2;
-			f.i++;
+			q.quote_simple = (q.quote_simple + \
+			(!q.quote_double && str[q.i] == '\'')) % 2;
+			q.quote_double = (q.quote_double + \
+			(!q.quote_simple && str[q.i] == '\"')) % 2;
+			q.i++;
 		}
-		if (f.str_idx >= f.s_len)
-			splited[f.tab_index++] = "\0";
+		if (q.str_idx >= q.s_len)
+			splited[q.tab_index++] = "\0";
 		else
-			splited[f.tab_index++] = ft_substr(str, f.str_idx, f.i - f.str_idx);
+			splited[q.tab_index++] = ft_substr(str, q.str_idx, q.i - q.str_idx);
 	}
 }
 
@@ -100,7 +100,7 @@ char	**ft_split_str_with_spaces_and_quotes(char const *s)
 	aux = malloc((count_words + 1) * sizeof(char *));
 	if (aux == NULL)
 		return (NULL);
-	ft_fill_array(aux, s, &caracter);
+	ft_fill_split(aux, s, &caracter);
 	aux[count_words] = NULL;
 	return (aux);
 }

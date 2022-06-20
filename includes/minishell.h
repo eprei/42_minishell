@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/18 12:15:51 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/06/20 17:05:41 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_count_words
 	int	i;
 }	t_count_words;
 
-typedef struct s_fill_array
+typedef struct s_quote_parsing
 {
 	int		s_len;
 	int		quote_simple;
@@ -54,7 +54,7 @@ typedef struct s_fill_array
 	int		i;
 	int		str_idx;
 	int		tab_index;
-}	t_fill_array;
+}	t_quote_parsing;
 
 typedef struct s_cmd
 {
@@ -89,7 +89,7 @@ typedef struct s_var
 
 /* *****************************  main.c  ********************************** */
 
-void	init(t_var *v, t_prompt *prompt, char **envp);
+void	init_mini_vars(t_var *v, t_prompt *prompt, char **envp);
 
 /* *************************** node_management ***************************** */
 
@@ -108,7 +108,8 @@ void	signal_handler(int sig);
 void	init_count_words_struct(t_count_words *w);
 int		ft_count_words(const char *str, char *caracter);
 char	**ft_split_str_with_spaces_and_quotes(char const *s);
-void	ft_fill_array(char **splited, char const *str, char *caracter);
+void	ft_fill_split(char **splited, char const *str, char *caracter);
+void	init_quote_parsing_struct(t_quote_parsing *q, char const *str);
 
 /* ****************************  subsplit.c  ******************************* */
 
@@ -126,7 +127,8 @@ void	fn_lexer(t_var *v, t_prompt *prompt);
 
 /* *****************************  expander.c  ******************************** */
 
-void	fn_expander(t_var *v);
+void	fn_expander(t_var *v, t_prompt *prompt);
+void	update_quote_status(char *subsplit_i, t_quote_parsing *q);
 
 /* **************************  utils_lexer.c  ******************************* */
 
