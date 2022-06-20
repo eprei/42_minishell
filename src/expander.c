@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:58:25 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/17 15:44:26 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/18 11:39:07 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,21 @@ char	*expand_vars(char *subsplit_i)
 {
 	char	*tmp;
 	char	*ptr;
-	int		i;
+    // char    *end;
 
-	i = 0;
 	ptr = subsplit_i;
-	while (ptr[i])
+	while (*ptr)
 	{
-		if (ptr[i] == '$')
-			printf("$ founded at i = [%d]\n", i);
-		i++;
+		if (*ptr == '$')
+		{
+            tmp = ptr;
+            // while ()
+            // {
+
+                
+            // }
+        }
+        ptr++;
 	}
 
 	tmp = ft_strjoin(subsplit_i, "_add_var_");

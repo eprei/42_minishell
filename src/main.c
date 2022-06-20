@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:33 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/17 17:02:05 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/18 11:36:09 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	init(t_var *v, t_prompt *prompt, char **envp)
 	init_t_var_main(v);
 	init_t_prompt(prompt, envp);
 }
-
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -35,6 +34,7 @@ int	main(int argc, char **argv, char **envp)
 	while (argc == 1)
 	{
 		v.line = readline(prompt.prompt_text);
+        add_history(v.line);
 		fn_lexer(&v, &prompt);
 		//fn_parsing(&v, &prompt);
 		free_all_tabs(&v);

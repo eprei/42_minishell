@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:44:35 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/17 15:48:56 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/20 11:07:15 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,15 @@ void	signal_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write(1, "\n", 2);
+        write(1, "\n", 2);
+        rl_on_new_line();
+        rl_replace_line("", 1);
+        rl_redisplay();
 	}
 	if (sig == SIGQUIT)
 	{
-		g_exit_status = 50;
-		write(1, "\nExit\n", 7); // search for how to avoid printing ^'\'
-		ft_exit(g_exit_status);
+        rl_on_new_line();
+        rl_replace_line("", 1);
+        rl_redisplay();
 	}
 }
