@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:36:37 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/17 11:54:12 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/20 14:38:26 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**init_envp(char **envp)
 	dest[i] = NULL;
 	return (dest);
 }
-/*
+
 void	init_path(t_prompt *s_p)
 {
 	int		i;
@@ -45,7 +45,7 @@ void	init_path(t_prompt *s_p)
 	{
 		if (ft_strncmp(s_p->envp[i], "PATH=", 5) == 0)
 		{
-			s_p->paths = ft_split(&s_p->env[i][5], ':');
+			s_p->paths = ft_split(&s_p->envp[i][5], ':');
 			if (s_p->paths == NULL)
 	//			ft_error("Error with paths.", s_p, 1);
 			break ;
@@ -80,4 +80,4 @@ char	*create_path(char **paths, char *cmdn)
 		paths++;
 	}
 	return (NULL);
-}*/
+}

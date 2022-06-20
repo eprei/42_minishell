@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/17 16:25:28 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/20 14:37:51 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_prompt
 	char	**envp;
 	int		**pipes;
 	pid_t	*pid;
+	char	**paths;
 	char	*prompt_text;
 	int		n_cmds;
 }			t_prompt;
@@ -180,7 +181,7 @@ void	close_pipes(t_prompt *s_pr);
 /* *****************************  exec.c  *************************** */
 
 void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd);
-void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd);
+void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 
 /* ******************************** utils_tab.c ****************************** */
 
