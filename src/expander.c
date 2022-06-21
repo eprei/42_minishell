@@ -6,11 +6,13 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:58:25 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/20 17:41:49 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/21 15:20:57 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+// TO DO: EXPAND VARS, SEE IF EXPAND ~ WORKS IN SPECIAL CASES LIKE ECHO ~/
 
 char	*expand_vars(char *subsplit_i, t_prompt *prompt)
 {
@@ -68,7 +70,7 @@ char	*expand_path(char *subsplit_i, char *str_home)
 }
 
 void	fn_expander(t_var *v, t_prompt *prompt)
-{
+{ (void)prompt;
 	int i;
 
 	i = 0;

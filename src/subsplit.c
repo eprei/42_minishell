@@ -1,5 +1,10 @@
 #include "../includes/minishell.h"
 
+// TO DO: RENAME FUNCTIONS AND USE MACROS LIKE IN split.c ,
+// SEE IF IT'S POSSIBLE TO USE THE FUNCTION update_quote_status(char *subsplit_i, t_quote_parsing *q)
+//		FROM expander.c
+
+
 static int	ft_count_words_OLD(char *s, char *set, int count);
 
 void	fn_sub_split(t_var *v)

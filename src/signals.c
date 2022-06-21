@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:44:35 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/20 11:07:15 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/06/21 10:09:35 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// MAKE IT WORK AT ALL CASES
 
 #include "../includes/minishell.h"
 

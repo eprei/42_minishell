@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:34:47 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/20 17:19:42 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/21 16:45:49 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	init_t_prompt(t_prompt *prompt, char **envp)
 	prompt->envp = init_envp(envp);
 	prompt->pid = NULL;
 	prompt->prompt_text = get_prompt(prompt->envp);
+	prompt->paths = NULL;
 	prompt->n_cmds = 0;
 }
 

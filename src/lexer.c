@@ -6,21 +6,11 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:01:32 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/20 11:59:18 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/21 17:39:07 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	free_all_tabs(t_var *v)
-{
-	free(v->line);
-	v->line = NULL;
-	tab_free(v->split);
-	v->split = NULL;
-	tab_free(v->subsplit);
-	v->subsplit = NULL;
-}
 
 void	print_error_token(t_var *v)
 {
@@ -55,6 +45,9 @@ void	fn_lexer(t_var *v, t_prompt *prompt)
 			v->i++;
 		}
 		fn_expander(v, prompt);
+//		DELETE THE NEXT LINE, IT'S JUST TO PRINT
+//		THE INFORMATION IN ORDER TO DEBUG
 		print_tab_with_str_name(v->subsplit, "v->subsplit final");
+		init_path(prompt);
 	}
 }

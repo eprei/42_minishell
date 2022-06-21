@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/20 17:05:41 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/21 17:31:44 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <stddef.h>
 # include <readline/history.h>
 # include <termios.h>
+# include <errno.h>
 
 # define FALSE 0
 # define TRUE 1
@@ -33,6 +34,8 @@
 # define OPEN 1
 
 # define NO_INIT 0
+
+# define FAILED -1
 
 int	g_exit_status;
 
@@ -63,6 +66,7 @@ typedef struct s_cmd
 	int				infile;
 	int				outfile;
 	int				is_builtin;
+	int				status;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }	t_cmd;
@@ -73,6 +77,7 @@ typedef struct s_prompt
 	char	**envp;
 	int		**pipes;
 	pid_t	*pid;
+	char	**paths;
 	char	*prompt_text;
 	int		n_cmds;
 }			t_prompt;
@@ -111,12 +116,12 @@ char	**ft_split_str_with_spaces_and_quotes(char const *s);
 void	ft_fill_split(char **splited, char const *str, char *caracter);
 void	init_quote_parsing_struct(t_quote_parsing *q, char const *str);
 
-/* ****************************  subsplit.c  ******************************* */
+/* ****************************  subsplit.c  ********************************* */
 
 void	fn_sub_split(t_var *v);
 char	**ft_cmdsubsplit(char const *s, char *set);
 
-/* *****************************  exit.c  *********************************** */
+/* *****************************  exit.c  ************************************ */
 
 void	ft_exit(int exit_status);
 
@@ -125,11 +130,6 @@ void	ft_exit(int exit_status);
 void	free_all_tabs(t_var *v);
 void	fn_lexer(t_var *v, t_prompt *prompt);
 
-/* *****************************  expander.c  ******************************** */
-
-void	fn_expander(t_var *v, t_prompt *prompt);
-void	update_quote_status(char *subsplit_i, t_quote_parsing *q);
-
 /* **************************  utils_lexer.c  ******************************* */
 
 char	*get_prompt(char **envp);
@@ -137,22 +137,32 @@ void	init_t_var_main(t_var *v);
 void	init_t_prompt(t_prompt *prompt, char **envp);
 void	print_tab_with_str_name(char **tab, char *tab_name);
 
-/* *****************************  BRANCHE o_build  *************************** */
+/* *****************************  expander.c  ******************************** */
 
-/* *****************************  var_utils.c  *************************** */
+void	fn_expander(t_var *v, t_prompt *prompt);
+void	update_quote_status(char *subsplit_i, t_quote_parsing *q);
+
+/* **************************  parsing.c  *********************************** */
+
+void	fn_parsing(t_var *v, t_prompt *prompt);
+void	print_list(t_prompt *prompt);
+void	free_t_cmd(t_prompt *prompt);
+void	fill_t_cmd(t_var *v, t_cmd *curr, int *is_last_cmd, t_prompt *prompt);
+
+/* *****************************  var_utils.c  ****************************** */
 
 int		env_var_exist(char *name, char **envp);
 char	*get_env(char *name, char **my_envp);
 int		set_env(char *name, char * var, char **my_env);
 
-/* *****************************  var_builtin.c  *************************** */
+/* *****************************  var_builtin.c  **************************** */
 
 int		export_builtin(t_cmd *cmd, char **envp);
 int		unset_builtin(char *name, char **my_envp);
 void	env_builtin(t_prompt *s_pr);
 void	echo_builtin(t_cmd *cmd);
 
-/* *****************************  utils_tab.c  *************************** */
+/* *****************************  utils_tab.c  ****************************** */
 
 int		tablen(char **t);
 char	**tab_add(char **src, char *add);
@@ -172,6 +182,8 @@ int		cd_builtin(t_cmd *cmd, char **my_env);
 /* *****************************  init_data.c  *************************** */
 
 char	**init_envp(char **envp);
+void	init_path(t_prompt *s_p);
+char	*create_path(char **paths, char *cmdn);
 
 /* *****************************  pipes_pid.c  *************************** */
 
@@ -187,5 +199,7 @@ void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd);
 /* ******************************** utils_tab.c ****************************** */
 
 void	print_tab(char **tab);
+
+
 
 #endif
