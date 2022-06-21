@@ -6,7 +6,7 @@
 #    By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 15:01:40 by Emiliano          #+#    #+#              #
-#    Updated: 2022/06/20 16:13:42 by olmartin         ###   ########.fr        #
+#    Updated: 2022/06/21 14:11:56 by olmartin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 NAMELIBFT = libft.a
 
-SRCS = exec_test.c signals.c split.c subsplit.c exit.c init_data.c var_builtin.c \
+SRCS = test_openfiles.c signals.c split.c subsplit.c exit.c init_data.c var_builtin.c \
 	utils_tab.c lexer.c utils_lexer.c expander.c var_utils.c pipes_pids.c \
 	exec.c open_files.c mini_builtins.c
 

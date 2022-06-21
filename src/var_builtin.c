@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 08:51:32 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/15 14:50:33 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/21 13:25:42 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,51 +14,39 @@
 
 int	export_builtin(t_cmd *cmd, char **my_env)
 {
-	int		is_var;
-	char	*n_var;
+	int		i;
+	char	*name;
+	char	*value;	
 
-	n_var = ft_strjoin(cmd->full_cmd[1], cmd->full_cmd[2]);
-	if (n_var == NULL)
-		return (1);
-	is_var = env_var_exist(cmd->full_cmd[1], my_env);
-	if (is_var == -1)
-	{
-		my_env = tab_add(my_env, n_var);
-	}
-	else
-	{
-		free(my_env[is_var]);
-		my_env[is_var] = n_var;
-	}
-	if (env_var_exist(cmd->full_cmd[1], my_env) == -1)
-		return (1);
-	else
-		return (0);
+	i = 0;
+	while (cmd->full_cmd[1][i] && cmd->full_cmd[1][i] != '=')
+		i++;
+	name = ft_substr(cmd->full_cmd[1], 0, i);
+	value = ft_substr(cmd->full_cmd[1], i + 1, ft_strlen(cmd->full_cmd[1]));
+	return (set_env(name, value, my_env));
 }
 
-int	unset_builtin(char *name, char **my_env)
+char	**unset_builtin(char *name, char **my_env)
 {
-//	(void)name;
-//	(void)my_env;
 	int		is_var;
 	char	**ret;
 	int		len;
 
+	ret = NULL;
 	if (my_env == 0)
-		return (1);
+		return (NULL);
 	len = tablen(my_env);
 	is_var = env_var_exist(name, my_env);
-if (is_var >= 0)
+	if (is_var >= 0)
 	{
 		ret = (char **)malloc(sizeof(char *) * len);
 		if (ret == 0)
-				return(1);
-		ret  = tab_delone(my_env, ret, is_var);
+			return (NULL);
+		ret = tab_delone(my_env, ret, is_var);
 		tab_free(my_env);
 		free(my_env);
-		my_env = ret;
 	}
-	return (0);
+	return (ret);
 }
 
 void	env_builtin(t_prompt *s_pr)
@@ -72,7 +60,7 @@ void	echo_builtin(t_cmd *cmd)
 	int	i;
 
 	len = tablen(cmd->full_cmd);
-	i =  1;
+	i = 1;
 	while (i < len && ft_strncmp(cmd->full_cmd[i], "-n", 3) == 0)
 		i++;
 	while (cmd->full_cmd[i] != NULL)

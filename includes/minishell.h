@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/20 14:37:51 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/21 14:47:40 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void	init_t_var_main(t_var *v);
 void	init_t_prompt(t_prompt *prompt, char **envp);
 void	print_tab_with_str_name(char **tab, char *tab_name);
 
-/* *****************************  BRANCHE o_build  *************************** */
+/* *****************************  BRANCHE o_files  *************************** */
 
 /* *****************************  var_utils.c  *************************** */
 
@@ -147,7 +147,7 @@ int		set_env(char *name, char * var, char **my_env);
 /* *****************************  var_builtin.c  *************************** */
 
 int		export_builtin(t_cmd *cmd, char **envp);
-int		unset_builtin(char *name, char **my_envp);
+char	**unset_builtin(char *name, char **my_envp);
 void	env_builtin(t_prompt *s_pr);
 void	echo_builtin(t_cmd *cmd);
 
@@ -159,9 +159,11 @@ void	tab_free(char **tab);
 void	print_tab(char **tab);
 char	**tab_delone(char **src, char **dest, int to_del);
 
-/* *****************************  mini_here.c  *************************** */
+/* *****************************  open_files.c  *************************** */
 
-char	*here_input(char *limiter);
+char	*here_input(char *limiter, int fd);
+int		open_in_files(char *in_file, char * limiter, t_cmd *cmd);
+int		open_outfiles(char *out_file, int append, t_cmd *cmd);
 
 /* *****************************  mini_builtin.c  *************************** */
 
@@ -182,6 +184,7 @@ void	close_pipes(t_prompt *s_pr);
 
 void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd);
 void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num);
+int		search_function(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 
 /* ******************************** utils_tab.c ****************************** */
 
