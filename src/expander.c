@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:58:25 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/21 15:20:57 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/23 13:28:21 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ char	*expand_path(char *subsplit_i, char *str_home)
 	char	*tmp;
 	char	*add_path;
 	t_quote_parsing q;
-
 	init_quote_parsing_struct(&q, NULL);
 	while (subsplit_i && subsplit_i[q.i])
 	{

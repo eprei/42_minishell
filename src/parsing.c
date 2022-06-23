@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/23 10:52:59 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/06/23 13:14:07 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,32 +74,56 @@ int	count_cmds(t_prompt *prompt)
 	return (i);
 }
 
-void	fill_t_cmd(t_var *v, t_prompt *prompt)
+// void	fill_t_cmd(t_var *v, t_prompt *prompt, int indx_cmd)
+// {
+// 	int	i;
+// 	// int index_start_nxt_cmd;
+// 	t_cmd	*curr;
+// 	(void)indx_cmd;
+// 	// index_start_nxt_cmd = 0;
+// 	// i = 0;
+// 	// while (v->subsplit[i] != NULL && indx_cmd > 0)
+// 	// {
+// 	// 	if (v->subsplit[i][0] == '|')
+// 	// 		indx_cmd--;
+// 	// 	i++;
+// 	// }
+// 	curr = prompt->cmds;
+// 	while (curr->next != NULL)
+// 			curr = curr->next;
+// 	i = 0;
+// 	while (v->subsplit[i] != NULL && v->subsplit[i][0] != '|')
+// 	{
+// 		curr->full_cmd = tab_add(curr->full_cmd, v->subsplit[i]);
+// 		i++;
+// 	}
+// 	curr->full_path = create_path(prompt->paths, curr->full_cmd[0]);
+// }
+
+void	fill_t_cmd(t_var *v, t_prompt *prompt, int indx_cmd)
 {
-	int	i;
-    // int next_pipe_index;
-    t_cmd	*curr;   
-    
-    // next_pipe_index = 0;
-    curr = prompt->cmds;
-    while (curr->next != NULL)
-            curr = curr->next;
-    i = 0;
+	static int	i = 0;
+	t_cmd	*curr;
+	(void)indx_cmd;
+	curr = prompt->cmds;
+	while (curr->next != NULL)
+			curr = curr->next;
+	if (v->subsplit[i][0] == '|')
+		i++;
 	while (v->subsplit[i] != NULL && v->subsplit[i][0] != '|')
 	{
 		curr->full_cmd = tab_add(curr->full_cmd, v->subsplit[i]);
 		i++;
 	}
 	curr->full_path = create_path(prompt->paths, curr->full_cmd[0]);
+	if (v->subsplit[i] == NULL)
+		i = 0;
 }
 
 void	fn_parsing(t_var *v, t_prompt *prompt)
 {
     int i;
 
-    if (v->subsplit == NULL)
-        return ; 
-// TO FIX: when subsplit[0][0] == '|' segfault
     i = 0;
     while (v->subsplit[i] && v->subsplit[i + 1] != NULL)
     {
@@ -115,7 +139,7 @@ void	fn_parsing(t_var *v, t_prompt *prompt)
             prompt->cmds = start_t_cmd(prompt);
         if (i > 0)
             add_t_cmd(prompt);
-        fill_t_cmd(v, prompt);      
+        fill_t_cmd(v, prompt, i);
         i++;
     }
 }

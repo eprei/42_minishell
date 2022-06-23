@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:21:06 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/16 12:18:25 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/23 13:27:41 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,13 @@ int	env_var_exist(char *name, char **my_env)
 	while (my_env && my_env[i])
 	{
 		if (ft_strncmp(my_env[i], var, ft_strlen(var)) == 0)
+		{
+			free(var);
 			return (i);
+		}
 		i++;
 	}
+	free(var);
 	return (-1);
 }
 

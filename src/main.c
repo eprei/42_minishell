@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:33 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/23 09:55:31 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/06/23 11:54:01 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	free_t_cmd2(t_cmd **cmd)
+void	free_t_cmd(t_cmd **cmd)
 {
 	t_cmd	*curr;
 
@@ -56,12 +56,11 @@ void	free_all_tabs_and_prompt(t_var *v, t_prompt *prompt)
 	tab_free(v->subsplit);
     free(v->subsplit);
 	v->subsplit = NULL;
-    free_t_cmd2(&prompt->cmds);
+    free_t_cmd(&prompt->cmds);
 
     // problems with the prompter after execute next two lines
     // free(prompt->prompt_text);
     // prompt->prompt_text = NULL;
-
     tab_free(prompt->paths);
     free(prompt->paths);
     prompt->paths = NULL;
