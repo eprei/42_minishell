@@ -2,4 +2,12 @@
 **/a.out
 **/a.out.dSym/*
 src/crash_test.c
+src/cd_test.c
+src/echo_test.c
+src/exec_test.c
+src/minishell.dSYM
+src/tab_utils_test.c
+src/test_builtins.c
+out1
+out1.txt
 

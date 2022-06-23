@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:56:37 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/17 10:20:18 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/21 15:17:18 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	pwd_builtin(char **my_env)
 
 	buffer = NULL;
 	buffer = get_env("PWD", my_env);
+//	buffer = getcwd(NULL, 0);
 	if (buffer != NULL)
 		ft_putendl_fd(buffer, 0);
 	free(buffer);
@@ -30,7 +31,7 @@ int	exec_cd(char *path, char **my_env)
 
 	cur_dir = getcwd(NULL, 0);
 	if (chdir(path) != 0)
-		perror("Error: gecwd() failed\n");
+		perror("Error: getcwd() failed\n");
 	else
 	{
 		set_env("OLDPWD", cur_dir, my_env);

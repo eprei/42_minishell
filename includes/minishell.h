@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/23 12:21:02 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:12:18 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ int		set_env(char *name, char * var, char **my_env);
 /* *****************************  var_builtin.c  **************************** */
 
 int		export_builtin(t_cmd *cmd, char **envp);
-int		unset_builtin(char *name, char **my_envp);
+char	**unset_builtin(char *name, char **my_envp);
 void	env_builtin(t_prompt *s_pr);
 void	echo_builtin(t_cmd *cmd);
 
@@ -170,9 +170,11 @@ void	tab_free(char **tab);
 void	print_tab(char **tab);
 char	**tab_delone(char **src, char **dest, int to_del);
 
-/* *****************************  mini_here.c  *************************** */
+/* *****************************  open_files.c  *************************** */
 
-char	*here_input(char *limiter);
+char	*here_input(char *limiter, int fd);
+int		open_in_files(char *in_file, char * limiter, t_cmd *cmd);
+int		open_outfiles(char *out_file, int append, t_cmd *cmd);
 
 /* *****************************  mini_builtin.c  *************************** */
 
@@ -194,11 +196,16 @@ void	close_pipes(t_prompt *s_pr);
 /* *****************************  exec.c  *************************** */
 
 void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd);
-void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd);
+void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num);
+int		search_function(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 
 /* ******************************** utils_tab.c ****************************** */
 
 void	print_tab(char **tab);
+/* ******************************** test  ****************************** */
+void	single_child_cmd(t_cmd *cmd, t_prompt *s_p);
+void	child_cmd1(t_cmd *cmd, t_prompt *s_p);
+void	prep_child2(t_cmd *curr, t_prompt *s_p);
 
 
 
