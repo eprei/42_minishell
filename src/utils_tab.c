@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_tab.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:38 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/17 16:25:24 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/22 14:50:04 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char	**tab_add(char **src, char *add)
 	dest[i++] = ft_strdup(add);
 	dest[i] = NULL;
 	tab_free(src);
+    free(src);
 	src = NULL;
 	return (dest);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:34:47 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/21 16:45:49 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/22 15:32:10 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ char	*get_prompt(char **envp)
 
 	str_get_info = get_env("USER", envp);
 	str_prompt = ft_strjoin(str_get_info, "@minishell42$ ");
-	return (str_prompt);
+	free(str_get_info);
+    return (str_prompt);
 }
 
 void	init_t_var_main(t_var *v)
@@ -49,10 +50,10 @@ void	print_tab_with_str_name(char **tab, char *tab_name)
 	i = 0;
 	if (tab == NULL)
 		return ;
-	ft_printf("\t Printing %s\n", tab_name);
+	ft_printf("\n\t Printing %s\n", tab_name);
 	while (tab && tab[i])
 	{
-		ft_printf("%s[%d] = %s\n", tab_name, i, tab[i]);
+		ft_printf("\t%s[%d] = %s\taddress = %p\n", tab_name, i, tab[i], tab[i]);
 		i++;
 	}
 	ft_printf("\n");

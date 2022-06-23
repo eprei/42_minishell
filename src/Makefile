@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+         #
+#    By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 15:01:40 by Emiliano          #+#    #+#              #
-#    Updated: 2022/06/21 17:02:24 by epresa-c         ###   ########.fr        #
+#    Updated: 2022/06/21 18:37:30 by Emiliano         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,7 @@ SRCS = main.c signals.c split.c subsplit.c exit.c init_data.c var_builtin.c \
 
 OBJ = $(SRCS:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror
-
-DEBUG_FLAG = -g
+CFLAGS = -Wall -Wextra -Werror -g
 
 LDFLAGS= /usr/local/Cellar/readline/8.1.2/lib
 
@@ -34,15 +32,14 @@ LIBFTPATH = ../libft
 
 all: $(NAME)
 
-.c.o:
-	$(CC) -I /Users/$(USER)/.brew/Cellar/readline/8.1.2/include $(CFLAGS) $(DEBUG_FLAG) -c $^ -o $@
-
-$(NAME): $(OBJ)
-	 make -C $(LIBFTPATH)
+$(NAME):
+	@ make -C $(LIBFTPATH)
 # mac 42
-	 $(CC) $(CFLAGS) $(OBJ) -L$(LIBFTPATH) -lft -L/Users/$(USER)/.brew/Cellar/readline/8.1.2/lib -lreadline -o $(NAME)
+#	@ CC $(CFLAGS) $(SRCS) -L$(LIBFTPATH) -lft -L/Users/$(USER)/.brew/Cellar/readline/8.1.2/lib -lreadline -I /Users/$(USER)/.brew/Cellar/readline/8.1.2/include -o $(NAME)
 # home mac
-#	@ CC $(SRCS) -L$(LIBFTPATH) -lft -L $(LDFLAGS) -lreadline -I $(CPPFLAGS) -o $(NAME)
+	@ CC $(SRCS) -L$(LIBFTPATH) -lft -L $(LDFLAGS) -lreadline -I $(CPPFLAGS) -o $(NAME)
+
+
 clean:
 	@rm -rf $(OBJ)
 	@make clean -C $(LIBFTPATH)

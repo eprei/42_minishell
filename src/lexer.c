@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:01:32 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/21 17:39:07 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/22 15:09:43 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,17 @@ void	fn_lexer(t_var *v, t_prompt *prompt)
 				v->j++;
 			}
 			tab_free(v->tmp);
+            free(v->tmp);
 			v->tmp = NULL;
 			v->i++;
 		}
 		fn_expander(v, prompt);
+        // fn_delete_quotes(v); TO MAKE
+        
 //		DELETE THE NEXT LINE, IT'S JUST TO PRINT
 //		THE INFORMATION IN ORDER TO DEBUG
-		print_tab_with_str_name(v->subsplit, "v->subsplit final");
-		init_path(prompt);
+		print_tab_with_str_name(v->subsplit, "v->subsplit after lexer");
+		
+        init_path(prompt);
 	}
 }

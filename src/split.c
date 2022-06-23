@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:52:31 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/20 14:51:45 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/22 13:56:25 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	**ft_split_str_with_spaces_and_quotes(char const *s)
 	if (count_words == -1)
 		return (NULL);
 	aux = malloc((count_words + 1) * sizeof(char *));
-	if (aux == NULL)
+    if (aux == NULL)
 		return (NULL);
 	ft_fill_split(aux, s, &caracter);
 	aux[count_words] = NULL;
