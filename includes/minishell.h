@@ -6,7 +6,7 @@
 /*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/22 14:31:01 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/06/23 09:53:28 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void	update_quote_status(char *subsplit_i, t_quote_parsing *q);
 void	fn_parsing(t_var *v, t_prompt *prompt);
 void	print_list(t_prompt *prompt);
 void	free_t_cmd(t_prompt *prompt);
-void	fill_t_cmd(t_var *v, int *is_last_cmd, t_prompt *prompt);
+void	fill_t_cmd(t_var *v, t_prompt *prompt);
 
 /* *****************************  var_utils.c  ****************************** */
 

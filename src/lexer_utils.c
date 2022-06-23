@@ -6,7 +6,7 @@
 /*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:34:47 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/22 15:32:10 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/06/23 09:36:59 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	init_t_prompt(t_prompt *prompt, char **envp)
 	prompt->pid = NULL;
 	prompt->prompt_text = get_prompt(prompt->envp);
 	prompt->paths = NULL;
-	prompt->n_cmds = 0;
+	prompt->n_cmds = 1;
 }
 
 void	print_tab_with_str_name(char **tab, char *tab_name)

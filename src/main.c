@@ -6,7 +6,7 @@
 /*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:33 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/22 16:18:03 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/06/23 09:55:31 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	free_all_tabs_and_prompt(t_var *v, t_prompt *prompt)
     tab_free(prompt->paths);
     free(prompt->paths);
     prompt->paths = NULL;
+    prompt->n_cmds = 1;
 }
 
 int	main(int argc, char **argv, char **envp)

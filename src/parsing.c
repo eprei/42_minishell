@@ -6,7 +6,7 @@
 /*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/23 09:22:04 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/06/23 10:52:59 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,13 @@ int	count_cmds(t_prompt *prompt)
 	return (i);
 }
 
-void	fill_t_cmd(t_var *v, int *is_last_cmd, t_prompt *prompt)
+void	fill_t_cmd(t_var *v, t_prompt *prompt)
 {
 	int	i;
-    t_cmd	*curr;
+    // int next_pipe_index;
+    t_cmd	*curr;   
     
+    // next_pipe_index = 0;
     curr = prompt->cmds;
     while (curr->next != NULL)
             curr = curr->next;
@@ -89,32 +91,33 @@ void	fill_t_cmd(t_var *v, int *is_last_cmd, t_prompt *prompt)
 		i++;
 	}
 	curr->full_path = create_path(prompt->paths, curr->full_cmd[0]);
-    *is_last_cmd = TRUE;
 }
 
 void	fn_parsing(t_var *v, t_prompt *prompt)
 {
-    // if (v->subsplit == NULL)
-    //     return ; 
-    
-    // while (v->subsplit)
-    // {
-    //     if ()
-    //     v->subsplit++;
-    // }
-    
-    int is_last_cmd = FALSE;
-	prompt->cmds = start_t_cmd(prompt);
-	fill_t_cmd(v, &is_last_cmd, prompt);
+    int i;
 
-    add_t_cmd(prompt);
-    fill_t_cmd(v, &is_last_cmd, prompt);
-
-    add_t_cmd(prompt);
-    fill_t_cmd(v, &is_last_cmd, prompt);
-
-	prompt->n_cmds = count_cmds(prompt);
+    if (v->subsplit == NULL)
+        return ; 
+// TO FIX: when subsplit[0][0] == '|' segfault
+    i = 0;
+    while (v->subsplit[i] && v->subsplit[i + 1] != NULL)
+    {
+        if (v->subsplit[i][0] == '|')
+            prompt->n_cmds++;
+        i++;
+    }
 	ft_printf("\nn_cmd = %d\n", prompt->n_cmds);
+    i = 0;
+    while (i < prompt->n_cmds)
+    {
+        if (i == 0)
+            prompt->cmds = start_t_cmd(prompt);
+        if (i > 0)
+            add_t_cmd(prompt);
+        fill_t_cmd(v, prompt);      
+        i++;
+    }
 }
 
 void	print_list(t_prompt *prompt)
