@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:36:37 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/20 14:38:26 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/23 11:48:09 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,10 @@ void	init_path(t_prompt *s_p)
 	{
 		tmp = s_p->paths[i];
 		s_p->paths[i] = ft_strjoin(tmp, "/");
-		if (s_p->paths[i++] == NULL)
+		if (s_p->paths[i] == NULL)
 	//		ft_error("Error with paths", s_p, 1);
 		free(tmp);
+		i++;
 	}
 }
 

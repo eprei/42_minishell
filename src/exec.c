@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:53:57 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/21 13:30:41 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/23 10:10:13 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd)
 {
-	int		dup_res[2];
+//	int		dup_res[2];
 	int		exec_res;
 
-	dup_res[0] = dup2(cur_cmd->outfile, STDOUT_FILENO);
+	printf("in fd et out fd: %d - %d \n", cur_cmd->infile, cur_cmd->outfile);
+/*	dup_res[0] = dup2(cur_cmd->outfile, STDOUT_FILENO);
 	dup_res[1] = dup2(cur_cmd->infile, STDIN_FILENO);
 	if (dup_res[0] < 0 || dup_res[1] < 0)
 		perror("Error with dup gen.");
@@ -26,7 +27,7 @@ void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd)
 	close(cur_cmd->infile);
 //	close(0);
 //	close(1);
-	exec_res = execve(cur_cmd->full_path, cur_cmd->full_cmd, s_pr->envp);
+*/	exec_res = execve(cur_cmd->full_path, cur_cmd->full_cmd, s_pr->envp);
 	if (exec_res == -1)
 	{
 		perror("Failure with command");
@@ -78,7 +79,8 @@ int	search_function(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 	else if (ft_strncmp(cur_cmd->full_cmd[0], "unset", 6) == 0)
 		s_pr->envp = unset_builtin(cur_cmd->full_cmd[1], s_pr->envp);
 	else
-		prep_exec(s_pr, cur_cmd, num);
-	printf("Res: %d\n", res);
+//		prep_exec(s_pr, cur_cmd, num);
+		prep_child2(cur_cmd, s_pr);		
+	//printf("Res: %d\n", res);
 	return (0);
 }

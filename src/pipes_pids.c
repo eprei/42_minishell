@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 08:47:28 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/17 12:01:56 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/23 10:42:58 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	create_pipes_pids(t_prompt *s_pr)
 			i++;
 		}
 	}
+	else
+		s_pr->pipes = NULL;
 }
 
 void	close_pipes(t_prompt *s_pr)

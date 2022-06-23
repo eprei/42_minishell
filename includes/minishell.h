@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/21 14:47:40 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:55:58 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,5 +189,10 @@ int		search_function(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 /* ******************************** utils_tab.c ****************************** */
 
 void	print_tab(char **tab);
+/* ******************************** test  ****************************** */
+void	single_child_cmd(t_cmd *cmd, t_prompt *s_p);
+void	child_cmd1(t_cmd *cmd, t_prompt *s_p);
+void	print_list(t_cmd *curr);
+void	prep_child2(t_cmd *curr, t_prompt *s_p);
 
 #endif
