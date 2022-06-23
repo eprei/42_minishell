@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:33 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/23 11:54:01 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:02:08 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,18 @@ int	main(int argc, char **argv, char **envp)
 	while (argc == 1)
 	{
 		v.line = readline(prompt.prompt_text);
-        add_history(v.line);
-		fn_lexer(&v, &prompt);
-		fn_parsing(&v, &prompt);
-		print_list(&prompt);
+		if (ft_strncmp(v.line, "exit", 4) == 0)
+			ft_exit(&v, &prompt);
+		if (ft_strlen(v.line) != 0)
+		{
+			add_history(v.line);
+			fn_lexer(&v, &prompt);
+			if (v.split != NULL)
+			{
+				fn_parsing(&v, &prompt);
+				print_list(&prompt); // just to print the list
+			}
+		}
 		free_all_tabs_and_prompt(&v, &prompt);
 	}
 	return (0);
