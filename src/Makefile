@@ -6,7 +6,7 @@
 #    By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 15:01:40 by Emiliano          #+#    #+#              #
-#    Updated: 2022/06/24 14:12:04 by olmartin         ###   ########.fr        #
+#    Updated: 2022/06/24 16:16:43 by olmartin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ NAMELIBFT = libft.a
 
 SRCS = main.c signals.c split.c subsplit.c exit.c init_data.c var_builtin.c \
 	utils_tab.c lexer.c lexer_utils.c expander.c var_utils.c pipes_pids.c \
-	exec.c open_files.c mini_builtins.c parsing.c prepare_exec.c
+	exec.c open_files.c mini_builtins.c parsing.c prepare_exec.c \
+	prep_builtin_exec.c
 
 
 OBJ = $(SRCS:.c=.o)
@@ -36,12 +37,12 @@ LIBFTPATH = ../libft
 all: $(NAME)
 
 .c.o:
-	$(CC) -I /Users/$(USER)/.brew/Cellar/readline/8.1.2/include $(CFLAGS) -c $^ -o $@
+	$(CC) -I /Users/$(USER)/.brew/Cellar/readline/8.1.2/include $(CFLAGS) -g -c $^ -o $@
 
 $(NAME): $(OBJ)
 	 make -C $(LIBFTPATH)
 # mac 42
-	 $(CC) $(CFLAGS) $(OBJ) -L$(LIBFTPATH) -lft -L/Users/$(USER)/.brew/Cellar/readline/8.1.2/lib -lreadline -o $(NAME)
+	 $(CC) $(CFLAGS) -g $(OBJ) -L$(LIBFTPATH) -lft -L/Users/$(USER)/.brew/Cellar/readline/8.1.2/lib -lreadline -o $(NAME)
 # home mac
 #	@ $(CC) $(SRCS) -L$(LIBFTPATH) -lft -L $(LDFLAGS) -lreadline -I $(CPPFLAGS) -o $(NAME)
 clean:
