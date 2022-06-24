@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:21:06 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/23 14:09:49 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:25:19 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*get_env(char *name, char **my_env)
 	return (ret);
 }
 
-int	set_env(char *name, char *value, char **my_env)
+char	**set_env(char *name, char *value, char **my_env)
 {
 	int		is_var;
 	char	*temp;
@@ -64,8 +64,10 @@ int	set_env(char *name, char *value, char **my_env)
 		my_env[is_var] = ft_strjoin(temp, value);
 	}
 	free(temp);
-	if (env_var_exist(name, my_env) == -1)
+/*	if (env_var_exist(name, my_env) == -1)
 		return (1);
 	else
 		return (0);
+*/
+	return (my_env);
 }

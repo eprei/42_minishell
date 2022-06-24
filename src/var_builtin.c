@@ -6,13 +6,13 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 08:51:32 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/21 13:25:42 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:49:50 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	export_builtin(t_cmd *cmd, char **my_env)
+char	**export_builtin(t_cmd *cmd, char **my_env)
 {
 	int		i;
 	char	*name;
@@ -23,7 +23,9 @@ int	export_builtin(t_cmd *cmd, char **my_env)
 		i++;
 	name = ft_substr(cmd->full_cmd[1], 0, i);
 	value = ft_substr(cmd->full_cmd[1], i + 1, ft_strlen(cmd->full_cmd[1]));
-	return (set_env(name, value, my_env));
+	 my_env = set_env(name, value, my_env);
+//	return (set_env(name, value, my_env));
+	return (my_env);
 }
 
 char	**unset_builtin(char *name, char **my_env)
@@ -69,6 +71,8 @@ void	echo_builtin(t_cmd *cmd)
 		if (++i < len)
 			ft_putstr_fd(" ", 1);
 	}
-	if (ft_strncmp(cmd->full_cmd[1], "-n", 3) != 0)
+	if (cmd->full_cmd[1] == NULL)
+		ft_putendl_fd("", 1);
+	else if (ft_strncmp(cmd->full_cmd[1], "-n", 3) != 0)
 		ft_putendl_fd("", 1);
 }

@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/23 16:30:04 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/24 15:07:35 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,11 +153,11 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt, int indx_cmd);
 
 int		env_var_exist(char *name, char **envp);
 char	*get_env(char *name, char **my_envp);
-int		set_env(char *name, char * var, char **my_env);
+char	**set_env(char *name, char * var, char **my_env);
 
 /* *****************************  var_builtin.c  **************************** */
 
-int		export_builtin(t_cmd *cmd, char **envp);
+char	**export_builtin(t_cmd *cmd, char **envp);
 char	**unset_builtin(char *name, char **my_envp);
 void	env_builtin(t_prompt *s_pr);
 void	echo_builtin(t_cmd *cmd);
@@ -197,15 +197,23 @@ void	close_pipes(t_prompt *s_pr);
 
 void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd);
 void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num);
-int		search_function(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 
 /* ******************************** utils_tab.c ****************************** */
 
 void	print_tab(char **tab);
+
+/* ******************************** prepare_exec.c 
+ * ************************* */
+
+int	search_function(t_prompt *s_pr, t_cmd *cur_cmd, int num);
+int is_with_redir(t_prompt *s_pr, t_cmd *cur_cmd, int num);
+int	read_list(t_prompt *s_pr);
+
 /* ******************************** test  ****************************** */
 void	single_child_cmd(t_cmd *cmd, t_prompt *s_p);
 void	child_cmd1(t_cmd *cmd, t_prompt *s_p);
 void	prep_child2(t_cmd *curr, t_prompt *s_p);
+int		test_complete_cmd(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 
 
 
