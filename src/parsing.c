@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/23 13:14:07 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/24 12:21:29 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,31 +74,19 @@ int	count_cmds(t_prompt *prompt)
 	return (i);
 }
 
-// void	fill_t_cmd(t_var *v, t_prompt *prompt, int indx_cmd)
-// {
-// 	int	i;
-// 	// int index_start_nxt_cmd;
-// 	t_cmd	*curr;
-// 	(void)indx_cmd;
-// 	// index_start_nxt_cmd = 0;
-// 	// i = 0;
-// 	// while (v->subsplit[i] != NULL && indx_cmd > 0)
-// 	// {
-// 	// 	if (v->subsplit[i][0] == '|')
-// 	// 		indx_cmd--;
-// 	// 	i++;
-// 	// }
-// 	curr = prompt->cmds;
-// 	while (curr->next != NULL)
-// 			curr = curr->next;
-// 	i = 0;
-// 	while (v->subsplit[i] != NULL && v->subsplit[i][0] != '|')
-// 	{
-// 		curr->full_cmd = tab_add(curr->full_cmd, v->subsplit[i]);
-// 		i++;
-// 	}
-// 	curr->full_path = create_path(prompt->paths, curr->full_cmd[0]);
-// }
+void    fn_echo_error(t_cmd *curr, char *subplit_i, char *err_msg)
+{
+    // ft_printf("%s: %s\n", subplit_i, err_msg);
+    curr->outfile = 2;
+	tab_free(curr->full_cmd);
+	free(curr->full_cmd);
+    curr->full_cmd = malloc(sizeof(char *) * 4);
+    curr->full_cmd[0] = ft_strdup("echo");
+    curr->full_cmd[1] = ft_strjoin(subplit_i, ": ");
+    curr->full_cmd[2] = ft_strdup(err_msg);
+    curr->full_cmd[3] = NULL;
+	curr->is_builtin = TRUE;
+}
 
 void	fill_t_cmd(t_var *v, t_prompt *prompt, int indx_cmd)
 {
@@ -116,6 +104,8 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt, int indx_cmd)
 		i++;
 	}
 	curr->full_path = create_path(prompt->paths, curr->full_cmd[0]);
+	if (curr->full_path == NULL)
+		fn_echo_error(curr, v->subsplit[i - 1], "comand not found");
 	if (v->subsplit[i] == NULL)
 		i = 0;
 }

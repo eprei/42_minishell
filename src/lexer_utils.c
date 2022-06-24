@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:34:47 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/23 09:36:59 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/06/24 11:38:18 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	print_tab_with_str_name(char **tab, char *tab_name)
 	ft_printf("\n\t Printing %s\n", tab_name);
 	while (tab && tab[i])
 	{
-		ft_printf("\t%s[%d] = %s\taddress = %p\n", tab_name, i, tab[i], tab[i]);
+		// ft_printf("\t%s[%d] = %s\taddress = %p\n", tab_name, i, tab[i], tab[i]);
+		ft_printf("\t%s[%d] = %s\n", tab_name, i, tab[i]);
 		i++;
 	}
 	ft_printf("\n");

@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:33 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/23 17:02:08 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/24 11:37:16 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	main(int argc, char **argv, char **envp)
 	while (argc == 1)
 	{
 		v.line = readline(prompt.prompt_text);
-		if (ft_strncmp(v.line, "exit", 4) == 0)
+		if (ft_strncmp(v.line, "exit", 4) == 0 && ft_strlen(v.line) == 4)
 			ft_exit(&v, &prompt);
 		if (ft_strlen(v.line) != 0)
 		{
