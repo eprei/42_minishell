@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/24 12:21:29 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/24 12:40:30 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,34 @@ void    fn_echo_error(t_cmd *curr, char *subplit_i, char *err_msg)
 	curr->is_builtin = TRUE;
 }
 
+int	check_builtin(char *cmd)
+{
+	int is_builtin;
+
+	is_builtin = FALSE;
+	if (ft_strncmp(cmd, "echo", 4) == 0 && ft_strlen(cmd) == 4)
+		is_builtin = TRUE;
+	if (ft_strncmp(cmd, "cd", 2) == 0 && ft_strlen(cmd) == 2)
+		is_builtin = TRUE;
+	if (ft_strncmp(cmd, "pwd", 3) == 0 && ft_strlen(cmd) == 3)
+		is_builtin = TRUE;
+	if (ft_strncmp(cmd, "export", 6) == 0 && ft_strlen(cmd) == 6)
+		is_builtin = TRUE;
+	if (ft_strncmp(cmd, "unset", 5) == 0 && ft_strlen(cmd) == 5)
+		is_builtin = TRUE;
+	if (ft_strncmp(cmd, "env", 3) == 0 && ft_strlen(cmd) == 3)
+		is_builtin = TRUE;
+	return (is_builtin);
+}
+
+void	is_builtin(t_cmd *curr)
+{
+	if (check_builtin(curr->full_cmd[0]) == TRUE)
+		curr->is_builtin = TRUE;
+	else
+		curr->is_builtin = FALSE;
+}
+
 void	fill_t_cmd(t_var *v, t_prompt *prompt, int indx_cmd)
 {
 	static int	i = 0;
@@ -101,6 +129,7 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt, int indx_cmd)
 	while (v->subsplit[i] != NULL && v->subsplit[i][0] != '|')
 	{
 		curr->full_cmd = tab_add(curr->full_cmd, v->subsplit[i]);
+		is_builtin(curr);
 		i++;
 	}
 	curr->full_path = create_path(prompt->paths, curr->full_cmd[0]);
