@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/27 10:10:45 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/27 13:56:45 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ void	close_pipes(t_prompt *s_pr);
 
 /* *****************************  exec.c  *************************** */
 
+void	wait_status(int exitstatus);
 void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd);
 void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 

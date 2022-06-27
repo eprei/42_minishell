@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 15:57:08 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/27 12:06:13 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/27 16:51:36 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ int	search_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 	return (res);
 }
 
-void redir_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
+void	redir_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 {
 	int		dup_res[2];
+
 	dup_res[0] = -1;
 	dup_res[1] = -1;
-
 	printf("in fd et out fd: %d - %d \n", cur_cmd->infile, cur_cmd->outfile);
 	if (cur_cmd->infile != 0)
 	{
@@ -55,13 +55,9 @@ void redir_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 	}
 	close_pipes(s_pr);
 	search_builtin(s_pr, cur_cmd, num);
-	if (dup_res[1] != -1)
-		close(cur_cmd->infile);
-	if (dup_res[0] != -1)
-		close(cur_cmd->outfile);
 }
 
-int fork_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
+int	fork_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 {
 	int	exitstatus;
 
@@ -79,15 +75,14 @@ int fork_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 	else
 	{
 		waitpid(s_pr->pid[num], &exitstatus, 0);
-		if (WIFEXITED(exitstatus))
-		{
-			g_exit_status = WEXITSTATUS(exitstatus);
-			if (g_exit_status != 0)
-				perror("Error after built");
-		}
+		wait_status(exitstatus);
 	}
-	if (num == s_pr->n_cmds)
-		close_pipes(s_pr);
+	if (cur_cmd->infile != 0)
+		close(cur_cmd->infile);
+	if (cur_cmd->outfile != 1)
+		close(cur_cmd->outfile);
+	//if (num == s_pr->n_cmds)
+	//	close_pipes(s_pr);
 	return (0);
 }
 
@@ -99,5 +94,5 @@ int	builtin_is_redir(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 		return (fork_builtin(s_pr, cur_cmd, num));
 	}
 	else
-		return (search_function(s_pr, cur_cmd, num));
+		return (search_builtin(s_pr, cur_cmd, num));
 }

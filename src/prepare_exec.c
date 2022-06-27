@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:51:16 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/27 12:10:58 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/27 17:07:35 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	search_function(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 
 	(void)num;
 	res = 0;
-	if (cur_cmd->is_builtin == TRUE)
-		search_builtin(s_pr, cur_cmd, num);
+//	if (cur_cmd->is_builtin == TRUE)
+//		search_builtin(s_pr, cur_cmd, num);
 	if (ft_strncmp(cur_cmd->full_cmd[0], "cd", 3) == 0)
 		res = cd_builtin(cur_cmd, s_pr->envp);
 	else if (ft_strncmp(cur_cmd->full_cmd[0], "echo", 5) == 0)
@@ -41,38 +41,43 @@ int	search_function(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 
 int	test_complete_cmd(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 {
-/*	(void)s_pr;
-	(void)cur_cmd;
+	(void)s_pr;
+//	(void)cur_cmd;
 	(void)num;
-*/	int	res;
+	int	res;
 
 	res = 0;
 	printf("Test complete cmd\n");
-	res = open_outfiles("sortie1", 0, cur_cmd);
+	res = open_outfiles("zzz", 0, cur_cmd);
+//	res = search_function(s_pr, cur_cmd, num);
 	
-	res = builtin_is_redir(s_pr, cur_cmd, num);
+	//res = builtin_is_redir(s_pr, cur_cmd, num);
 	return (res);	 
 }
 
 int	read_list(t_prompt *s_pr)
 {
-	t_cmd	*curr;
+	t_cmd	*cur_cmd;
 	int		i;
 	int		res;
 
 	i = 0;
 	res = 0;
 	create_pipes_pids(s_pr);
-	curr = s_pr->cmds;
-	while (curr != NULL)
+	cur_cmd = s_pr->cmds;
+	while (cur_cmd != NULL)
 	{
-		if (curr->is_builtin == 0)
-			res = search_function(s_pr, curr, i);
-	//	test_complete_cmd(s_pr, curr, i);
-//		if (curr->is_builtin)
-//			res = builtin_is_redir(s_pr, curr, i);
-	//res = search_function(s_pr, curr, i);
-		curr = curr->next;
+		if (cur_cmd->is_builtin == 0)
+		{
+			//est_complete_cmd(s_pr, cur_cmd, i);
+			res = search_function(s_pr, cur_cmd, i);
+		}
+		else
+		{
+			test_complete_cmd(s_pr, cur_cmd, i);
+			res = builtin_is_redir(s_pr, cur_cmd, i);
+		}
+		cur_cmd = cur_cmd->next;
 		i++;
 	}
 	return (res);

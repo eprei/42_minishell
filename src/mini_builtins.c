@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:56:37 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/21 15:17:18 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/27 15:48:01 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	pwd_builtin(char **my_env)
 
 	buffer = NULL;
 	buffer = get_env("PWD", my_env);
-//	buffer = getcwd(NULL, 0);
 	if (buffer != NULL)
 		ft_putendl_fd(buffer, 0);
 	free(buffer);
@@ -31,7 +30,10 @@ int	exec_cd(char *path, char **my_env)
 
 	cur_dir = getcwd(NULL, 0);
 	if (chdir(path) != 0)
-		perror("Error: getcwd() failed\n");
+	{	
+		g_exit_status = errno;
+		perror("Error: cd failed. ");
+	}
 	else
 	{
 		set_env("OLDPWD", cur_dir, my_env);
@@ -63,5 +65,6 @@ int	cd_builtin(t_cmd *cmd, char **my_env)
 	else
 		dest = ft_strdup(cmd->full_cmd[1]);
 	res = exec_cd(dest, my_env);
+	printf("Err glob : %d\n", g_exit_status);
 	return (res);
 }

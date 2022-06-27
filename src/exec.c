@@ -6,11 +6,21 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:53:57 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/27 12:13:46 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/27 15:05:49 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	wait_status(int exitstatus)
+{
+	if (WIFEXITED(exitstatus))
+	{
+		g_exit_status = WEXITSTATUS(exitstatus);
+		if (g_exit_status != 0)
+			perror("Error with arguments");
+	}
+}
 
 void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd)
 {
@@ -23,19 +33,18 @@ void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd)
 	if (dup_res[0] < 0 || dup_res[1] < 0)
 		perror("Error with dup gen.");
 	close_pipes(s_pr);
-//	close(cur_cmd->outfile);
-//	close(cur_cmd->infile);
 	exec_res = execve(cur_cmd->full_path, cur_cmd->full_cmd, s_pr->envp);
 	if (exec_res == -1)
 	{
 		perror("Failure with command");
+		g_exit_status = errno;
 	}
 }
 
 void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 {
 	int	exitstatus;
-	g_exit_status = 0;
+
 	s_pr->pid[num] = fork();
 	if (s_pr->pid[num] < 0)
 	{
@@ -47,16 +56,10 @@ void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 	else
 	{
 		waitpid(s_pr->pid[num], &exitstatus, 0);
-		if (WIFEXITED(exitstatus))
-		{
-			g_exit_status = WEXITSTATUS(exitstatus);
-			if (g_exit_status  != 0)
-				perror("Error with arguments");
-		}
+		wait_status(exitstatus);
 	}
-/*	if (num == 2)
-	{
-		close_pipes(s_pr);
-	}
-*/
+	if (cur_cmd->outfile != 1)
+		close(cur_cmd->outfile);
+	if (cur_cmd->infile != 0)
+		close(cur_cmd->infile);
 }
