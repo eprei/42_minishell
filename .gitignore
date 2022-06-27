@@ -10,4 +10,10 @@ src/tab_utils_test.c
 src/test_builtins.c
 out1
 out1.txt
-
+doc/pendientes
+src/*.o
+libft/*.o
+libft/utils/*.o
+.vscode
+libft/libft.a
+minishell

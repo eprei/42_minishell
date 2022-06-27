@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/25 15:18:12 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/06/27 15:20:36 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@
 # define FINISHED 1
 
 # define CHAR_NOT_FOUND -1
+
+# define REDIR_INPUT 1
+# define REDIR_OUTPUT_SIMPLE 2
+# define REDIR_OUTPUT_APPEND 3
+# define HERE_DOC 4
 
 int	g_exit_status;
 
@@ -152,7 +157,7 @@ void	update_quote_status(char *subsplit_i, t_quote_parsing *q);
 void	fn_parsing(t_var *v, t_prompt *prompt);
 void	print_list(t_prompt *prompt);
 void	free_t_cmd(t_cmd **cmd);
-void	fill_t_cmd(t_var *v, t_prompt *prompt, int indx_cmd);
+void	fill_t_cmd(t_var *v, t_prompt *prompt);
 
 /* *****************************  var_utils.c  ****************************** */
 
