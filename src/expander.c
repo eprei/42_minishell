@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:58:25 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/23 13:28:21 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/26 14:52:49 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,76 @@
 
 // TO DO: EXPAND VARS, SEE IF EXPAND ~ WORKS IN SPECIAL CASES LIKE ECHO ~/
 
+int	search_charset_index_inside_str(char *str, char *set)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_strchr(set, str[i]))
+			return (i);
+		i++;
+	}
+	return (CHAR_NOT_FOUND);
+}
+
+char	*get_var_name(char *str, t_prompt *prompt)
+{
+	char	*aux;
+	char	*variable_name;
+	int		length;
+
+	length = 0;
+	while (str[length] != 0)
+	{	printf("lenght = %d\t str[%d] = %c\n", length, length, str[length]);
+		if (ft_strchr("\"\'$|>< ", str[length]) != 0 && length != 0) // BUG TO FIX: when $ is in beetween double quotes
+			break ;
+		length++;
+	}
+	variable_name = ft_substr(str, 1, length);
+	printf("variable name = %s\n", variable_name);
+	if (variable_name[0] == '?' && ft_strlen(variable_name) == 1)
+		return (variable_name);
+	else
+		aux = get_env(variable_name, prompt->envp);
+	free(variable_name);
+	return (aux);
+}
+
 char	*expand_vars(char *subsplit_i, t_prompt *prompt)
 {
 	t_quote_parsing q;
-	// char *tmp;
-	(void)prompt;
+	char	*tmp;
+	char	*var_env = NULL;
+	char	*name;
 
 	init_quote_parsing_struct(&q, NULL);
 	while (subsplit_i && subsplit_i[q.i])
 	{
 		update_quote_status(subsplit_i, &q);
-		if (q.quote_simple == CLOSED && subsplit_i[q.i] == '$')
-		{	printf("found en i = [%d]\n", q.i);
-			// tmp = ft_strjoin(subsplit_i, get_env("LESS", prompt->envp));
-			// free(subsplit_i);
-			// subsplit_i = tmp;
+		if ((q.quote_simple == CLOSED && q.quote_double == CLOSED && subsplit_i[q.i] == '$' \
+			 && subsplit_i[q.i - 1] != '$') || (q.quote_simple == CLOSED && \
+			  q.quote_double == OPEN && subsplit_i[q.i] == '$' \
+			 && subsplit_i[q.i - 1] != '$'))
+		{
+			tmp = ft_substr(subsplit_i, 0, q.i); // string before '$'
+			name = get_var_name(&subsplit_i[q.i], prompt); // check if var exist or not
+			printf("name = %s\n", name); // BUG TO FIX: when $ is in beetween double quotes
+			if (name == NULL)
+				name = ft_strdup("");
+			if (ft_strncmp(name, "?", 1) == 0 && ft_strlen(name) == 1) // if $? , name gets the value of g_exit_status
+			{ 	write(1, "20\n", 4);
+				free(name);
+				name = ft_strdup(ft_itoa(g_exit_status));
+			}
+			free(subsplit_i);
+			subsplit_i = ft_strjoin(tmp, name);
+			printf("subsplit = %s\n", subsplit_i);
+			free(tmp);
+			free(name);
+			name = NULL;
+			free(var_env);
 		}
 		q.i++;
 	}
@@ -46,6 +101,7 @@ char	*expand_path(char *subsplit_i, char *str_home)
 	char	*tmp;
 	char	*add_path;
 	t_quote_parsing q;
+
 	init_quote_parsing_struct(&q, NULL);
 	while (subsplit_i && subsplit_i[q.i])
 	{
@@ -68,9 +124,18 @@ char	*expand_path(char *subsplit_i, char *str_home)
 	return (subsplit_i);
 }
 
+void	pars_expand_status(char *subsplit_i, int *expand_status)
+{
+	(void)subsplit_i;
+	static int i = 0;
+	if (i == 1)
+		*expand_status = FINISHED;
+	i++;
+}
+
 void	fn_expander(t_var *v, t_prompt *prompt)
-{ (void)prompt;
-	int i;
+{
+	int	i;
 
 	i = 0;
 	while (v->subsplit && v->subsplit[i])

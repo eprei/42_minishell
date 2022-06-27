@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/23 16:30:04 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/25 15:18:12 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@
 # define NO_INIT 0
 
 # define FAILED -1
+
+# define UNFINISHED 0
+# define FINISHED 1
+
+# define CHAR_NOT_FOUND -1
 
 int	g_exit_status;
 

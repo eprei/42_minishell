@@ -36,14 +36,18 @@ LIBFTPATH = ../libft
 all: $(NAME)
 
 .c.o:
-	$(CC) -I /Users/$(USER)/.brew/Cellar/readline/8.1.2/include $(CFLAGS) -c $^ -o $@
+# mac 42
+#	$(CC) -I /Users/$(USER)/.brew/Cellar/readline/8.1.2/include $(CFLAGS) -c $^ -o $@
+# home mac
+	$(CC) -I $(CPPFLAGS) $(CFLAGS) -c $^ -o $@
 
 $(NAME): $(OBJ)
 	 make -C $(LIBFTPATH)
 # mac 42
-	 $(CC) $(CFLAGS) $(OBJ) -L$(LIBFTPATH) -lft -L/Users/$(USER)/.brew/Cellar/readline/8.1.2/lib -lreadline -o $(NAME)
+#	 $(CC) $(CFLAGS) $(OBJ) -L$(LIBFTPATH) -lft -L/Users/$(USER)/.brew/Cellar/readline/8.1.2/lib -lreadline -o $(NAME)
 # home mac
-#	@ $(CC) $(SRCS) -L$(LIBFTPATH) -lft -L $(LDFLAGS) -lreadline -I $(CPPFLAGS) -o $(NAME)
+	@ $(CC) $(OBJ) -L$(LIBFTPATH) -lft -L $(LDFLAGS) -lreadline -o $(NAME)
+
 clean:
 	@rm -rf $(OBJ)
 	@make clean -C $(LIBFTPATH)
