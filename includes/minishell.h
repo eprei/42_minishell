@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/24 16:16:07 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/27 10:10:45 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,13 +206,13 @@ void	print_tab(char **tab);
  * ************************* */
 
 int	search_function(t_prompt *s_pr, t_cmd *cur_cmd, int num);
-int is_with_redir(t_prompt *s_pr, t_cmd *cur_cmd, int num);
+int builtin_is_redir(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 int	read_list(t_prompt *s_pr);
 
 /* ******************************** prep_builtin_exec.c 
  * ************************* */
 
-void	search_builtin(t_prompt *s_pr, t_cmd *cur, int num);
+int	search_builtin(t_prompt *s_pr, t_cmd *cur, int num);
 
 /* ******************************** test  ****************************** */
 void	single_child_cmd(t_cmd *cmd, t_prompt *s_p);
