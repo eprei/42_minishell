@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/27 17:52:00 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/28 13:15:43 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,9 +169,9 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt)
 {
 	static int	i = 0;
 	t_cmd	*curr;
-	int		redir_status;
+	// int		redir_status;
 	int 	j;
-	int		open_redir_status;
+	// int		open_redir_status;
 
 	j = 0;
 	curr = prompt->cmds;
@@ -181,25 +181,25 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt)
 		i++;
 	while (v->subsplit[i] != NULL && v->subsplit[i][0] != '|')
 	{
-		redir_status = FALSE;
-		is_redir(v, &i, &redir_status);
-		if (redir_status != FALSE)
-		{
-			fill_cmd_with_redir(v, &i, &j, redir_status, curr, &open_redir_status);
-			if (open_redir_status == FALSE)
-				fn_echo_error(curr, v->subsplit[i], "no such a file or directory");
-		}
-		else
-		{
+		// redir_status = FALSE;
+		// is_redir(v, &i, &redir_status);
+		// if (redir_status != FALSE)
+		// {
+		// 	fill_cmd_with_redir(v, &i, &j, redir_status, curr, &open_redir_status);
+		// 	if (open_redir_status == FALSE)
+		// 		fn_echo_error(curr, v->subsplit[i], "no such a file or directory");
+		// }
+		// else
+		// {
 			curr->full_cmd = tab_add(curr->full_cmd, v->subsplit[i]);
 			is_builtin(curr);
-		}
+		// }
 		j++;
 		i++;
 	}
-	if (curr->full_cmd != NULL)
+	if (curr->full_cmd != NULL && curr->is_builtin == FALSE)
 		curr->full_path = create_path(prompt->paths, curr->full_cmd[0]);
-	if (curr->full_path == NULL)
+	if (curr->full_path == NULL && curr->is_builtin == FALSE)
 		fn_echo_error(curr, v->subsplit[i - j], "command not found");
 	if (v->subsplit[i] == NULL)
 		i = 0;
