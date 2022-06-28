@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:56:37 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/27 15:48:01 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/28 15:03:15 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,5 @@ int	cd_builtin(t_cmd *cmd, char **my_env)
 	else
 		dest = ft_strdup(cmd->full_cmd[1]);
 	res = exec_cd(dest, my_env);
-	printf("Err glob : %d\n", g_exit_status);
 	return (res);
 }
