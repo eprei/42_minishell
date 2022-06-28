@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:34:47 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/24 11:38:18 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/27 11:56:33 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,16 @@ char	*get_prompt(char **envp)
 {
 	char	*str_get_info;
 	char	*str_prompt;
+	char	*color;
 
 	str_get_info = get_env("USER", envp);
 	str_prompt = ft_strjoin(str_get_info, "@minishell42$ ");
 	free(str_get_info);
-    return (str_prompt);
+    color = ft_strjoin("\033[1;92m\002", str_prompt);
+	free(str_prompt);
+	str_prompt = ft_strjoin(color, "\033[0m");
+	free(color);
+	return (str_prompt);
 }
 
 void	init_t_var_main(t_var *v)

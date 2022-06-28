@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/27 13:56:45 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/28 15:22:13 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,16 @@
 # define NO_INIT 0
 
 # define FAILED -1
+
+# define UNFINISHED 0
+# define FINISHED 1
+
+# define CHAR_NOT_FOUND -1
+
+# define REDIR_INPUT 1
+# define REDIR_OUTPUT_SIMPLE 2
+# define REDIR_OUTPUT_APPEND 3
+# define HERE_DOC 4
 
 int	g_exit_status;
 
@@ -147,7 +157,7 @@ void	update_quote_status(char *subsplit_i, t_quote_parsing *q);
 void	fn_parsing(t_var *v, t_prompt *prompt);
 void	print_list(t_prompt *prompt);
 void	free_t_cmd(t_cmd **cmd);
-void	fill_t_cmd(t_var *v, t_prompt *prompt, int indx_cmd);
+void	fill_t_cmd(t_var *v, t_prompt *prompt);
 
 /* *****************************  var_utils.c  ****************************** */
 
@@ -203,14 +213,14 @@ void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 
 void	print_tab(char **tab);
 
-/* ******************************** prepare_exec.c 
+/* ******************************** prepare_exec.c
  * ************************* */
 
 int	search_function(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 int builtin_is_redir(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 int	read_list(t_prompt *s_pr);
 
-/* ******************************** prep_builtin_exec.c 
+/* ******************************** prep_builtin_exec.c
  * ************************* */
 
 int	search_builtin(t_prompt *s_pr, t_cmd *cur, int num);

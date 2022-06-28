@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/24 12:40:30 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/28 13:15:43 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,11 +116,64 @@ void	is_builtin(t_cmd *curr)
 		curr->is_builtin = FALSE;
 }
 
-void	fill_t_cmd(t_var *v, t_prompt *prompt, int indx_cmd)
+void	is_redir(t_var *v, int *i, int *redir_status)
+{
+	if (v->subsplit[*i][0] == '>' && v->subsplit[*i + 1] && v->subsplit[*i + 1][0] == '>')
+	{
+		*redir_status = REDIR_OUTPUT_APPEND;
+		*i = *i + 1;
+	}
+	else if (v->subsplit[*i][0] == '>')
+		*redir_status = REDIR_OUTPUT_SIMPLE;
+	else if (v->subsplit[*i][0] == '<' && v->subsplit[*i + 1] && v->subsplit[*i + 1][0] == '<')
+	{
+		*redir_status = HERE_DOC;
+		*i = *i + 1;
+	}
+	else if (v->subsplit[*i][0] == '<')
+		*redir_status = REDIR_INPUT;
+}
+
+void	fill_cmd_with_redir(t_var *v, int *i, int *j, int redir_status, t_cmd *curr, int *open_redir_status)
+{
+	*open_redir_status = FALSE;
+	if (redir_status == REDIR_OUTPUT_APPEND)
+	{
+		*i = *i + 1;
+		*j = *j + 1;
+		*open_redir_status = open_outfiles(v->subsplit[*i], TRUE, curr);
+		ft_printf("open_redir_status of REDIR_OUTPUT_APPEND = %d\n", *open_redir_status);
+	}
+	else if (redir_status == REDIR_OUTPUT_SIMPLE)
+	{
+		*i = *i + 1;
+		*j = *j + 1;
+		*open_redir_status = open_outfiles(v->subsplit[*i], FALSE, curr);
+		ft_printf("open_redir_status of REDIR_OUTPUT_SIMPLE = %d\n", *open_redir_status);
+	}
+	else if (redir_status == HERE_DOC)
+	{
+		*open_redir_status = open_in_files(NULL, v->subsplit[*i + 1], curr);
+		ft_printf("open_redir_status of HERE_DOC= %d\n", *open_redir_status);
+	}
+	else if (redir_status == REDIR_INPUT)
+	{
+		*i = *i + 1;
+		*j = *j + 1;
+		*open_redir_status = open_in_files(v->subsplit[*i], NULL, curr);
+		ft_printf("OPEN REDIR STATUS of REDIR_INPUT= %d\n", *open_redir_status);
+	}
+}
+
+void	fill_t_cmd(t_var *v, t_prompt *prompt)
 {
 	static int	i = 0;
 	t_cmd	*curr;
-	(void)indx_cmd;
+	// int		redir_status;
+	int 	j;
+	// int		open_redir_status;
+
+	j = 0;
 	curr = prompt->cmds;
 	while (curr->next != NULL)
 			curr = curr->next;
@@ -128,39 +181,53 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt, int indx_cmd)
 		i++;
 	while (v->subsplit[i] != NULL && v->subsplit[i][0] != '|')
 	{
-		curr->full_cmd = tab_add(curr->full_cmd, v->subsplit[i]);
-		is_builtin(curr);
+		// redir_status = FALSE;
+		// is_redir(v, &i, &redir_status);
+		// if (redir_status != FALSE)
+		// {
+		// 	fill_cmd_with_redir(v, &i, &j, redir_status, curr, &open_redir_status);
+		// 	if (open_redir_status == FALSE)
+		// 		fn_echo_error(curr, v->subsplit[i], "no such a file or directory");
+		// }
+		// else
+		// {
+			curr->full_cmd = tab_add(curr->full_cmd, v->subsplit[i]);
+			is_builtin(curr);
+		// }
+		j++;
 		i++;
 	}
-	curr->full_path = create_path(prompt->paths, curr->full_cmd[0]);
-	if (curr->full_path == NULL)
-		fn_echo_error(curr, v->subsplit[i - 1], "comand not found");
+	if (curr->full_cmd != NULL && curr->is_builtin == FALSE)
+		curr->full_path = create_path(prompt->paths, curr->full_cmd[0]);
+	if (curr->full_path == NULL && curr->is_builtin == FALSE)
+		fn_echo_error(curr, v->subsplit[i - j], "command not found");
 	if (v->subsplit[i] == NULL)
 		i = 0;
 }
 
 void	fn_parsing(t_var *v, t_prompt *prompt)
 {
-    int i;
+	int i;
 
-    i = 0;
-    while (v->subsplit[i] && v->subsplit[i + 1] != NULL)
-    {
-        if (v->subsplit[i][0] == '|')
-            prompt->n_cmds++;
-        i++;
-    }
-	ft_printf("\nn_cmd = %d\n", prompt->n_cmds);
-    i = 0;
-    while (i < prompt->n_cmds)
-    {
-        if (i == 0)
-            prompt->cmds = start_t_cmd(prompt);
-        if (i > 0)
-            add_t_cmd(prompt);
-        fill_t_cmd(v, prompt, i);
-        i++;
-    }
+	i = 0;
+	while (v->subsplit[i] && v->subsplit[i + 1] != NULL)
+	{
+		if (v->subsplit[i][0] == '|')
+			prompt->n_cmds++;
+		i++;
+	}
+	create_pipes_pids(prompt);
+	// ft_printf("\nn_cmd = %d\n", prompt->n_cmds);
+	i = 0;
+	while (i < prompt->n_cmds)
+	{
+		if (i == 0)
+			prompt->cmds = start_t_cmd(prompt);
+		if (i > 0)
+			add_t_cmd(prompt);
+		fill_t_cmd(v, prompt);
+		i++;
+	}
 }
 
 void	print_list(t_prompt *prompt)
