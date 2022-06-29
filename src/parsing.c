@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/29 10:51:46 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/29 15:32:59 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_cmd	*start_t_cmd(t_prompt *prompt)
 		new_node->infile = STDIN_FILENO;
 		new_node->outfile = STDOUT_FILENO;
 		new_node->is_builtin = FALSE;
-		new_node->status = 0;
+		new_node->status = NULL;
 		new_node->next = NULL;
 		new_node->prev = NULL;
 		prompt->cmds = new_node;
@@ -52,7 +52,7 @@ void    add_t_cmd(t_prompt *prompt)
 		new_node->infile = STDIN_FILENO;
 		new_node->outfile = STDOUT_FILENO;
 		new_node->is_builtin = FALSE;
-		new_node->status = 0;
+		new_node->status = NULL;
 		new_node->next = NULL;
 		new_node->prev = curr;
 		curr->next = new_node;
@@ -76,16 +76,14 @@ int	count_cmds(t_prompt *prompt)
 
 void    fn_echo_error(t_cmd *curr, char *subplit_i, char *err_msg)
 {
-    // ft_printf("%s: %s\n", subplit_i, err_msg);
     curr->outfile = 2;
 	tab_free(curr->full_cmd);
 	free(curr->full_cmd);
-    curr->full_cmd = malloc(sizeof(char *) * 4);
-    curr->full_cmd[0] = ft_strdup("echo");
-    curr->full_cmd[1] = ft_strjoin(subplit_i, ": ");
-    curr->full_cmd[2] = ft_strdup(err_msg);
-    curr->full_cmd[3] = NULL;
-	curr->is_builtin = TRUE;
+    curr->full_cmd = malloc(sizeof(char *) * 2);
+    curr->full_cmd[0] = ft_strdup(subplit_i);
+	curr->full_cmd[1] = NULL;
+	curr->is_builtin = FALSE;
+	curr->status = ft_strdup(err_msg);
 }
 
 int	check_builtin(char *cmd)
@@ -116,29 +114,42 @@ void	is_builtin(t_cmd *curr)
 		curr->is_builtin = FALSE;
 }
 
-void	is_redir(t_var *v, int *i, int *redir_status)
+void	is_redir(t_var *v, int *i, int *j, int *redir_status)
 {
-	if (v->subsplit[*i][0] == '>' && v->subsplit[*i + 1] && v->subsplit[*i + 1][0] == '>')
+	if (v->subsplit[*i][0] == '>' && v->subsplit[*i + 1][0] == '>')
 	{
 		*redir_status = REDIR_OUTPUT_APPEND;
-		*i = *i + 1;
+		printf("\tdetect REDIR_OUTPUT_APPEND at i = %d\n", *i);
+		*i += 2;
+		*j += 2;
 	}
-	else if (v->subsplit[*i][0] == '>')
-		*redir_status = REDIR_OUTPUT_SIMPLE;
-	else if (v->subsplit[*i][0] == '<' && v->subsplit[*i + 1] && v->subsplit[*i + 1][0] == '<')
+	if (v->subsplit[*i][0] == '<' && v->subsplit[*i + 1][0] == '<')
 	{
 		*redir_status = HERE_DOC;
-		*i = *i + 1;
+		printf("\tdetect HERE_DOC at i = %d\n", *i);
+		*i += 2;
+		*j += 2;
 	}
-	else if (v->subsplit[*i][0] == '<')
+	if (v->subsplit[*i][0] == '>')
+	{
+		*redir_status = REDIR_OUTPUT_SIMPLE;
+		printf("\tdetect REDIR_OUTPUT_SIMPLE at i = %d\n", *i);
+		*i += 1;
+		*j += 1;
+	}
+	if (v->subsplit[*i][0] =='<')
+	{
 		*redir_status = REDIR_INPUT;
+		printf("\tdetect REDIR_INPUT at i = %d\n", *i);
+		*i += 1;
+		*j += 1;
+	}
 }
 
-void	fill_cmd_with_redir(t_var *v, int *i, int *j, int redir_status, t_cmd *curr, int *open_redir_status)
+void	fill_cmd_with_redir(t_var *v, int *i, int redir_status, t_cmd *curr, int *open_redir_status)
 {
-	(void)j;
-	(void)i;
 	*open_redir_status = FALSE;
+
 	if (redir_status == REDIR_OUTPUT_APPEND)
 	{
 		*open_redir_status = open_outfiles(v->subsplit[*i], TRUE, curr);
@@ -151,7 +162,7 @@ void	fill_cmd_with_redir(t_var *v, int *i, int *j, int redir_status, t_cmd *curr
 	}
 	else if (redir_status == HERE_DOC)
 	{
-		*open_redir_status = open_in_files(NULL, v->subsplit[*i + 1], curr);
+		*open_redir_status = open_in_files(NULL, v->subsplit[*i], curr);
 		ft_printf("open_redir_status of HERE_DOC= %d\n", *open_redir_status);
 	}
 	else if (redir_status == REDIR_INPUT)
@@ -159,15 +170,17 @@ void	fill_cmd_with_redir(t_var *v, int *i, int *j, int redir_status, t_cmd *curr
 		*open_redir_status = open_in_files(v->subsplit[*i], NULL, curr);
 		ft_printf("OPEN REDIR STATUS of REDIR_INPUT= %d\n", *open_redir_status);
 	}
+	if (*open_redir_status == FALSE)
+		fn_echo_error(curr, v->subsplit[*i], "no such a file or directory");
 }
 
 void	fill_t_cmd(t_var *v, t_prompt *prompt)
 {
 	static int	i = 0;
 	t_cmd	*curr;
-	// int		redir_status;
+	int		redir_status;
 	int 	j;
-	// int		open_redir_status;
+	int		open_redir_status;
 	static int	n_pipe = 0;
 
 	j = 0;
@@ -186,26 +199,25 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt)
 	}
 	while (v->subsplit[i] != NULL && v->subsplit[i][0] != '|')
 	{
-		// redir_status = FALSE;
-		// is_redir(v, &i, &redir_status);
-		// if (redir_status != FALSE)
-		// {
-		// 	fill_cmd_with_redir(v, &i, &j, redir_status, curr, &open_redir_status);
-		// 	if (open_redir_status == FALSE)
-		// 		fn_echo_error(curr, v->subsplit[i], "no such a file or directory");
-		// }
-		// else
-		// {
+		redir_status = FALSE;
+		is_redir(v, &i, &j, &redir_status);
+		if (redir_status != FALSE)
+			fill_cmd_with_redir(v, &i, redir_status, curr, &open_redir_status);
+		else
+		{
 			curr->full_cmd = tab_add(curr->full_cmd, v->subsplit[i]);
 			is_builtin(curr);
-		// }
+		}
 		j++;
 		i++;
 	}
-	if (curr->full_cmd != NULL && curr->is_builtin == FALSE)
-		curr->full_path = create_path(prompt->paths, curr->full_cmd[0]);
-	if (curr->full_path == NULL && curr->is_builtin == FALSE)
-		fn_echo_error(curr, v->subsplit[i - j], "command not found");
+	if (curr->infile != -1)
+	{
+		if (curr->full_cmd != NULL && curr->is_builtin == FALSE)
+			curr->full_path = create_path(prompt->paths, curr->full_cmd[0]);
+		if (curr->full_path == NULL && curr->is_builtin == FALSE)
+			fn_echo_error(curr, v->subsplit[i - j], "command not found");
+	}
 	if (v->subsplit[i] == NULL)
 		i = 0;
 }
@@ -250,7 +262,7 @@ void	print_list(t_prompt *prompt)
 		ft_printf("\tinfile = %d\n", curr->infile);
 		ft_printf("\toutfile = %d\n", curr->outfile);
 		ft_printf("\tis_builtin = %d\n", curr->is_builtin);
-		ft_printf("\tstatus = %d\n", curr->status);
+		ft_printf("\tstatus = %s\n", curr->status);
 		ft_printf("\tprev = %p\n", curr->prev);
 		ft_printf("\tnext = %p\n", curr->next);
 		curr = curr->next;
