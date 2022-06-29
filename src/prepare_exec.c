@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prepare_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:51:16 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/28 15:02:07 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/29 10:33:56 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	read_list(t_prompt *s_pr)
 
 	i = 0;
 	res = 0;
-	create_pipes_pids(s_pr);
 	cur_cmd = s_pr->cmds;
 	while (cur_cmd != NULL)
 	{

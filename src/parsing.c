@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/28 13:15:43 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/06/29 10:51:46 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,18 +136,16 @@ void	is_redir(t_var *v, int *i, int *redir_status)
 
 void	fill_cmd_with_redir(t_var *v, int *i, int *j, int redir_status, t_cmd *curr, int *open_redir_status)
 {
+	(void)j;
+	(void)i;
 	*open_redir_status = FALSE;
 	if (redir_status == REDIR_OUTPUT_APPEND)
 	{
-		*i = *i + 1;
-		*j = *j + 1;
 		*open_redir_status = open_outfiles(v->subsplit[*i], TRUE, curr);
 		ft_printf("open_redir_status of REDIR_OUTPUT_APPEND = %d\n", *open_redir_status);
 	}
 	else if (redir_status == REDIR_OUTPUT_SIMPLE)
 	{
-		*i = *i + 1;
-		*j = *j + 1;
 		*open_redir_status = open_outfiles(v->subsplit[*i], FALSE, curr);
 		ft_printf("open_redir_status of REDIR_OUTPUT_SIMPLE = %d\n", *open_redir_status);
 	}
@@ -158,8 +156,6 @@ void	fill_cmd_with_redir(t_var *v, int *i, int *j, int redir_status, t_cmd *curr
 	}
 	else if (redir_status == REDIR_INPUT)
 	{
-		*i = *i + 1;
-		*j = *j + 1;
 		*open_redir_status = open_in_files(v->subsplit[*i], NULL, curr);
 		ft_printf("OPEN REDIR STATUS of REDIR_INPUT= %d\n", *open_redir_status);
 	}
@@ -172,13 +168,22 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt)
 	// int		redir_status;
 	int 	j;
 	// int		open_redir_status;
+	static int	n_pipe = 0;
 
 	j = 0;
 	curr = prompt->cmds;
 	while (curr->next != NULL)
 			curr = curr->next;
 	if (v->subsplit[i][0] == '|')
+	{
+		if (curr->prev->outfile == 1)
+		{
+			curr->prev->outfile = prompt->pipes[n_pipe][1];
+			curr->infile = prompt->pipes[n_pipe][0];
+			n_pipe++;
+		}
 		i++;
+	}
 	while (v->subsplit[i] != NULL && v->subsplit[i][0] != '|')
 	{
 		// redir_status = FALSE;
@@ -217,7 +222,6 @@ void	fn_parsing(t_var *v, t_prompt *prompt)
 		i++;
 	}
 	create_pipes_pids(prompt);
-	// ft_printf("\nn_cmd = %d\n", prompt->n_cmds);
 	i = 0;
 	while (i < prompt->n_cmds)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:33 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/28 15:22:33 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/06/29 09:56:07 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	main(int argc, char **argv, char **envp)
 			if (v.split != NULL)
 			{
 				fn_parsing(&v, &prompt);
-				//print_list(&prompt); // just to print the list
+				print_list(&prompt); // just to print the list
 				read_list(&prompt);
 			}
 		}

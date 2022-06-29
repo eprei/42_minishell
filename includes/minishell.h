@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/28 15:22:13 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/06/29 09:49:34 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,6 @@ typedef struct s_var
 void	init_mini_vars(t_var *v, t_prompt *prompt, char **envp);
 
 /* *************************** node_management ***************************** */
-
-// void	start_stack(t_node **tail, t_node **head, int value);
-// void	insert_beginning_stack(t_node **tail, int value);
-// void	add_command_to_list(t_node **head, int value);
 
 void	ft_new_prompt(int sig);
 
