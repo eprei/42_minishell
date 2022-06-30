@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:01:32 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/23 12:04:30 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/30 17:38:12 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_error_token(t_var *v)
 
 void	fn_lexer(t_var *v, t_prompt *prompt)
 {
-	(void)prompt;
+	prompt->token_status = TRUE;
 	v->split = ft_split_str_with_spaces_and_quotes(v->line); //this functions return NULL if ther's a quote inconsistence
 	if (v->split == NULL)
 	{
@@ -47,15 +47,13 @@ void	fn_lexer(t_var *v, t_prompt *prompt)
 		}
 		if (v->subsplit[0][0] == '|')
 			{
-				//TO DO: End and reinit the prompter
-				ft_printf("\n\tsyntax error near unexpected token `|'\n\tclosing minishel temporaly until the fn_reinit_prompter is created...\n\n");
-				exit(-1);
+				write(1, "syntax error near unexpected token\n", 36);
+				// exit(-1);
+				prompt->token_status = FAILED;
 			}
 		fn_expander(v, prompt);
 		// fn_delete_quotes(v); TO MAKE
-		// DELETE THE NEXT LINE, IT'S JUST TO PRINT
-		// THE INFORMATION IN ORDER TO DEBUG
-		print_tab_with_str_name(v->subsplit, "v->subsplit after lexer");
+		print_tab_with_str_name(v->subsplit, "v->subsplit after lexer"); // JUST TO PRINT INFO
         init_path(prompt);
 	}
 }

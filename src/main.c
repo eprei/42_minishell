@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:33 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/29 09:56:07 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/30 17:35:27 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,21 @@ void	free_t_cmd(t_cmd **cmd)
 	while (curr->next != NULL)
 	{
 		curr = curr->next;
-        tab_free(curr->prev->full_cmd);
-        free(curr->prev->full_cmd);
-        curr->prev->full_cmd = NULL;
-        free(curr->prev->full_path);
-        curr->prev->full_path = NULL;
+		tab_free(curr->prev->full_cmd);
+		free(curr->prev->full_cmd);
+		curr->prev->full_cmd = NULL;
+		free(curr->prev->full_path);
+		curr->prev->full_path = NULL;
+		free(curr->prev->status);
+		curr->prev->status = NULL;
 		free(curr->prev);
-        curr->prev = NULL;
+		curr->prev = NULL;
 	}
-    tab_free(curr->full_cmd);
-    free(curr->full_cmd);
-    curr->full_cmd = NULL;
-    free(curr->full_path);
-    curr->full_path = NULL;
+	tab_free(curr->full_cmd);
+	free(curr->full_cmd);
+	curr->full_cmd = NULL;
+	free(curr->full_path);
+	curr->full_path = NULL;
 	free(curr);
 	*cmd = NULL;
 }
@@ -73,20 +75,19 @@ int	main(int argc, char **argv, char **envp)
 	t_prompt	prompt;
 
 	(void)argv;
+	(void)argc;
 	init_mini_vars(&v, &prompt, envp);
 	signal(SIGINT, signal_handler); // ctrl + C
 	signal(SIGQUIT, SIG_IGN); // ctrl + '\'
 	// CTRL+D = EOF of standard input, wich ends the proces; LEARN HOW TO HANDLE THIS
-	while (argc == 1)
+	while (prompt.stop == FALSE)
 	{
 		v.line = readline(prompt.prompt_text);
-		if (ft_strncmp(v.line, "exit", 4) == 0 && ft_strlen(v.line) == 4)
-			ft_exit(&v, &prompt);
 		if (ft_strlen(v.line) != 0)
 		{
 			add_history(v.line);
 			fn_lexer(&v, &prompt);
-			if (v.split != NULL)
+			if (v.split != NULL && prompt.token_status != FAILED)
 			{
 				fn_parsing(&v, &prompt);
 				print_list(&prompt); // just to print the list
@@ -95,5 +96,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free_all_tabs_and_prompt(&v, &prompt);
 	}
-	return (0);
+	write(1, "exit\n", 6);
+	return (g_exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:34:47 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/27 11:56:33 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/30 17:35:13 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,13 @@ void	init_t_prompt(t_prompt *prompt, char **envp)
 {
 	prompt->cmds = NULL;
 	prompt->envp = init_envp(envp);
+	prompt->pipes = NULL;
 	prompt->pid = NULL;
-	prompt->prompt_text = get_prompt(prompt->envp);
 	prompt->paths = NULL;
+	prompt->prompt_text = get_prompt(prompt->envp);
 	prompt->n_cmds = 1;
+	prompt->stop = FALSE;
+	prompt->token_status = TRUE;
 }
 
 void	print_tab_with_str_name(char **tab, char *tab_name)

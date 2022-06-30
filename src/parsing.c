@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/29 15:32:59 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/30 16:40:33 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_cmd	*start_t_cmd(t_prompt *prompt)
 		new_node->outfile = STDOUT_FILENO;
 		new_node->is_builtin = FALSE;
 		new_node->status = NULL;
+		new_node->exec_stat = EXECUTABLE;
 		new_node->next = NULL;
 		new_node->prev = NULL;
 		prompt->cmds = new_node;
@@ -53,6 +54,7 @@ void    add_t_cmd(t_prompt *prompt)
 		new_node->outfile = STDOUT_FILENO;
 		new_node->is_builtin = FALSE;
 		new_node->status = NULL;
+		new_node->exec_stat = EXECUTABLE;
 		new_node->next = NULL;
 		new_node->prev = curr;
 		curr->next = new_node;
@@ -76,7 +78,6 @@ int	count_cmds(t_prompt *prompt)
 
 void    fn_echo_error(t_cmd *curr, char *subplit_i, char *err_msg)
 {
-    curr->outfile = 2;
 	tab_free(curr->full_cmd);
 	free(curr->full_cmd);
     curr->full_cmd = malloc(sizeof(char *) * 2);
@@ -103,15 +104,28 @@ int	check_builtin(char *cmd)
 		is_builtin = TRUE;
 	if (ft_strncmp(cmd, "env", 3) == 0 && ft_strlen(cmd) == 3)
 		is_builtin = TRUE;
+	if (ft_strncmp(cmd, "exit", 4) == 0 && ft_strlen(cmd) == 4)
+		is_builtin = TRUE;
 	return (is_builtin);
 }
 
-void	is_builtin(t_cmd *curr)
+void	is_builtin_is_exit(t_cmd *curr, t_prompt *prompt, int i, t_var *v)
 {
 	if (check_builtin(curr->full_cmd[0]) == TRUE)
 		curr->is_builtin = TRUE;
+	if (ft_strncmp(curr->full_cmd[0], "exit", 4) == 0 && ft_strlen(curr->full_cmd[0]) == 4)
+	{
+		if (i == 0)
+		{
+			prompt->stop = TRUE;
+			if (v->subsplit[i + 1] && ft_atoi(v->subsplit[i + 1]) <= INT_MAX \
+				&& ft_atoi(v->subsplit[i + 1]) >= INT_MIN)
+				g_exit_status = ft_atoi(v->subsplit[i + 1]);
+		}
+		curr->exec_stat = NON_EXECUTABLE;
+	}
 	else
-		curr->is_builtin = FALSE;
+		prompt->stop = FALSE;
 }
 
 void	is_redir(t_var *v, int *i, int *j, int *redir_status)
@@ -174,6 +188,19 @@ void	fill_cmd_with_redir(t_var *v, int *i, int redir_status, t_cmd *curr, int *o
 		fn_echo_error(curr, v->subsplit[*i], "no such a file or directory");
 }
 
+char	**cd_expantion_home(t_cmd *curr, char **envp)
+{
+	char	**aux;
+
+	tab_free(curr->full_cmd);
+	// to solve leaks
+	aux = malloc(sizeof(char *) * 3);
+	aux[0] = ft_strdup("cd");
+	aux[1] = get_env("HOME", envp);
+	aux[2] = NULL;
+	return (aux);
+}
+
 void	fill_t_cmd(t_var *v, t_prompt *prompt)
 {
 	static int	i = 0;
@@ -206,11 +233,13 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt)
 		else
 		{
 			curr->full_cmd = tab_add(curr->full_cmd, v->subsplit[i]);
-			is_builtin(curr);
+			is_builtin_is_exit(curr, prompt, i, v);
 		}
 		j++;
 		i++;
 	}
+	if (ft_strncmp(curr->full_cmd[0], "cd", 2) == 0 && ft_strlen(curr->full_cmd[0]) == 2 && curr->full_cmd[1] == NULL)
+		curr->full_cmd = cd_expantion_home(curr, prompt->envp); // TO SOLVE: LEAKS
 	if (curr->infile != -1)
 	{
 		if (curr->full_cmd != NULL && curr->is_builtin == FALSE)
@@ -253,9 +282,9 @@ void	print_list(t_prompt *prompt)
 
 	i = 0;
 	curr = prompt->cmds;
+	ft_printf("\n\t**** PRINTING LIST OF COMMANDS ****\n\n");
 	while (curr != NULL)
 	{
-		ft_printf("\n\t**** PRINTING LIST OF COMMANDS ****\n\n");
 		ft_printf("cmd_[%d] \t address = %p\n", i, curr);
 		print_tab_with_str_name(curr->full_cmd, "cmd->full_cmd");
 		ft_printf("\tfull_path = %s\n", curr->full_path);
@@ -263,6 +292,7 @@ void	print_list(t_prompt *prompt)
 		ft_printf("\toutfile = %d\n", curr->outfile);
 		ft_printf("\tis_builtin = %d\n", curr->is_builtin);
 		ft_printf("\tstatus = %s\n", curr->status);
+		ft_printf("\texec_status = %d\n", curr->exec_stat);
 		ft_printf("\tprev = %p\n", curr->prev);
 		ft_printf("\tnext = %p\n", curr->next);
 		curr = curr->next;

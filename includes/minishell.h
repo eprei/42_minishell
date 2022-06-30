@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/29 12:14:07 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/30 16:59:34 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <readline/history.h>
 # include <termios.h>
 # include <errno.h>
+# include <limits.h>
 
 # define FALSE 0
 # define TRUE 1
@@ -46,6 +47,9 @@
 # define REDIR_OUTPUT_SIMPLE 2
 # define REDIR_OUTPUT_APPEND 3
 # define HERE_DOC 4
+
+# define EXECUTABLE 1
+# define NON_EXECUTABLE -1
 
 int	g_exit_status;
 
@@ -77,6 +81,7 @@ typedef struct s_cmd
 	int				outfile;
 	int				is_builtin;
 	char			*status;
+	int				exec_stat;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }	t_cmd;
@@ -90,6 +95,8 @@ typedef struct s_prompt
 	char	**paths;
 	char	*prompt_text;
 	int		n_cmds;
+	int		stop;
+	int		token_status;
 }			t_prompt;
 
 typedef struct s_var
