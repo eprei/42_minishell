@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/29 15:32:59 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/30 12:01:02 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	count_cmds(t_prompt *prompt)
 
 void    fn_echo_error(t_cmd *curr, char *subplit_i, char *err_msg)
 {
-    curr->outfile = 2;
+   // curr->outfile = 2;
 	tab_free(curr->full_cmd);
 	free(curr->full_cmd);
     curr->full_cmd = malloc(sizeof(char *) * 2);

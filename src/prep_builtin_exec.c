@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 15:57:08 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/27 16:51:36 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/30 16:01:40 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ int	search_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 
 void	redir_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 {
-	int		dup_res[2];
+	int	dup_res;
+
+	dup_res = -1;
+/*	int		dup_res[2];
 
 	dup_res[0] = -1;
 	dup_res[1] = -1;
@@ -47,10 +50,12 @@ void	redir_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 		if (dup_res[1] < 0)
 			perror("Error with dup gen.");
 	}
-	if (cur_cmd->outfile != 0)
+*/	if (cur_cmd->outfile != 0)
 	{
-		dup_res[0] = dup2(cur_cmd->outfile, STDOUT_FILENO);
-		if (dup_res[0] < 0)
+		//dup_res[0] = dup2(cur_cmd->outfile, STDOUT_FILENO);
+		//if (dup_res[0] < 0)
+		dup_res = dup2(cur_cmd->outfile, STDOUT_FILENO);
+		if (dup_res < 0)
 			perror("Error with dup gen.");
 	}
 	close_pipes(s_pr);
@@ -86,13 +91,28 @@ int	fork_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 	return (0);
 }
 
+void	builtin_close_redir(t_cmd *cur_cmd)
+{
+	if (cur_cmd->infile != 0)
+		close(cur_cmd->infile);
+	if (cur_cmd->outfile != 1)
+		close(cur_cmd->outfile);
+}
+
+
 int	builtin_is_redir(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 {
-	if (cur_cmd->infile != 0 || cur_cmd->outfile != 1)
+	char	*cmd;
+
+	cmd = cur_cmd->full_cmd[0];
+	if (ft_strncmp(cmd, "cd", 3) == 0 || ft_strncmp(cmd, "export", 7) == 0 || \
+		ft_strncmp(cmd, "unset", 6) == 0)
 	{
-		printf("REdir_fork\n");
-		return (fork_builtin(s_pr, cur_cmd, num));
+		builtin_close_redir(cur_cmd);
+		return (search_builtin(s_pr, cur_cmd, num));
 	}
+	else if (cur_cmd->outfile != 1)
+		return (fork_builtin(s_pr, cur_cmd, num));
 	else
 		return (search_builtin(s_pr, cur_cmd, num));
 }

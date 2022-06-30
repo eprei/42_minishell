@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/29 12:14:07 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/06/30 10:38:00 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,27 +205,21 @@ void	wait_status(int exitstatus);
 void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd);
 void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 
-/* ******************************** utils_tab.c ****************************** */
-
-void	print_tab(char **tab);
-
 /* ******************************** prepare_exec.c
  * ************************* */
 
-int	search_function(t_prompt *s_pr, t_cmd *cur_cmd, int num);
-int builtin_is_redir(t_prompt *s_pr, t_cmd *cur_cmd, int num);
-int	read_list(t_prompt *s_pr);
+void	print_error(t_cmd *cur_cmd);
+int		search_function(t_prompt *s_pr, t_cmd *cur_cmd, int num);
+int		read_list(t_prompt *s_pr);
 
 /* ******************************** prep_builtin_exec.c
  * ************************* */
 
-int	search_builtin(t_prompt *s_pr, t_cmd *cur, int num);
+int		search_builtin(t_prompt *s_pr, t_cmd *cur, int num);
+void	redir_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num);
+int		fork_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num);
+int 	builtin_is_redir(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 
-/* ******************************** test  ****************************** */
-void	single_child_cmd(t_cmd *cmd, t_prompt *s_p);
-void	child_cmd1(t_cmd *cmd, t_prompt *s_p);
-void	prep_child2(t_cmd *curr, t_prompt *s_p);
-int		test_complete_cmd(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 
 
 
