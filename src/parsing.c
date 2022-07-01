@@ -78,10 +78,7 @@ int	count_cmds(t_prompt *prompt)
 
 void    fn_echo_error(t_cmd *curr, char *subplit_i, char *err_msg)
 {
-<<<<<<< HEAD
-=======
    // curr->outfile = 2;
->>>>>>> o_30_exec
 	tab_free(curr->full_cmd);
 	free(curr->full_cmd);
     curr->full_cmd = malloc(sizeof(char *) * 2);
