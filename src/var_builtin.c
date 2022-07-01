@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 08:51:32 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/01 14:51:40 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/01 16:32:04 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,19 @@
 
 char	**export_builtin(t_cmd *cmd, t_prompt *s_pr)
 {
-	int		i;
+	size_t	i;
 	char	*name;
 	char	*value;	
 
 	i = 0;
 	while (cmd->full_cmd[1][i] && cmd->full_cmd[1][i] != '=')
 		i++;
-	name = ft_substr(cmd->full_cmd[1], 0, i);
-	value = ft_substr(cmd->full_cmd[1], i + 1, ft_strlen(cmd->full_cmd[1]));
-	 s_pr->envp = set_env(name, value, s_pr);
+	if (i < ft_strlen(cmd->full_cmd[1]))
+	{
+		name = ft_substr(cmd->full_cmd[1], 0, i);
+		value = ft_substr(cmd->full_cmd[1], i + 1, ft_strlen(cmd->full_cmd[1]));
+		s_pr->envp = set_env(name, value, s_pr);
+	}
 	return (s_pr->envp);
 }
 
