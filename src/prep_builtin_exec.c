@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 15:57:08 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/30 16:01:40 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/01 15:03:08 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ int	search_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 	(void)num;
 	res = 0;
 	if (ft_strncmp(cur_cmd->full_cmd[0], "cd", 3) == 0)
-		res = cd_builtin(cur_cmd, s_pr->envp);
+		res = cd_builtin(cur_cmd, s_pr);
 	else if (ft_strncmp(cur_cmd->full_cmd[0], "echo", 5) == 0)
 		echo_builtin(cur_cmd);
 	else if (ft_strncmp(cur_cmd->full_cmd[0], "env", 4) == 0)
 		env_builtin(s_pr);
 	else if (ft_strncmp(cur_cmd->full_cmd[0], "export", 7) == 0)
-		s_pr->envp = export_builtin(cur_cmd, s_pr->envp);
+		s_pr->envp = export_builtin(cur_cmd, s_pr);
 	else if (ft_strncmp(cur_cmd->full_cmd[0], "pwd", 4) == 0)
 		res = pwd_builtin(s_pr->envp);
 	else if (ft_strncmp(cur_cmd->full_cmd[0], "unset", 6) == 0)
-		s_pr->envp = unset_builtin(cur_cmd->full_cmd[1], s_pr->envp);
+		s_pr->envp = unset_builtin(cur_cmd->full_cmd[1], s_pr);
 	return (res);
 }
 

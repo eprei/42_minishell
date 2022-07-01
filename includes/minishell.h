@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/30 10:38:00 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/01 15:00:13 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,12 +159,12 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt);
 
 int		env_var_exist(char *name, char **envp);
 char	*get_env(char *name, char **my_envp);
-char	**set_env(char *name, char * var, char **my_env);
+char	**set_env(char *name, char * var, t_prompt *s_pr);
 
 /* *****************************  var_builtin.c  **************************** */
 
-char	**export_builtin(t_cmd *cmd, char **envp);
-char	**unset_builtin(char *name, char **my_envp);
+char	**export_builtin(t_cmd *cmd, t_prompt *s_pr);
+char	**unset_builtin(char *name, t_prompt *s_pr);
 void	env_builtin(t_prompt *s_pr);
 void	echo_builtin(t_cmd *cmd);
 
@@ -185,7 +185,7 @@ int		open_outfiles(char *out_file, int append, t_cmd *cmd);
 /* *****************************  mini_builtin.c  *************************** */
 
 int		pwd_builtin(char **my_envp);
-int		cd_builtin(t_cmd *cmd, char **my_env);
+int		cd_builtin(t_cmd *cmd, t_prompt *s_pr);
 
 /* *****************************  init_data.c  *************************** */
 
