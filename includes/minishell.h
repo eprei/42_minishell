@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/01 14:55:22 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/01 15:32:04 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,12 +168,12 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt);
 
 int		env_var_exist(char *name, char **envp);
 char	*get_env(char *name, char **my_envp);
-char	**set_env(char *name, char * var, char **my_env);
+char	**set_env(char *name, char * var, t_prompt *s_pr);
 
 /* *****************************  var_builtin.c  **************************** */
 
-char	**export_builtin(t_cmd *cmd, char **envp);
-char	**unset_builtin(char *name, char **my_envp);
+char	**export_builtin(t_cmd *cmd, t_prompt *s_pr);
+char	**unset_builtin(char *name, t_prompt *s_pr);
 void	env_builtin(t_prompt *s_pr);
 void	echo_builtin(t_cmd *cmd);
 
@@ -194,7 +194,7 @@ int		open_outfiles(char *out_file, int append, t_cmd *cmd);
 /* *****************************  mini_builtin.c  *************************** */
 
 int		pwd_builtin(char **my_envp);
-int		cd_builtin(t_cmd *cmd, char **my_env);
+int		cd_builtin(t_cmd *cmd, t_prompt *s_pr);
 
 /* *****************************  init_data.c  *************************** */
 
@@ -214,27 +214,21 @@ void	wait_status(int exitstatus);
 void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd);
 void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 
-/* ******************************** utils_tab.c ****************************** */
-
-void	print_tab(char **tab);
-
 /* ******************************** prepare_exec.c
  * ************************* */
 
-int	search_function(t_prompt *s_pr, t_cmd *cur_cmd, int num);
-int builtin_is_redir(t_prompt *s_pr, t_cmd *cur_cmd, int num);
-int	read_list(t_prompt *s_pr);
+void	print_error(t_cmd *cur_cmd);
+int		search_function(t_prompt *s_pr, t_cmd *cur_cmd, int num);
+int		read_list(t_prompt *s_pr);
 
 /* ******************************** prep_builtin_exec.c
  * ************************* */
 
-int	search_builtin(t_prompt *s_pr, t_cmd *cur, int num);
+int		search_builtin(t_prompt *s_pr, t_cmd *cur, int num);
+void	redir_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num);
+int		fork_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num);
+int 	builtin_is_redir(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 
-/* ******************************** test  ****************************** */
-void	single_child_cmd(t_cmd *cmd, t_prompt *s_p);
-void	child_cmd1(t_cmd *cmd, t_prompt *s_p);
-void	prep_child2(t_cmd *curr, t_prompt *s_p);
-int		test_complete_cmd(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 
 
 
