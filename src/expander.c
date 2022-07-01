@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:58:25 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/06/27 11:35:42 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/01 13:28:37 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*get_var_name(char *str, t_prompt *prompt)
 	return (aux);
 }
 
-char	*get_var_name_double_quotes(char *str, t_prompt *prompt)
+char	*get_var_name_double_quotes(char *str, t_prompt *prompt, int *idx_after_var)
 {
 	char	*aux;
 	char	*variable_name;
@@ -59,7 +59,7 @@ char	*get_var_name_double_quotes(char *str, t_prompt *prompt)
 	length = 0;
 	while (str[length] != 0)
 	{
-		if (ft_strchr("/~%^{}:;\"", str[length]) != 0 && length != 0) // BUG TO FIX: when $ is in beetween double quotes
+		if (ft_strchr("/~%^{}:;\'\"", str[length]) != 0 && length != 0) // BUG TO FIX: when $ is in beetween double quotes
 		{
 			length--;
 			break ;
@@ -72,6 +72,7 @@ char	*get_var_name_double_quotes(char *str, t_prompt *prompt)
 	else
 		aux = get_env(variable_name, prompt->envp);
 	free(variable_name);
+	*idx_after_var = length;
 	return (aux);
 }
 
@@ -79,7 +80,10 @@ char	*expand_vars(char *subsplit_i, t_prompt *prompt)
 {
 	t_quote_parsing q;
 	char	*tmp;
+	char	*tmp2;
+	char	*tmp3;
 	char	*name;
+	int		idx_after_var;
 
 	init_quote_parsing_struct(&q, NULL);
 	while (subsplit_i && subsplit_i[q.i])
@@ -104,8 +108,9 @@ char	*expand_vars(char *subsplit_i, t_prompt *prompt)
 		}
 		if (q.quote_simple == CLOSED && q.quote_double == OPEN && subsplit_i[q.i] == '$')
 		{
+			idx_after_var = 0;
 			tmp = ft_substr(subsplit_i, 0, q.i); // string before '$'
-			name = get_var_name_double_quotes(&subsplit_i[q.i], prompt); // check if var exist or not
+			name = get_var_name_double_quotes(&subsplit_i[q.i], prompt, &idx_after_var); // check if var exist or not
 			if (name == NULL)
 				name = ft_strdup("");
 			if (ft_strncmp(name, "?", 1) == 0 && ft_strlen(name) == 1) // if $? , name gets the value of g_exit_status
@@ -113,12 +118,15 @@ char	*expand_vars(char *subsplit_i, t_prompt *prompt)
 				free(name);
 				name = ft_strdup(ft_itoa(g_exit_status));
 			}
-			free(subsplit_i);
-			subsplit_i = ft_strjoin(tmp, name);
+			tmp3 = ft_strjoin(tmp, name);
 			free(tmp);
-			tmp = ft_strjoin(subsplit_i, "\"");
+			tmp = ft_substr(subsplit_i, q.i + idx_after_var + 1, ft_strlen(subsplit_i) - q.i - idx_after_var);
+			tmp2 = ft_strjoin(tmp3, tmp);
+			free(tmp3);
+			free(tmp);
+			tmp = NULL;
 			free(subsplit_i);
-			subsplit_i = tmp;
+			subsplit_i = tmp2;
 			free(name);
 			name = NULL;
 		}

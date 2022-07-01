@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/30 16:59:34 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/01 14:55:22 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 # define NO_INIT 0
 
 # define FAILED -1
+
+# define MALLOC_ERROR -42
 
 # define UNFINISHED 0
 # define FINISHED 1

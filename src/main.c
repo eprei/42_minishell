@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:33 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/06/30 17:35:27 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/01 15:24:05 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int	main(int argc, char **argv, char **envp)
 	init_mini_vars(&v, &prompt, envp);
 	signal(SIGINT, signal_handler); // ctrl + C
 	signal(SIGQUIT, SIG_IGN); // ctrl + '\'
-	// CTRL+D = EOF of standard input, wich ends the proces; LEARN HOW TO HANDLE THIS
 	while (prompt.stop == FALSE)
 	{
 		v.line = readline(prompt.prompt_text);
@@ -90,12 +89,12 @@ int	main(int argc, char **argv, char **envp)
 			if (v.split != NULL && prompt.token_status != FAILED)
 			{
 				fn_parsing(&v, &prompt);
-				print_list(&prompt); // just to print the list
+				print_list(&prompt); // << TO DELETE: it's just to print the list
 				read_list(&prompt);
 			}
 		}
 		free_all_tabs_and_prompt(&v, &prompt);
 	}
 	write(1, "exit\n", 6);
-	return (g_exit_status);
+	exit (g_exit_status);
 }
