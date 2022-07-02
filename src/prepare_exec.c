@@ -25,6 +25,7 @@ int	search_function(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 	int	res;
 
 	(void)num;
+	(void)res;
 	res = 0;
 	if (ft_strncmp(cur_cmd->full_cmd[0], "cd", 3) == 0)
 		res = cd_builtin(cur_cmd, s_pr);

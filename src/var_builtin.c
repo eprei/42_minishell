@@ -49,8 +49,10 @@ char	**unset_builtin(char *name, t_prompt *s_pr)
 		ret = tab_delone(s_pr->envp, ret, is_var);
 		tab_free(s_pr->envp);
 		free(s_pr->envp);
+		return (ret);
 	}
-	return (ret);
+	else
+		return (s_pr->envp);
 }
 
 void	env_builtin(t_prompt *s_pr)
