@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:34:47 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/01 14:59:28 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/04 16:38:39 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ char	*get_prompt(char **envp)
 	str_get_info = get_env("USER", envp);
 	str_prompt = ft_strjoin(str_get_info, "@minishell42$ ");
 	free(str_get_info);
-    color = ft_strjoin("\033[1;92m\002", str_prompt);
+	color = ft_strdup(str_prompt);
 	free(str_prompt);
-	str_prompt = ft_strjoin(color, "\033[0m");
+	str_prompt = ft_strdup(color);
 	free(color);
 	return (str_prompt);
 }
@@ -48,6 +48,7 @@ void	init_t_prompt(t_prompt *prompt, char **envp)
 	prompt->prompt_text = get_prompt(prompt->envp);
 	prompt->n_cmds = 1;
 	prompt->stop = FALSE;
+	prompt->error_msg = NO_ERROR;
 	prompt->token_status = TRUE;
 }
 
@@ -59,7 +60,7 @@ void	print_tab_with_str_name(char **tab, char *tab_name)
 	if (tab == NULL)
 		return ;
 	ft_printf("\n\t Printing %s\n", tab_name);
-	while (tab && tab[i])
+	while (tab && tab[i] != NULL)
 	{
 		// ft_printf("\t%s[%d] = %s\taddress = %p\n", tab_name, i, tab[i], tab[i]);
 		ft_printf("\t%s[%d] = %s\n", tab_name, i, tab[i]);
