@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:58:25 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/01 13:28:37 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/04 11:22:48 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*get_var_name_double_quotes(char *str, t_prompt *prompt, int *idx_after_var
 	length = 0;
 	while (str[length] != 0)
 	{
-		if (ft_strchr("/~%^{}:;\'\"", str[length]) != 0 && length != 0) // BUG TO FIX: when $ is in beetween double quotes
+		if (ft_strchr("/~%^{}:;\'\" ", str[length]) != 0 && length != 0) // BUG TO FIX: when $ is in beetween double quotes
 		{
 			length--;
 			break ;
@@ -78,12 +78,12 @@ char	*get_var_name_double_quotes(char *str, t_prompt *prompt, int *idx_after_var
 
 char	*expand_vars(char *subsplit_i, t_prompt *prompt)
 {
-	t_quote_parsing q;
-	char	*tmp;
-	char	*tmp2;
-	char	*tmp3;
-	char	*name;
-	int		idx_after_var;
+	t_quote_parsing	q;
+	char			*tmp;
+	char			*tmp2;
+	char			*tmp3;
+	char			*name;
+	int				idx_after_var;
 
 	init_quote_parsing_struct(&q, NULL);
 	while (subsplit_i && subsplit_i[q.i])
@@ -137,15 +137,17 @@ char	*expand_vars(char *subsplit_i, t_prompt *prompt)
 
 void	update_quote_status(char *subsplit_i, t_quote_parsing *q)
 {
-	q->quote_simple = (q->quote_simple + (q->quote_double == CLOSED && subsplit_i[q->i] == '\'')) % 2;
-	q->quote_double = (q->quote_double + (q->quote_simple == CLOSED && subsplit_i[q->i] == '\"')) % 2;
+	q->quote_simple = (q->quote_simple + \
+	(q->quote_double == CLOSED && subsplit_i[q->i] == '\'')) % 2;
+	q->quote_double = (q->quote_double + \
+	(q->quote_simple == CLOSED && subsplit_i[q->i] == '\"')) % 2;
 }
 
 char	*expand_path(char *subsplit_i, char *str_home)
 {
-	char	*tmp;
-	char	*add_path;
-	t_quote_parsing q;
+	char			*tmp;
+	char			*add_path;
+	t_quote_parsing	q;
 
 	init_quote_parsing_struct(&q, NULL);
 	while (subsplit_i && subsplit_i[q.i])
@@ -153,16 +155,16 @@ char	*expand_path(char *subsplit_i, char *str_home)
 		update_quote_status(subsplit_i, &q);
 		if (q.quote_simple == CLOSED && q.quote_double == CLOSED && subsplit_i[q.i] == '~' \
 			 && (/*q.i == 0  || */subsplit_i[q.i - 1] != '$')) // fn to_ check i + 1 !alphanum, i-1!alphanum i o chequear si i+1 es /
-			{
-				tmp = ft_substr(subsplit_i, 0, q.i);
-				add_path = ft_strjoin(tmp, str_home);
-				free(tmp);
-				tmp = ft_substr(subsplit_i, q.i + 1, ft_strlen(subsplit_i));
-				free(subsplit_i);
-				subsplit_i = ft_strjoin(add_path, tmp);
-				free(tmp);
-				free(add_path);
-			}
+		{
+			tmp = ft_substr(subsplit_i, 0, q.i);
+			add_path = ft_strjoin(tmp, str_home);
+			free(tmp);
+			tmp = ft_substr(subsplit_i, q.i + 1, ft_strlen(subsplit_i));
+			free(subsplit_i);
+			subsplit_i = ft_strjoin(add_path, tmp);
+			free(tmp);
+			free(add_path);
+		}
 		q.i++;
 	}
 	free(str_home);
@@ -171,8 +173,9 @@ char	*expand_path(char *subsplit_i, char *str_home)
 
 void	pars_expand_status(char *subsplit_i, int *expand_status)
 {
+	static int	i = 0;
+
 	(void)subsplit_i;
-	static int i = 0;
 	if (i == 1)
 		*expand_status = FINISHED;
 	i++;
@@ -186,7 +189,8 @@ void	fn_expander(t_var *v, t_prompt *prompt)
 	while (v->subsplit && v->subsplit[i])
 	{
 		v->subsplit[i] = expand_vars(v->subsplit[i], prompt);
-		v->subsplit[i] = expand_path(v->subsplit[i], get_env("HOME", prompt->envp));
+		v->subsplit[i] = expand_path(v->subsplit[i], \
+		get_env("HOME", prompt->envp));
 		i++;
 	}
 }
