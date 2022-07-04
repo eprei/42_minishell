@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/01 14:55:22 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/03 19:52:36 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 
 # define FAILED -1
 
+# define NO_ERROR 0
 # define MALLOC_ERROR -42
 
 # define UNFINISHED 0
@@ -98,6 +99,7 @@ typedef struct s_prompt
 	char	*prompt_text;
 	int		n_cmds;
 	int		stop;
+	int		error_msg;
 	int		token_status;
 }			t_prompt;
 

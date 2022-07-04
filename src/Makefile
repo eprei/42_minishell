@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+         #
+#    By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 15:01:40 by Emiliano          #+#    #+#              #
-#    Updated: 2022/07/01 15:24:29 by epresa-c         ###   ########.fr        #
+#    Updated: 2022/07/03 20:15:52 by Emiliano         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,16 +38,16 @@ all: $(NAME)
 
 .c.o:
 # mac 42
-	$(CC) -I /Users/$(USER)/.brew/Cellar/readline/8.1.2/include $(CFLAGS) $(DEBUG_FLAG) -c $^ -o $@
+#	$(CC) -I /Users/$(USER)/.brew/Cellar/readline/8.1.2/include $(CFLAGS) $(DEBUG_FLAG) -c $^ -o $@
 # home mac
-#	$(CC) -I $(CPPFLAGS) $(CFLAGS) $(DEBUG_FLAG) -c $^ -o $@
+	$(CC) -I $(CPPFLAGS) $(CFLAGS) $(DEBUG_FLAG) -c $^ -o $@
 
 $(NAME): $(OBJ)
 	 make -C $(LIBFTPATH)
 # mac 42
-	 $(CC) $(CFLAGS) -g $(OBJ) -L$(LIBFTPATH) -lft -L/Users/$(USER)/.brew/Cellar/readline/8.1.2/lib -lreadline -o $(NAME)
+#	 $(CC) $(CFLAGS) -g $(OBJ) -L$(LIBFTPATH) -lft -L/Users/$(USER)/.brew/Cellar/readline/8.1.2/lib -lreadline -o $(NAME)
 # home mac
-#	@ $(CC) $(OBJ) -L$(LIBFTPATH) -lft -L $(LDFLAGS) -lreadline -o $(NAME)
+	@ $(CC) $(OBJ) -L$(LIBFTPATH) -lft -L $(LDFLAGS) -lreadline -o $(NAME)
 
 clean:
 	@rm -rf $(OBJ)

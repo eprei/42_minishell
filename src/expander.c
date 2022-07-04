@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:58:25 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/01 13:28:37 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/03 21:38:24 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*get_var_name_double_quotes(char *str, t_prompt *prompt, int *idx_after_var
 	length = 0;
 	while (str[length] != 0)
 	{
-		if (ft_strchr("/~%^{}:;\'\"", str[length]) != 0 && length != 0) // BUG TO FIX: when $ is in beetween double quotes
+		if (ft_strchr("/~%^{}:;\'\" ", str[length]) != 0 && length != 0) // BUG TO FIX: when $ is in beetween double quotes
 		{
 			length--;
 			break ;
