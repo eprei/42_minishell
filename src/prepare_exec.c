@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:51:16 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/04 11:04:00 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/04 16:51:15 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	search_function(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 	(void)num;
 	(void)res;
 	res = 0;
-	if (ft_strncmp(cur_cmd->full_cmd[0], "cd", 3) == 0)
+/*	if (ft_strncmp(cur_cmd->full_cmd[0], "cd", 3) == 0)
 		res = cd_builtin(cur_cmd, s_pr);
 	else if (ft_strncmp(cur_cmd->full_cmd[0], "echo", 5) == 0)
 		echo_builtin(cur_cmd);
@@ -42,7 +42,7 @@ int	search_function(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 	else if (ft_strncmp(cur_cmd->full_cmd[0], "unset", 6) == 0)
 		s_pr->envp = unset_builtin(cur_cmd->full_cmd[1], s_pr);
 	else
-		prep_exec(s_pr, cur_cmd, num);
+*/		prep_exec(s_pr, cur_cmd, num);
 	return (0);
 }
 
@@ -57,6 +57,7 @@ int	exec_single(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 		res = builtin_is_redir(s_pr, cur_cmd, num);
 	else
 		prep_exec(s_pr, cur_cmd, num);
+	builtin_close_redir(cur_cmd);
 	return (0);
 }
 
@@ -67,7 +68,9 @@ int	exec_multiple(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 	res = 0;
 	while (cur_cmd != NULL)
 	{
-		if (cur_cmd->exec_stat == 1)
+		if (cur_cmd->status != NULL)
+			print_error(cur_cmd);
+		else if (cur_cmd->exec_stat == 1)
 		{
 			if (cur_cmd->is_builtin == 0)
 				res = search_function(s_pr, cur_cmd, num);
@@ -76,8 +79,7 @@ int	exec_multiple(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 			cur_cmd = cur_cmd->next;
 			num++;
 		}
-		else
-			builtin_close_redir(cur_cmd);
+		builtin_close_redir(cur_cmd);
 	}
 	return (0);
 }

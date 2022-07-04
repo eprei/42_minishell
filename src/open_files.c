@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 11:50:10 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/04 14:45:32 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/04 16:48:13 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	open_in_files(char *in_file, char *limiter, t_cmd *cmd)
 	//else
 	cmd->infile = open(in_file, O_RDONLY);
 	//printf("Unlink state %d\n", unlink("tmp_here"));
+//	if (limiter != NULL)
+//		unlink("tmp_here");
 	if (cmd->infile < 0)
 		return (FALSE);
 	else
