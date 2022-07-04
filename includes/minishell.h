@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/01 15:32:04 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/04 10:38:33 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,7 @@ int		read_list(t_prompt *s_pr);
 int		search_builtin(t_prompt *s_pr, t_cmd *cur, int num);
 void	redir_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 int		fork_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num);
+void	builtin_close_redir(t_cmd *cur_cmd);
 int 	builtin_is_redir(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 
 

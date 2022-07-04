@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:51:16 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/30 10:55:41 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/04 11:04:00 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,42 @@ int	search_function(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 	return (0);
 }
 
+int	exec_single(t_prompt *s_pr, t_cmd *cur_cmd, int num)
+{
+	int	res;
+
+	res = 0;
+	if (cur_cmd->status != NULL)
+		print_error(cur_cmd);
+	else if (cur_cmd->is_builtin == 1)
+		res = builtin_is_redir(s_pr, cur_cmd, num);
+	else
+		prep_exec(s_pr, cur_cmd, num);
+	return (0);
+}
+
+int	exec_multiple(t_prompt *s_pr, t_cmd *cur_cmd, int num)
+{
+	int	res;
+
+	res = 0;
+	while (cur_cmd != NULL)
+	{
+		if (cur_cmd->exec_stat == 1)
+		{
+			if (cur_cmd->is_builtin == 0)
+				res = search_function(s_pr, cur_cmd, num);
+			else
+				res = builtin_is_redir(s_pr, cur_cmd, num);
+			cur_cmd = cur_cmd->next;
+			num++;
+		}
+		else
+			builtin_close_redir(cur_cmd);
+	}
+	return (0);
+}
+
 int	read_list(t_prompt *s_pr)
 {
 	t_cmd	*cur_cmd;
@@ -56,28 +92,15 @@ int	read_list(t_prompt *s_pr)
 	res = 0;
 	g_exit_status = 0;
 	cur_cmd = s_pr->cmds;
-	if (s_pr->n_cmds == 1)
+	if (cur_cmd->exec_stat == 1)
 	{
-		if (cur_cmd->status != NULL)
-			print_error(cur_cmd);
-		else if (cur_cmd->is_builtin == 1)
-			res = builtin_is_redir(s_pr, cur_cmd, i);
+		if (s_pr->n_cmds == 1)
+			res = exec_single(s_pr, cur_cmd, i);
 		else
-			prep_exec(s_pr, cur_cmd, i);
+			res = exec_multiple(s_pr, cur_cmd, i);
 	}
 	else
-	{
-		while (cur_cmd != NULL)
-		{
-			if (cur_cmd->is_builtin == 0)
-				res = search_function(s_pr, cur_cmd, i);
-			else
-				res = builtin_is_redir(s_pr, cur_cmd, i);
-			cur_cmd = cur_cmd->next;
-			i++;
-		}
-	}
+		builtin_close_redir(cur_cmd);
 	g_exit_status = errno;
 	return (res);
 }
-
