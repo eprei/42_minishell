@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:34:47 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/03 21:04:05 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/07/04 16:38:39 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ char	*get_prompt(char **envp)
 	str_get_info = get_env("USER", envp);
 	str_prompt = ft_strjoin(str_get_info, "@minishell42$ ");
 	free(str_get_info);
-    color = ft_strjoin("\033[1;92m\002", str_prompt);
+	color = ft_strdup(str_prompt);
 	free(str_prompt);
-	str_prompt = ft_strjoin(color, "\033[0m");
+	str_prompt = ft_strdup(color);
 	free(color);
 	return (str_prompt);
 }

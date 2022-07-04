@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:33 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/03 19:58:22 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/07/04 15:31:58 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,20 @@ void	free_all_tabs_and_prompt(t_var *v, t_prompt *prompt)
 	free(v->line);
 	v->line = NULL;
 	tab_free(v->split);
-    free(v->split);
+	free(v->split);
 	v->split = NULL;
 	tab_free(v->subsplit);
-    free(v->subsplit);
+	free(v->subsplit);
 	v->subsplit = NULL;
-    free_t_cmd(&prompt->cmds);
+	free_t_cmd(&prompt->cmds);
 
     // problems with the prompter after execute next two lines
     // free(prompt->prompt_text);
     // prompt->prompt_text = NULL;
-    tab_free(prompt->paths);
-    free(prompt->paths);
-    prompt->paths = NULL;
-    prompt->n_cmds = 1;
+	tab_free(prompt->paths);
+	free(prompt->paths);
+	prompt->paths = NULL;
+	prompt->n_cmds = 1;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -89,8 +89,11 @@ int	main(int argc, char **argv, char **envp)
 			if (v.split != NULL && prompt.token_status != FAILED)
 			{
 				fn_parsing(&v, &prompt);
-				print_list(&prompt); // << TO DELETE: it's just to print the list
-				read_list(&prompt);
+				if (prompt.token_status != FAILED)
+				{
+					print_list(&prompt); // << TO DELETE: it's just to print the list
+					read_list(&prompt);
+				}
 			}
 		}
 		free_all_tabs_and_prompt(&v, &prompt);

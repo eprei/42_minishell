@@ -1,49 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   subsplit.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/04 11:44:35 by epresa-c          #+#    #+#             */
+/*   Updated: 2022/07/04 11:04:53 by epresa-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 // TO DO: RENAME FUNCTIONS AND USE MACROS LIKE IN split.c ,
-// SEE IF IT'S POSSIBLE TO USE THE FUNCTION update_quote_status(char *subsplit_i, t_quote_parsing *q)
-//		FROM expander.c
+// SEE IF IT'S POSSIBLE TO USE THE FUNCTION
+//	update_quote_status(char *subsplit_i, t_quote_parsing *q)
+//	FROM expander.c
 
-
-static int	ft_count_words_OLD(char *s, char *set, int count);
-
-// void	fn_sub_split(t_var *v)
-// {
-// 	char **aux;
-// 	int index_split;
-// 	int index_aux;
-// 	int index_subsplit;
-// 	int number_total_subsplits = 0;
-// 	int j = 0;
-
-// 	while (v->split[j] != 0)
-// 	{
-// 		number_total_subsplits++;
-// 		number_total_subsplits += ft_count_words_OLD(v->split[j], ">|<", 0); // trabajar SUBSPLIT
-// 		printf("number_total_subsplits = %d\tsplit[%d] = %s\n", number_total_subsplits, j, v->split[j]);
-// 		j++;
-// 	}
-// 	aux = malloc(sizeof(char *) * number_total_subsplits);
-
-// 	index_split = 0;
-// 	index_subsplit = 0;
-// 	while (v->split[index_split] != 0)
-// 	{
-// 		aux = ft_cmdsubsplit(v->split[index_split], ">|<");
-// 		index_aux = 0;
-// 		while (aux[index_aux] != 0)
-// 		{
-// 			v->subsplit[index_subsplit] = ft_strdup(aux[index_aux]);
-//             ft_printf("\n\tsub pointer = %p\n", v->subsplit);
-// 			aux[index_aux] = NULL;
-// 			index_subsplit++;
-// 			index_aux++;
-// 		}
-// 		index_split++;
-// 	}
-// }
-
-static int	ft_count_words_OLD(char *s, char *set, int count)
+static int	ft_count_words_old(char *s, char *set, int count)
 {
 	int		q[2];
 	int		i;
@@ -71,7 +45,7 @@ static int	ft_count_words_OLD(char *s, char *set, int count)
 	return (count);
 }
 
-static char	**ft_fill_array_OLD(char **aux, char *s, char *set, int i[3])
+static char	**ft_fill_array_old(char **aux, char *s, char *set, int i[3])
 {
 	int		q[2];
 
@@ -107,13 +81,13 @@ char	**ft_cmdsubsplit(char const *s, char *set)
 	i[2] = 0;
 	if (!s)
 		return (NULL);
-	nwords = ft_count_words_OLD((char *)s, set, 0);
+	nwords = ft_count_words_old((char *)s, set, 0);
 	if (nwords == -1)
 		return (NULL);
 	aux = malloc((nwords + 1) * sizeof(char *));
 	if (aux == NULL)
 		return (NULL);
-	aux = ft_fill_array_OLD(aux, (char *)s, set, i);
+	aux = ft_fill_array_old(aux, (char *)s, set, i);
 	aux[nwords] = NULL;
 	return (aux);
 }
