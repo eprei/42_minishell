@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:36:37 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/27 15:12:11 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/01 14:21:01 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,18 @@ void	init_path(t_prompt *s_p)
 			s_p->paths = ft_split(&s_p->envp[i][5], ':');
 			if (s_p->paths == NULL)
 				perror("Error with paths.");
+			i = 0;
+			while (s_p->paths[i] != 0)
+			{
+				tmp = s_p->paths[i];
+				s_p->paths[i] = ft_strjoin(tmp, "/");
+				if (s_p->paths[i++] == NULL)
+					perror("Error with paths");
+				free(tmp);
+			}
 			break ;
 		}
 		i++;
-	}
-	i = 0;
-	while (s_p->paths[i] != 0)
-	{
-		tmp = s_p->paths[i];
-		s_p->paths[i] = ft_strjoin(tmp, "/");
-		if (s_p->paths[i++] == NULL)
-			perror("Error with paths");
-		free(tmp);
 	}
 }
 

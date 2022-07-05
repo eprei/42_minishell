@@ -6,49 +6,53 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 08:51:32 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/23 16:49:50 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/01 16:32:04 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	**export_builtin(t_cmd *cmd, char **my_env)
+char	**export_builtin(t_cmd *cmd, t_prompt *s_pr)
 {
-	int		i;
+	size_t	i;
 	char	*name;
 	char	*value;	
 
 	i = 0;
 	while (cmd->full_cmd[1][i] && cmd->full_cmd[1][i] != '=')
 		i++;
-	name = ft_substr(cmd->full_cmd[1], 0, i);
-	value = ft_substr(cmd->full_cmd[1], i + 1, ft_strlen(cmd->full_cmd[1]));
-	 my_env = set_env(name, value, my_env);
-//	return (set_env(name, value, my_env));
-	return (my_env);
+	if (i < ft_strlen(cmd->full_cmd[1]))
+	{
+		name = ft_substr(cmd->full_cmd[1], 0, i);
+		value = ft_substr(cmd->full_cmd[1], i + 1, ft_strlen(cmd->full_cmd[1]));
+		s_pr->envp = set_env(name, value, s_pr);
+	}
+	return (s_pr->envp);
 }
 
-char	**unset_builtin(char *name, char **my_env)
+char	**unset_builtin(char *name, t_prompt *s_pr)
 {
 	int		is_var;
 	char	**ret;
 	int		len;
 
 	ret = NULL;
-	if (my_env == 0)
+	if (s_pr->envp == 0)
 		return (NULL);
-	len = tablen(my_env);
-	is_var = env_var_exist(name, my_env);
+	len = tablen(s_pr->envp);
+	is_var = env_var_exist(name, s_pr->envp);
 	if (is_var >= 0)
 	{
 		ret = (char **)malloc(sizeof(char *) * len);
 		if (ret == 0)
 			return (NULL);
-		ret = tab_delone(my_env, ret, is_var);
-		tab_free(my_env);
-		free(my_env);
+		ret = tab_delone(s_pr->envp, ret, is_var);
+		tab_free(s_pr->envp);
+		free(s_pr->envp);
+		return (ret);
 	}
-	return (ret);
+	else
+		return (s_pr->envp);
 }
 
 void	env_builtin(t_prompt *s_pr)
