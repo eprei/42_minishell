@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:36:37 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/27 15:12:11 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/06 16:59:16 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,3 @@ char	*create_path(char **paths, char *cmdn)
 	}
 	return (NULL);
 }
-

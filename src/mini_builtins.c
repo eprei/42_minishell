@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:56:37 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/05 12:08:28 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/06 17:00:17 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,6 @@ int	cd_builtin(t_cmd *cmd, t_prompt *s_pr)
 	int		res;
 
 	len = ft_strlen(cmd->full_cmd[1]);
-//	if (ft_strncmp(cmd->full_cmd[1], "~", len) == 0)
-//		dest = (get_env("HOME", s_pr->envp));
-//	else if (ft_strncmp(cmd->full_cmd[1], "~/", len) == 0)
-//		dest = (ft_strjoin(get_env("HOME", s_pr->envp), cmd->full_cmd[1] + 1));
 	if (ft_strncmp(cmd->full_cmd[1], "-", len) == 0)
 	{
 		dest = get_env("OLDPWD", s_pr->envp);
