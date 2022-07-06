@@ -38,16 +38,16 @@ all: $(NAME)
 
 .c.o:
 # mac 42
-#	$(CC) -I /Users/$(USER)/.brew/Cellar/readline/8.1.2/include $(CFLAGS) $(DEBUG_FLAG) -c $^ -o $@
+	$(CC) -I /Users/$(USER)/.brew/Cellar/readline/8.1.2/include $(CFLAGS) $(DEBUG_FLAG) -c $^ -o $@
 # home mac
-	$(CC) -I $(CPPFLAGS) $(CFLAGS) $(DEBUG_FLAG) -c $^ -o $@
+#	$(CC) -I $(CPPFLAGS) $(CFLAGS) $(DEBUG_FLAG) -c $^ -o $@
 
 $(NAME): $(OBJ)
 	 make -C $(LIBFTPATH)
 # mac 42
-#	 $(CC) $(CFLAGS) -g $(OBJ) -L$(LIBFTPATH) -lft -L/Users/$(USER)/.brew/Cellar/readline/8.1.2/lib -lreadline -o $(NAME)
+	 $(CC) $(CFLAGS) -g $(OBJ) -L$(LIBFTPATH) -lft -L/Users/$(USER)/.brew/Cellar/readline/8.1.2/lib -lreadline -o $(NAME)
 # home mac
-	@ $(CC) $(OBJ) -L$(LIBFTPATH) -lft -L $(LDFLAGS) -lreadline -o $(NAME)
+#	@ $(CC) $(OBJ) -L$(LIBFTPATH) -lft -L $(LDFLAGS) -lreadline -o $(NAME)
 
 clean:
 	@rm -rf $(OBJ)
