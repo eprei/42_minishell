@@ -1,23 +1,12 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/06/03 15:01:40 by Emiliano          #+#    #+#              #
-#    Updated: 2022/07/04 11:56:36 by epresa-c         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = minishell
 
 NAMELIBFT = libft.a
 
-SRCS = main.c signals.c split.c subsplit.c exit.c init_data.c var_builtin.c \
+SRCS = main.c signals.c split.c subsplit.c init_data.c var_builtin.c \
 	utils_tab.c lexer.c lexer_utils.c expander.c var_utils.c pipes_pids.c \
 	exec.c open_files.c mini_builtins.c parsing.c prepare_exec.c \
-	prep_builtin_exec.c
+	prep_builtin_exec.c error.c check_builtin_and_redir.c expander_utils.c \
+	node_t_cmd_create.c node_t_cmd_fill.c print_list.c
 
 
 OBJ = $(SRCS:.c=.o)

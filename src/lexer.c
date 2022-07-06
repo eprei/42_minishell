@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:01:32 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/04 15:34:57 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/06 14:51:18 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void	fn_lexer(t_var *v, t_prompt *prompt)
 			prompt->error_msg = ERROR_SYNTAX_PIPE_AT_START;
 			print_error(prompt);
 			prompt->token_status = FAILED;
+			g_exit_status = 258;
 		}
 		fn_expander(v, prompt);
 		fn_delete_quotes(v, prompt);
