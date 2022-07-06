@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:56:37 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/01 15:02:32 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/06/28 15:03:15 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	pwd_builtin(char **my_env)
 	return (0);
 }
 
-int	exec_cd(char *path, t_prompt *s_pr)
+int	exec_cd(char *path, char **my_env)
 {
 	char	*cur_dir;
 
@@ -36,34 +36,34 @@ int	exec_cd(char *path, t_prompt *s_pr)
 	}
 	else
 	{
-		s_pr->envp = set_env("OLDPWD", cur_dir, s_pr);
+		set_env("OLDPWD", cur_dir, my_env);
 		free(cur_dir);
 		cur_dir = getcwd(NULL, 0);
-		s_pr->envp = set_env("PWD", cur_dir, s_pr);
+		set_env("PWD", cur_dir, my_env);
 		free(cur_dir);
 	}
 	return (0);
 }
 
-int	cd_builtin(t_cmd *cmd, t_prompt *s_pr)
+int	cd_builtin(t_cmd *cmd, char **my_env)
 {
 	char	*dest;
 	int		len;
 	int		res;
 
 	len = ft_strlen(cmd->full_cmd[1]);
-//	if (ft_strncmp(cmd->full_cmd[1], "~", len) == 0)
-//		dest = (get_env("HOME", s_pr->envp));
-//	else if (ft_strncmp(cmd->full_cmd[1], "~/", len) == 0)
-//		dest = (ft_strjoin(get_env("HOME", s_pr->envp), cmd->full_cmd[1] + 1));
-	if (ft_strncmp(cmd->full_cmd[1], "-", len) == 0)
+	if (ft_strncmp(cmd->full_cmd[1], "~", len) == 0)
+		dest = (get_env("HOME", my_env));
+	else if (ft_strncmp(cmd->full_cmd[1], "~/", len) == 0)
+		dest = (ft_strjoin(get_env("HOME", my_env), cmd->full_cmd[1] + 1));
+	else if (ft_strncmp(cmd->full_cmd[1], "-", len) == 0)
 	{
-		dest = get_env("OLDPWD", s_pr->envp);
+		dest = get_env("OLDPWD", my_env);
 		if (dest == NULL)
-			dest = get_env("PWD", s_pr->envp);
+			dest = get_env("PWD", my_env);
 	}
 	else
 		dest = ft_strdup(cmd->full_cmd[1]);
-	res = exec_cd(dest, s_pr);
+	res = exec_cd(dest, my_env);
 	return (res);
 }
