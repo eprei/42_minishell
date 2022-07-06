@@ -48,18 +48,18 @@ void	init_path(t_prompt *s_p)
 			s_p->paths = ft_split(&s_p->envp[i][5], ':');
 			if (s_p->paths == NULL)
 				perror("Error with paths.");
+			i = 0;
+			while (s_p->paths[i] != 0)
+			{
+				tmp = s_p->paths[i];
+				s_p->paths[i] = ft_strjoin(tmp, "/");
+				if (s_p->paths[i++] == NULL)
+					perror("Error with paths");
+				free(tmp);
+			}
 			break ;
 		}
 		i++;
-	}
-	i = 0;
-	while (s_p->paths[i] != 0)
-	{
-		tmp = s_p->paths[i];
-		s_p->paths[i] = ft_strjoin(tmp, "/");
-		if (s_p->paths[i++] == NULL)
-			perror("Error with paths");
-		free(tmp);
 	}
 }
 
@@ -71,13 +71,17 @@ char	*create_path(char **paths, char *cmdn)
 	if (access(path_cmd, X_OK) == 0)
 		return (path_cmd);
 	free(path_cmd);
-	while (*paths)
+	if (paths != NULL)
 	{
-		path_cmd = ft_strjoin(*paths, cmdn);
-		if (access(path_cmd, X_OK) == 0)
-			return (path_cmd);
-		free(path_cmd);
-		paths++;
+		while (*paths)
+		{
+			path_cmd = ft_strjoin(*paths, cmdn);
+			if (access(path_cmd, X_OK) == 0)
+				return (path_cmd);
+			free(path_cmd);
+			paths++;
+		}
 	}
 	return (NULL);
 }
+
