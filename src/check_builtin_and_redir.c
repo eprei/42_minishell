@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/06 15:20:04 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/07 10:27:51 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	is_builtin_is_exit(t_cmd *curr, t_prompt *prompt, int i, t_var *v)
 		if (i == 0)
 		{
 			prompt->stop = TRUE;
-			if (v->subsplit[i + 1] && ft_atoi(v->subsplit[i + 1]) <= INT_MAX \
-				&& ft_atoi(v->subsplit[i + 1]) >= INT_MIN)
-				g_exit_status = ft_atoi(v->subsplit[i + 1]);
+			if (v->s_split[i + 1] && ft_atoi(v->s_split[i + 1]) <= INT_MAX \
+				&& ft_atoi(v->s_split[i + 1]) >= INT_MIN)
+				g_exit_status = ft_atoi(v->s_split[i + 1]);
 		}
 		curr->exec_stat = NON_EXECUTABLE;
 	}
@@ -56,9 +56,9 @@ void	is_builtin_is_exit(t_cmd *curr, t_prompt *prompt, int i, t_var *v)
 
 void	is_redir(t_var *v, int *i, int *j, int *redir_status, t_prompt *prompt)
 {
-	if (v->subsplit[*i][0] == '>' && v->subsplit[*i + 1] && v->subsplit[*i + 1][0] == '>')
+	if (v->s_split[*i][0] == '>' && v->s_split[*i + 1] && v->s_split[*i + 1][0] == '>')
 	{
-		if (v->subsplit[*i + 2] != NULL && ft_strchr("~%^{}:; |\\", v->subsplit[*i + 2][0]) == 0)
+		if (v->s_split[*i + 2] != NULL && ft_strchr("~%^{}:; |\\", v->s_split[*i + 2][0]) == 0)
 		{
 			*redir_status = REDIR_OUTPUT_APPEND;
 			printf("\tdetect REDIR_OUTPUT_APPEND at i = %d\n", *i);
@@ -73,9 +73,9 @@ void	is_redir(t_var *v, int *i, int *j, int *redir_status, t_prompt *prompt)
 		}
 		return ;
 	}
-	if (v->subsplit[*i][0] == '<' && v->subsplit[*i + 1] && v->subsplit[*i + 1][0] == '<')
+	if (v->s_split[*i][0] == '<' && v->s_split[*i + 1] && v->s_split[*i + 1][0] == '<')
 	{
-		if (v->subsplit[*i + 2] != NULL && ft_strchr("~%^{}:; |\\", v->subsplit[*i + 2][0]) == 0)
+		if (v->s_split[*i + 2] != NULL && ft_strchr("~%^{}:; |\\", v->s_split[*i + 2][0]) == 0)
 		{
 			*redir_status = HERE_DOC;
 			printf("\tdetect HERE_DOC at i = %d\n", *i);
@@ -90,9 +90,9 @@ void	is_redir(t_var *v, int *i, int *j, int *redir_status, t_prompt *prompt)
 		}
 		return ;
 	}
-	if (v->subsplit[*i][0] == '>')
+	if (v->s_split[*i][0] == '>')
 	{
-		if (v->subsplit[*i + 1] != NULL && ft_strchr("~%^{}:; |\\", v->subsplit[*i + 1][0]) == 0)
+		if (v->s_split[*i + 1] != NULL && ft_strchr("~%^{}:; |\\", v->s_split[*i + 1][0]) == 0)
 		{
 			*redir_status = REDIR_OUTPUT_SIMPLE;
 			printf("\tdetect REDIR_OUTPUT_SIMPLE at i = %d\n", *i);
@@ -106,9 +106,9 @@ void	is_redir(t_var *v, int *i, int *j, int *redir_status, t_prompt *prompt)
 			print_error(prompt);
 		}
 	}
-	if (v->subsplit[*i][0] == '<')
+	if (v->s_split[*i][0] == '<')
 	{
-		if (v->subsplit[*i + 1] != NULL && ft_strchr("~%^{}:; |\\", v->subsplit[*i + 1][0]) == 0)
+		if (v->s_split[*i + 1] != NULL && ft_strchr("~%^{}:; |\\", v->s_split[*i + 1][0]) == 0)
 		{
 			*redir_status = REDIR_INPUT;
 			printf("\tdetect REDIR_INPUT at i = %d\n", *i);

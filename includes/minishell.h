@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/06 16:36:12 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/07 11:02:46 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ typedef struct s_count_words
 typedef struct s_quote_parsing
 {
 	int		s_len;
-	int		quote_simple;
-	int		quote_double;
+	int		q_simple;
+	int		q_double;
 	int		i;
 	int		str_idx;
 	int		tab_index;
@@ -112,7 +112,7 @@ typedef struct s_var
 	char	*line;
 	char	**split;
 	char	**tmp;
-	char	**subsplit;
+	char	**s_split;
 	int		i;
 	int		j;
 }	t_var;
@@ -127,7 +127,8 @@ void	ft_new_prompt(int sig);
 
 /* ****************************** signals.c ******************************** */
 
-void	signal_handler(int sig);
+void	signal_handler1(int sig);
+void	signal_handler2(int sig);
 
 /* *****************************  split.c  ********************************** */
 
@@ -137,10 +138,10 @@ char	**ft_split_str_with_spaces_and_quotes(char const *s, t_prompt *prompt);
 void	ft_fill_split(char **splited, char const *str, char *caracter);
 void	init_quote_parsing_struct(t_quote_parsing *q, char const *str);
 
-/* ****************************  subsplit.c  ******************************** */
+/* ****************************  s_split.c  ******************************** */
 
 void	fn_sub_split(t_var *v);
-char	**ft_cmdsubsplit(char const *s, char *set);
+char	**ft_cmds_split(char const *s, char *set);
 
 /* *****************************  lexer.c  ********************************** */
 
@@ -161,13 +162,13 @@ void	fn_expander(t_var *v, t_prompt *prompt);
 int		search_charset_index_inside_str(char *str, char *set);
 char	*get_var_name(char *str, t_prompt *prompt);
 char	*get_var_name_double_quotes(char *str, t_prompt *prompt, int *idx_after);
-char	*expand_vars(char *subsplit_i, t_prompt *prompt);
+char	*expand_vars(char *s_split_i, t_prompt *prompt);
 
 /* ***************************  expander_utils.c  *************************** */
 
-void	update_quote_status(char *subsplit_i, t_quote_parsing *q);
-char	*expand_path(char *subsplit_i, char *str_home);
-void	pars_expand_status(char *subsplit_i, int *expand_status);
+void	update_quote_status(char *s_split_i, t_quote_parsing *q);
+char	*expand_path(char *s_split_i, char *str_home);
+void	pars_expand_status(char *s_split_i, int *expand_status);
 char	**cd_expantion_home(t_cmd *curr, char **envp);
 
 /* **************************  parsing.c  *********************************** */

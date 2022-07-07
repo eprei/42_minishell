@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:33 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/06 17:08:42 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/07 11:56:29 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,10 @@ void	free_all_tabs_and_prompt(t_var *v, t_prompt *prompt)
 	tab_free(v->split);
 	free(v->split);
 	v->split = NULL;
-	tab_free(v->subsplit);
-	free(v->subsplit);
-	v->subsplit = NULL;
+	tab_free(v->s_split);
+	free(v->s_split);
+	v->s_split = NULL;
 	free_t_cmd(&prompt->cmds);
-
-    // problems with the prompter after execute next two lines
-    // free(prompt->prompt_text);
-    // prompt->prompt_text = NULL;
 	tab_free(prompt->paths);
 	free(prompt->paths);
 	prompt->paths = NULL;
@@ -71,19 +67,32 @@ void	free_all_tabs_and_prompt(t_var *v, t_prompt *prompt)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_var		v;
-	t_prompt	prompt;
+	t_var			v;
+	t_prompt		prompt;
+	struct termios	termios_save;
+	struct termios	termios_new;
 
 	(void)argv;
 	(void)argc;
 	init_mini_vars(&v, &prompt, envp);
-	signal(SIGINT, signal_handler); // ctrl + C
 	signal(SIGQUIT, SIG_IGN); // ctrl + '\'
 	while (prompt.stop == FALSE)
 	{
+		signal(SIGINT, signal_handler1); // ctrl + C
+		tcgetattr(0, &termios_save);
+		termios_new = termios_save;
+		termios_new.c_lflag &= ~ECHOCTL;
+		tcsetattr(0, 0, &termios_new);
 		v.line = readline(prompt.prompt_text);
-		if (ft_strlen(v.line) != 0)
+		tcsetattr(0, 0, &termios_save);
+		if (!v.line)
 		{
+			prompt.stop = TRUE;
+			g_exit_status = 0;
+		}
+		else
+		{
+			signal(SIGINT, signal_handler2); // ctrl + C
 			add_history(v.line);
 			fn_lexer(&v, &prompt);
 			if (v.split != NULL && prompt.token_status != FAILED)

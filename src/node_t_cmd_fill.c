@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/06 17:35:40 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/07 12:37:58 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt, int k)
 	int			j;
 	int			open_redir_status;
 	static int	n_pipe = 0;
+
 	j = 0;
 	if (k == 0)
 		n_pipe = 0;
@@ -28,7 +29,7 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt, int k)
 	curr = prompt->cmds;
 	while (curr->next != NULL)
 			curr = curr->next;
-	if (v->subsplit[i][0] == '|')
+	if (v->s_split[i][0] == '|')
 	{
 		if (curr->prev->outfile == 1)
 		{
@@ -38,7 +39,7 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt, int k)
 		}
 		i++;
 	}
-	while (v->subsplit[i] != NULL && v->subsplit[i][0] != '|' /*&& prompt->token_status != FAILED*/)
+	while (v->s_split[i] != NULL && v->s_split[i][0] != '|')
 	{
 		redir_status = FALSE;
 		is_redir(v, &i, &j, &redir_status, prompt);
@@ -46,7 +47,7 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt, int k)
 			fill_cmd_with_redir(v, &i, redir_status, curr, &open_redir_status);
 		else
 		{
-			curr->full_cmd = tab_add(curr->full_cmd, v->subsplit[i]);
+			curr->full_cmd = tab_add(curr->full_cmd, v->s_split[i]);
 			is_builtin_is_exit(curr, prompt, i, v);
 		}
 		j++;
@@ -54,15 +55,19 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt, int k)
 	}
 	if (ft_strncmp(curr->full_cmd[0], "cd", 2) == 0 && \
 		ft_strlen(curr->full_cmd[0]) == 2 && curr->full_cmd[1] == NULL)
-		curr->full_cmd = cd_expantion_home(curr, prompt->envp); // TO SOLVE: LEAKS
+		curr->full_cmd = cd_expantion_home(curr, prompt->envp);
+	// if (curr->full_cmd[0][0] == '/')
+	// {
+	// 	curr->status = ft_strdup("is a directory");
+	// }
 	if (curr->infile != -1 && curr->exec_stat == EXECUTABLE)
 	{
 		if (curr->full_cmd != NULL && curr->is_builtin == FALSE)
 			curr->full_path = create_path(prompt->paths, curr->full_cmd[0]);
 		if (curr->full_path == NULL && curr->is_builtin == FALSE)
-			fn_echo_error(curr, v->subsplit[i - j], "command not found");
+			fn_echo_error(curr, v->s_split[i - j], "command not found");
 	}
-	if (v->subsplit[i] == NULL)
+	if (v->s_split[i] == NULL)
 		i = 0;
 }
 
@@ -71,27 +76,26 @@ void	fill_cmd_with_redir(t_var *v, int *i, int redir_status, t_cmd *curr, int *o
 	*open_redir_status = FALSE;
 	if (redir_status == REDIR_OUTPUT_APPEND)
 	{
-		*open_redir_status = open_outfiles(v->subsplit[*i], TRUE, curr);
+		*open_redir_status = open_outfiles(v->s_split[*i], TRUE, curr);
 		ft_printf("open_redir_status of REDIR_OUTPUT_APPEND = %d\n", *open_redir_status);
 		if (*open_redir_status == FALSE)
-			fn_echo_error(curr, v->subsplit[*i], "No such a file or directory");
+			fn_echo_error(curr, v->s_split[*i], "No such a file or directory");
 	}
 	else if (redir_status == REDIR_OUTPUT_SIMPLE)
 	{
-		*open_redir_status = open_outfiles(v->subsplit[*i], FALSE, curr);
+		*open_redir_status = open_outfiles(v->s_split[*i], FALSE, curr);
 		ft_printf("open_redir_status of REDIR_OUTPUT_SIMPLE = %d\n", *open_redir_status);
 	}
 	else if (redir_status == HERE_DOC)
 	{
-		*open_redir_status = open_in_files(NULL, v->subsplit[*i], curr);
+		*open_redir_status = open_in_files(NULL, v->s_split[*i], curr);
 		ft_printf("open_redir_status of HERE_DOC= %d\n", *open_redir_status);
 	}
 	else if (redir_status == REDIR_INPUT)
 	{
-		*open_redir_status = open_in_files(v->subsplit[*i], NULL, curr);
+		*open_redir_status = open_in_files(v->s_split[*i], NULL, curr);
 		ft_printf("OPEN REDIR STATUS of REDIR_INPUT= %d\n", *open_redir_status);
-
 	}
 	if (*open_redir_status == FALSE)
-		fn_echo_error(curr, v->subsplit[*i], "no such a file or directory");
+		fn_echo_error(curr, v->s_split[*i], "no such a file or directory");
 }

@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/06 14:51:59 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/07 10:27:51 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	fn_parsing(t_var *v, t_prompt *prompt)
 	int	i;
 
 	i = 0;
-	while (v->subsplit[i] && v->subsplit[i + 1] != NULL)
+	while (v->s_split[i] && v->s_split[i + 1] != NULL)
 	{
-		if ((v->subsplit[i][0] == '|' && v->subsplit[i + 1][0] == '|'))
+		if ((v->s_split[i][0] == '|' && v->s_split[i + 1][0] == '|'))
 		{
 			prompt->token_status = FAILED;
 			prompt->error_msg = SYNTAX_ERROR_NEAR_UNEXPECTED_TOKEN;
@@ -27,11 +27,11 @@ void	fn_parsing(t_var *v, t_prompt *prompt)
 			print_error(prompt);
 			return ;
 		}
-		if (v->subsplit[i][0] == '|')
+		if (v->s_split[i][0] == '|')
 			prompt->n_cmds++;
 		i++;
 	}
-	if (v->subsplit[i][0] == '|')
+	if (v->s_split[i][0] == '|')
 	{
 		prompt->token_status = FAILED;
 		prompt->error_msg = SYNTAX_ERROR_NEAR_UNEXPECTED_TOKEN;

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   subsplit.c                                         :+:      :+:    :+:   */
+/*   s_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,7 +14,7 @@
 
 // TO DO: RENAME FUNCTIONS AND USE MACROS LIKE IN split.c ,
 // SEE IF IT'S POSSIBLE TO USE THE FUNCTION
-//	update_quote_status(char *subsplit_i, t_quote_parsing *q)
+//	update_quote_status(char *s_split_i, t_quote_parsing *q)
 //	FROM expander.c
 
 static int	ft_count_words_old(char *s, char *set, int count)
@@ -70,7 +70,7 @@ static char	**ft_fill_array_old(char **aux, char *s, char *set, int i[3])
 	return (aux);
 }
 
-char	**ft_cmdsubsplit(char const *s, char *set)
+char	**ft_cmds_split(char const *s, char *set)
 {
 	char	**aux;
 	int		nwords;

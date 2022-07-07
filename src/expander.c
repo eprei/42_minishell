@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:58:25 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/06 11:57:04 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/07 10:27:51 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void	fn_expander(t_var *v, t_prompt *prompt)
 	int	i;
 
 	i = 0;
-	while (v->subsplit && v->subsplit[i])
+	while (v->s_split && v->s_split[i])
 	{
-		v->subsplit[i] = expand_vars(v->subsplit[i], prompt);
-		v->subsplit[i] = expand_path(v->subsplit[i], \
+		v->s_split[i] = expand_vars(v->s_split[i], prompt);
+		v->s_split[i] = expand_path(v->s_split[i], \
 		get_env("HOME", prompt->envp));
 		i++;
 	}
@@ -88,7 +88,7 @@ char	*get_var_name_double_quotes(char *str, t_prompt *prompt, int *idx_after)
 	return (aux);
 }
 
-char	*expand_vars(char *subsplit_i, t_prompt *prompt)
+char	*expand_vars(char *s_split_i, t_prompt *prompt)
 {
 	t_quote_parsing	q;
 	char			*tmp;
@@ -98,51 +98,51 @@ char	*expand_vars(char *subsplit_i, t_prompt *prompt)
 	int				idx_after;
 
 	init_quote_parsing_struct(&q, NULL);
-	while (subsplit_i && subsplit_i[q.i])
+	while (s_split_i && s_split_i[q.i])
 	{
-		update_quote_status(subsplit_i, &q);
-		if (q.quote_simple == CLOSED && q.quote_double == CLOSED && subsplit_i[q.i] == '$')
+		update_quote_status(s_split_i, &q);
+		if (q.q_simple == CLOSED && q.q_double == CLOSED && s_split_i[q.i] == '$')
 		{
-			tmp = ft_substr(subsplit_i, 0, q.i); // string before '$'
-			name = get_var_name(&subsplit_i[q.i], prompt); // check if var exist or not
+			tmp = ft_substr(s_split_i, 0, q.i); // string before '$'
+			name = get_var_name(&s_split_i[q.i], prompt);
 			if (name == NULL)
 				name = ft_strdup("");
-			if (ft_strncmp(name, "?", 1) == 0 && ft_strlen(name) == 1) // if $? , name gets the value of g_exit_status
+			if (ft_strncmp(name, "?", 1) == 0 && ft_strlen(name) == 1)
 			{
 				free(name);
 				name = ft_strdup(ft_itoa(g_exit_status));
 			}
-			free(subsplit_i);
-			subsplit_i = ft_strjoin(tmp, name);
+			free(s_split_i);
+			s_split_i = ft_strjoin(tmp, name);
 			free(tmp);
 			free(name);
 			name = NULL;
 		}
-		if (q.quote_simple == CLOSED && q.quote_double == OPEN && subsplit_i[q.i] == '$')
+		if (q.q_simple == CLOSED && q.q_double == OPEN && s_split_i[q.i] == '$')
 		{
 			idx_after = 0;
-			tmp = ft_substr(subsplit_i, 0, q.i); // string before '$'
-			name = get_var_name_double_quotes(&subsplit_i[q.i], prompt, &idx_after); // check if var exist or not
+			tmp = ft_substr(s_split_i, 0, q.i); // string before '$'
+			name = get_var_name_double_quotes(&s_split_i[q.i], prompt, &idx_after);
 			if (name == NULL)
 				name = ft_strdup("");
-			if (ft_strncmp(name, "?", 1) == 0 && ft_strlen(name) == 1) // if $? , name gets the value of g_exit_status
+			if (ft_strncmp(name, "?", 1) == 0 && ft_strlen(name) == 1)
 			{
 				free(name);
 				name = ft_strdup(ft_itoa(g_exit_status));
 			}
 			tmp3 = ft_strjoin(tmp, name);
 			free(tmp);
-			tmp = ft_substr(subsplit_i, q.i + idx_after + 1, ft_strlen(subsplit_i) - q.i - idx_after);
+			tmp = ft_substr(s_split_i, q.i + idx_after + 1, ft_strlen(s_split_i) - q.i - idx_after);
 			tmp2 = ft_strjoin(tmp3, tmp);
 			free(tmp3);
 			free(tmp);
 			tmp = NULL;
-			free(subsplit_i);
-			subsplit_i = tmp2;
+			free(s_split_i);
+			s_split_i = tmp2;
 			free(name);
 			name = NULL;
 		}
 		q.i++;
 	}
-	return (subsplit_i);
+	return (s_split_i);
 }

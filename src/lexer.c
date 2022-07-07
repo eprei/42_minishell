@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:01:32 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/06 14:51:18 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/07 10:27:51 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,24 @@ void	check_quotes_and_delete(t_prompt *prompt, t_var *v, int i) //check if it's 
 
 	init_quote_parsing_struct(&q, NULL);
 	k = -1;
-	aux = malloc((ft_strlen(v->subsplit[i]) + 1) * sizeof(char));
+	aux = malloc((ft_strlen(v->s_split[i]) + 1) * sizeof(char));
 	if (aux == NULL)
 	{
 		prompt->error_msg = MALLOC_ERROR;
 		prompt->token_status = FAILED;
 		return ;
 	}
-	while (v->subsplit[i][q.i] != '\0')
+	while (v->s_split[i][q.i] != '\0')
 	{
-		update_quote_status(v->subsplit[i], &q);
-		if ((v->subsplit[i][q.i] != '\"' || q.quote_simple) && \
-		(v->subsplit[i][q.i] != '\'' || q.quote_double) && ++k >= 0)
-			aux[k] = v->subsplit[i][q.i];
+		update_quote_status(v->s_split[i], &q);
+		if ((v->s_split[i][q.i] != '\"' || q.q_simple) && \
+		(v->s_split[i][q.i] != '\'' || q.q_double) && ++k >= 0)
+			aux[k] = v->s_split[i][q.i];
 		q.i++;
 	}
 	aux[++k] = '\0';
-	free(v->subsplit[i]);
-	v->subsplit[i] = aux;
+	free(v->s_split[i]);
+	v->s_split[i] = aux;
 }
 
 void	print_error(t_prompt *prompt)
@@ -58,7 +58,7 @@ void	fn_delete_quotes(t_var *v, t_prompt *prompt)
 	int	i;
 
 	i = 0;
-	while (v->subsplit[i] != NULL)
+	while (v->s_split[i] != NULL)
 	{
 		check_quotes_and_delete(prompt, v, i);
 		if (prompt->error_msg != NO_ERROR)
@@ -94,11 +94,11 @@ void	fn_lexer(t_var *v, t_prompt *prompt)
 		v->i = 0;
 		while (v->split[v->i])
 		{
-			v->tmp = ft_cmdsubsplit(v->split[v->i], "<|>");
+			v->tmp = ft_cmds_split(v->split[v->i], "<|>");
 			v->j = 0;
 			while (v->tmp[v->j] != NULL)
 			{
-				v->subsplit = tab_add(v->subsplit, v->tmp[v->j]);
+				v->s_split = tab_add(v->s_split, v->tmp[v->j]);
 				v->j++;
 			}
 			tab_free(v->tmp);
@@ -106,7 +106,7 @@ void	fn_lexer(t_var *v, t_prompt *prompt)
 			v->tmp = NULL;
 			v->i++;
 		}
-		if (v->subsplit[0][0] == '|')
+		if (v->s_split[0][0] == '|')
 		{
 			prompt->error_msg = ERROR_SYNTAX_PIPE_AT_START;
 			print_error(prompt);

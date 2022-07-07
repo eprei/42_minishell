@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:34:47 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/04 17:51:27 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/07 10:27:51 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	init_t_var_main(t_var *v)
 	v->line = NULL;
 	v->split = NULL;
 	v->tmp = NULL;
-	v->subsplit = NULL;
+	v->s_split = NULL;
 	v->i = 0;
 	v->j = 0;
 }
