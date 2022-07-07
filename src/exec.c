@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:53:57 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/07 10:59:55 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/07 12:31:37 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd)
 	dup_res[1] = dup2(cur_cmd->infile, STDIN_FILENO);
 	if (dup_res[0] < 0 || dup_res[1] < 0)
 		perror("Error with dup cmd");
-	close_pipes(s_pr);
+//	close_pipes(s_pr);
+	builtin_close_redir(cur_cmd);
 	exec_res = execve(cur_cmd->full_path, cur_cmd->full_cmd, s_pr->envp);
 	if (exec_res == -1)
 	{

@@ -6,7 +6,7 @@
 /*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:51:16 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/07 10:30:28 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/07 11:55:59 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	exec_multiple(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 	res = 0;
 	while (cur_cmd != NULL)
 	{
+		printf("CMD No: %d\n", num);
 		if (cur_cmd->status != NULL)
 			ft_print_error(cur_cmd);
 		else if (cur_cmd->exec_stat == 1)
@@ -76,7 +77,7 @@ int	read_list(t_prompt *s_pr)
 	int		i;
 	int		res;
 
-	i = 0;
+	i = 0; //inutile ?
 	res = 0;
 	if (s_pr->cmds != NULL)
 	{
