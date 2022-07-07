@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/06 16:56:53 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/07 14:43:58 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <termios.h>
 # include <errno.h>
 # include <limits.h>
+# include <sys/ioctl.h>
 
 # define FALSE 0
 # define TRUE 1
@@ -72,8 +73,8 @@ typedef struct s_count_words
 typedef struct s_quote_parsing
 {
 	int		s_len;
-	int		quote_simple;
-	int		quote_double;
+	int		q_simple;
+	int		q_double;
 	int		i;
 	int		str_idx;
 	int		tab_index;
@@ -111,7 +112,7 @@ typedef struct s_var
 	char	*line;
 	char	**split;
 	char	**tmp;
-	char	**subsplit;
+	char	**s_split;
 	int		i;
 	int		j;
 }	t_var;
@@ -126,7 +127,8 @@ void	ft_new_prompt(int sig);
 
 /* ****************************** signals.c ******************************** */
 
-void	signal_handler(int sig);
+void	signal_handler1(int sig);
+void	signal_handler2(int sig);
 
 /* *****************************  split.c  ********************************** */
 
@@ -136,14 +138,10 @@ char	**ft_split_str_with_spaces_and_quotes(char const *s, t_prompt *prompt);
 void	ft_fill_split(char **splited, char const *str, char *caracter);
 void	init_quote_parsing_struct(t_quote_parsing *q, char const *str);
 
-/* ****************************  subsplit.c  ******************************** */
+/* ****************************  s_split.c  ******************************** */
 
 void	fn_sub_split(t_var *v);
-char	**ft_cmdsubsplit(char const *s, char *set);
-
-/* *****************************  exit.c  *********************************** */
-
-void	ft_exit(t_var	*v, t_prompt *prompt);
+char	**ft_cmds_split(char const *s, char *set);
 
 /* *****************************  lexer.c  ********************************** */
 
@@ -161,16 +159,48 @@ void	print_tab_with_str_name(char **tab, char *tab_name);
 /* *****************************  expander.c  ******************************* */
 
 void	fn_expander(t_var *v, t_prompt *prompt);
-void	update_quote_status(char *subsplit_i, t_quote_parsing *q);
+int		search_charset_index_inside_str(char *str, char *set);
+char	*get_var_name(char *str, t_prompt *prompt);
+char	*get_var_name_double_quotes(char *str, t_prompt *prompt, int *idx_after);
+char	*expand_vars(char *s_split_i, t_prompt *prompt);
+
+/* ***************************  expander_utils.c  *************************** */
+
+void	update_quote_status(char *s_split_i, t_quote_parsing *q);
+char	*expand_path(char *s_split_i, char *str_home);
+void	pars_expand_status(char *s_split_i, int *expand_status);
+char	**cd_expantion_home(t_cmd *curr, char **envp);
 
 /* **************************  parsing.c  *********************************** */
 
 void	fn_parsing(t_var *v, t_prompt *prompt);
-void	print_list(t_prompt *prompt);
-void	free_t_cmd(t_cmd **cmd);
-void	fill_t_cmd(t_var *v, t_prompt *prompt, int k);
 
-/* *****************************  var_utils.c  ****************************** */
+/* ***********************  node_t_cmd_create.c  **************************** */
+
+t_cmd	*start_t_cmd(t_prompt *prompt);
+void	add_t_cmd(t_prompt *prompt);
+int		count_cmds(t_prompt *prompt);
+
+/* ***********************  node_t_cmd_fill.c  **************************** */
+
+void	fill_t_cmd(t_var *v, t_prompt *prompt, int k);
+void	fill_cmd_with_redir(t_var *v, int *i, int redir_status, t_cmd *curr, int *open_redir_status);
+
+/* **********************  check_builtin_and_redir.c  *********************** */
+
+int		check_builtin(char *cmd);
+void	is_builtin_is_exit(t_cmd *curr, t_prompt *prompt, int i, t_var *v);
+void	is_redir(t_var *v, int *i, int *j, int *redir_status, t_prompt *prompt);
+
+/* ******************************  error.c  ********************************* */
+
+void	fn_echo_error(t_cmd *curr, char *subplit_i, char *err_msg);
+
+/* ******************************  print_list.c  **************************** */
+
+void	print_list(t_prompt *prompt);
+
+/* ******************************  var_utils.c  ***************************** */
 
 int		env_var_exist(char *name, char **envp);
 char	*get_env(char *name, char **my_envp);

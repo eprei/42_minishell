@@ -1,2 +1,5 @@
-exit_status = 50
-	SIGQUIT signal received
+Syntax error 258
+
+Command not found 127
+
+No souch file or directory 1

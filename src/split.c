@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:52:31 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/04 13:59:45 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/07 10:26:48 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int	ft_count_words(const char *str, char *caracter)
 void	init_quote_parsing_struct(t_quote_parsing *q, char const *str)
 	{
 	q->i = 0;
-	q->quote_simple = CLOSED;
-	q->quote_double = CLOSED;
+	q->q_simple = CLOSED;
+	q->q_double = CLOSED;
 	q->str_idx = 0;
 	q->tab_index = 0;
 	q->s_len = ft_strlen(str);
@@ -69,13 +69,13 @@ void	ft_fill_split(char **splited, char const *str, char *caracter)
 		while (str[q.i] == *caracter && str[q.i] != '\0')
 			q.i++;
 		q.str_idx = q.i;
-		while ((str[q.i] != *caracter || q.quote_simple == OPEN \
-		|| q.quote_double == OPEN) && str[q.i] != '\0')
+		while ((str[q.i] != *caracter || q.q_simple == OPEN \
+		|| q.q_double == OPEN) && str[q.i] != '\0')
 		{
-			q.quote_simple = (q.quote_simple + \
-			(!q.quote_double && str[q.i] == '\'')) % 2;
-			q.quote_double = (q.quote_double + \
-			(!q.quote_simple && str[q.i] == '\"')) % 2;
+			q.q_simple = (q.q_simple + \
+			(!q.q_double && str[q.i] == '\'')) % 2;
+			q.q_double = (q.q_double + \
+			(!q.q_simple && str[q.i] == '\"')) % 2;
 			q.i++;
 		}
 		if (q.str_idx >= q.s_len)
