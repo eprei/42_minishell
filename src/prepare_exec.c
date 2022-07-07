@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prepare_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/23 14:51:16 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/07 11:55:59 by olmartin         ###   ########.fr       */
+/*   Created: 2022/07/07 14:32:22 by olmartin          #+#    #+#             */
+/*   Updated: 2022/07/07 14:32:41 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,6 @@ void	ft_print_error(t_cmd *cur_cmd)
 	ft_putstr_fd(" : ", 2);
 	ft_putendl_fd(cur_cmd->status, 2);
 }
-/*
-int	search_function(t_prompt *s_pr, t_cmd *cur_cmd, int num)
-{
-	int	res;
-
-	(void)num;
-	(void)res;
-	res = 0;
-		prep_exec(s_pr, cur_cmd, num);
-	return (0);
-}
-*/
 
 int	exec_single(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 {
@@ -54,7 +42,6 @@ int	exec_multiple(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 	res = 0;
 	while (cur_cmd != NULL)
 	{
-		printf("CMD No: %d\n", num);
 		if (cur_cmd->status != NULL)
 			ft_print_error(cur_cmd);
 		else if (cur_cmd->exec_stat == 1)

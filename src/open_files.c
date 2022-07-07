@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 11:50:10 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/06 17:02:26 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/07 14:19:00 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,14 @@ char	*here_input(char *limiter, int fd)
 	{
 		ft_printf(">");
 		str = get_next_line(0);
-		if (ft_strncmp(str, n_lim, l_lim) == 0 && (l_lim == ft_strlen(str)))
+		if (!str)
+		{
+			ft_putstr_fd(limiter, 2);
+			ft_putstr_fd(" should be used as LIMITER\n", 2);
+			break ;
+		}
+		else if (ft_strncmp(str, n_lim, l_lim) == 0 && \
+			(l_lim == ft_strlen(str)))
 			break ;
 		write(fd, str, ft_strlen(str));
 	}

@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 15:57:08 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/07 11:34:41 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/07 14:27:04 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,11 @@ int	fork_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 		close(cur_cmd->infile);
 	if (cur_cmd->outfile != 1)
 		close(cur_cmd->outfile);
-	//if (num == s_pr->n_cmds)
-	//	close_pipes(s_pr);
 	return (0);
 }
 
 void	builtin_close_redir(t_cmd *cur_cmd)
 {
-	char txt[20] = "Close pipes child\n";
-	write(2, &txt, 20);
-
 	if (cur_cmd->infile != 0)
 		close(cur_cmd->infile);
 	if (cur_cmd->outfile != 1)

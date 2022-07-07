@@ -51,7 +51,7 @@ void	create_pipes_pids(t_prompt *s_pr)
 		s_pr->pipes = NULL;
 }
 
-void	close_pipes(t_prompt *s_pr)
+void	close_pipes(t_prompt *s_pr)  // Pas util ?
 {
 	int	i;
 	int	e;
