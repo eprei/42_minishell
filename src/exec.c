@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:53:57 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/06 15:48:51 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/07 10:59:55 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	wait_status(int exitstatus)
 	{
 		g_exit_status = WEXITSTATUS(exitstatus);
 		if (g_exit_status != 0)
+		{
+			if (g_exit_status != 255) //sort et CTRL + \ ou CTRL + c
 			perror("Error with arguments");
+		}
 	}
 }
 
@@ -27,7 +30,7 @@ void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd)
 	int		dup_res[2];
 	int		exec_res;
 
-	printf("in fd et out fd: %d - %d \n", cur_cmd->infile, cur_cmd->outfile);
+	//printf("in fd et out fd: %d - %d \n", cur_cmd->infile, cur_cmd->outfile);
 	dup_res[0] = dup2(cur_cmd->outfile, STDOUT_FILENO);
 	dup_res[1] = dup2(cur_cmd->infile, STDIN_FILENO);
 	if (dup_res[0] < 0 || dup_res[1] < 0)

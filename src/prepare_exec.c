@@ -6,7 +6,7 @@
 /*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 14:51:16 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/06 17:12:47 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/07 10:30:28 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	exec_multiple(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 	res = 0;
 	while (cur_cmd != NULL)
 	{
-		if (cur_cmd->status != NULL) //test a faire sur exec_stat = -1
+		if (cur_cmd->status != NULL)
 			ft_print_error(cur_cmd);
 		else if (cur_cmd->exec_stat == 1)
 		{

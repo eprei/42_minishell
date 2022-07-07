@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:33 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/04 15:31:58 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/07 10:37:28 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	main(int argc, char **argv, char **envp)
 				fn_parsing(&v, &prompt);
 				if (prompt.token_status != FAILED)
 				{
-					print_list(&prompt); // << TO DELETE: it's just to print the list
+//					print_list(&prompt); // << TO DELETE: it's just to print the list
 					read_list(&prompt);
 				}
 			}

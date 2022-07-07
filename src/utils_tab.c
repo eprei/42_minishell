@@ -6,7 +6,7 @@
 /*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:38 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/22 14:50:04 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/07/07 10:31:45 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	**tab_add(char **src, char *add)
 	dest[i++] = ft_strdup(add);
 	dest[i] = NULL;
 	tab_free(src);
-    free(src);
+	free(src);
 	src = NULL;
 	return (dest);
 }

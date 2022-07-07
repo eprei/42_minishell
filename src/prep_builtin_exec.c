@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 15:57:08 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/06 16:11:21 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/07 11:34:41 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	search_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 {
 	int	res;
 
-	(void)s_pr;
 	(void)num;
 	res = 0;
 	if (ft_strncmp(cur_cmd->full_cmd[0], "cd", 3) == 0)
@@ -36,28 +35,16 @@ int	search_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 
 void	redir_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 {
-	int	dup_res;
-	char txt[15] = "dup_built";
+	int		dup_res;
+	char	txt[15] = "dup_built";
 
 	dup_res = -1;
-/*	int		dup_res[2];
-	dup_res[0] = -1;
-	dup_res[1] = -1;
-	printf("in fd et out fd: %d - %d \n", cur_cmd->infile, cur_cmd->outfile);
-	if (cur_cmd->infile != 0)
+	if (cur_cmd->outfile != 0)
 	{
-		dup_res[1] = dup2(cur_cmd->infile, STDIN_FILENO);
-		if (dup_res[1] < 0)
-			perror("Error with dup gen.");
-	}
-*/	if (cur_cmd->outfile != 0)
-	{
-		//dup_res[0] = dup2(cur_cmd->outfile, STDOUT_FILENO);
-		//if (dup_res[0] < 0)
 		dup_res = dup2(cur_cmd->outfile, STDOUT_FILENO);
 		if (dup_res < 0)
 		{
-			write(2, &txt, 15); 
+			write(2, &txt, 15);
 			perror("Error with dup gen.");
 		}
 	}
@@ -105,7 +92,6 @@ void	builtin_close_redir(t_cmd *cur_cmd)
 	if (cur_cmd->outfile != 1)
 		close(cur_cmd->outfile);
 }
-
 
 int	builtin_is_redir(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 {
