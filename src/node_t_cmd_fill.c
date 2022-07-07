@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/07 12:37:58 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/07 14:35:34 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,13 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt, int k)
 	if (ft_strncmp(curr->full_cmd[0], "cd", 2) == 0 && \
 		ft_strlen(curr->full_cmd[0]) == 2 && curr->full_cmd[1] == NULL)
 		curr->full_cmd = cd_expantion_home(curr, prompt->envp);
-	// if (curr->full_cmd[0][0] == '/')
-	// {
-	// 	curr->status = ft_strdup("is a directory");
-	// }
+	else if (curr->full_cmd[0][0] == '/')
+	{
+		if (access(curr->full_cmd[0], F_OK) == 0)
+			fn_echo_error(curr, v->s_split[i - j], "is a directory");
+		else
+			fn_echo_error(curr, v->s_split[i - j], "No such file or directory");
+	}
 	if (curr->infile != -1 && curr->exec_stat == EXECUTABLE)
 	{
 		if (curr->full_cmd != NULL && curr->is_builtin == FALSE)
@@ -77,25 +80,15 @@ void	fill_cmd_with_redir(t_var *v, int *i, int redir_status, t_cmd *curr, int *o
 	if (redir_status == REDIR_OUTPUT_APPEND)
 	{
 		*open_redir_status = open_outfiles(v->s_split[*i], TRUE, curr);
-		ft_printf("open_redir_status of REDIR_OUTPUT_APPEND = %d\n", *open_redir_status);
 		if (*open_redir_status == FALSE)
 			fn_echo_error(curr, v->s_split[*i], "No such a file or directory");
 	}
 	else if (redir_status == REDIR_OUTPUT_SIMPLE)
-	{
 		*open_redir_status = open_outfiles(v->s_split[*i], FALSE, curr);
-		ft_printf("open_redir_status of REDIR_OUTPUT_SIMPLE = %d\n", *open_redir_status);
-	}
 	else if (redir_status == HERE_DOC)
-	{
 		*open_redir_status = open_in_files(NULL, v->s_split[*i], curr);
-		ft_printf("open_redir_status of HERE_DOC= %d\n", *open_redir_status);
-	}
 	else if (redir_status == REDIR_INPUT)
-	{
 		*open_redir_status = open_in_files(v->s_split[*i], NULL, curr);
-		ft_printf("OPEN REDIR STATUS of REDIR_INPUT= %d\n", *open_redir_status);
-	}
 	if (*open_redir_status == FALSE)
 		fn_echo_error(curr, v->s_split[*i], "no such a file or directory");
 }

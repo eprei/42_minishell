@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:33 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/07 11:56:29 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/07 14:07:26 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	main(int argc, char **argv, char **envp)
 			prompt.stop = TRUE;
 			g_exit_status = 0;
 		}
-		else
+		else if (ft_strlen(v.line) != 0)
 		{
 			signal(SIGINT, signal_handler2); // ctrl + C
 			add_history(v.line);

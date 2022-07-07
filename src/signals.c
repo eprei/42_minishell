@@ -6,15 +6,14 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:44:35 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/07 11:22:12 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/07 14:12:48 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// MAKE IT WORK AT ALL CASES
-
 #include "../includes/minishell.h"
 
-void	signal_handler1(int sig) //static mode
+// static mode
+void	signal_handler1(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -26,7 +25,8 @@ void	signal_handler1(int sig) //static mode
 	}
 }
 
-void	signal_handler2(int sig) //interactive mode
+// interactive mode
+void	signal_handler2(int sig)
 {
 	if (sig == SIGINT)
 	{

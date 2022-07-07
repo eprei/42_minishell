@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/07 10:27:51 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/07 14:25:23 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	is_redir(t_var *v, int *i, int *j, int *redir_status, t_prompt *prompt)
 		if (v->s_split[*i + 2] != NULL && ft_strchr("~%^{}:; |\\", v->s_split[*i + 2][0]) == 0)
 		{
 			*redir_status = REDIR_OUTPUT_APPEND;
-			printf("\tdetect REDIR_OUTPUT_APPEND at i = %d\n", *i);
 			*i += 2;
 			*j += 2;
 		}
@@ -78,7 +77,6 @@ void	is_redir(t_var *v, int *i, int *j, int *redir_status, t_prompt *prompt)
 		if (v->s_split[*i + 2] != NULL && ft_strchr("~%^{}:; |\\", v->s_split[*i + 2][0]) == 0)
 		{
 			*redir_status = HERE_DOC;
-			printf("\tdetect HERE_DOC at i = %d\n", *i);
 			*i += 2;
 			*j += 2;
 		}
@@ -95,7 +93,6 @@ void	is_redir(t_var *v, int *i, int *j, int *redir_status, t_prompt *prompt)
 		if (v->s_split[*i + 1] != NULL && ft_strchr("~%^{}:; |\\", v->s_split[*i + 1][0]) == 0)
 		{
 			*redir_status = REDIR_OUTPUT_SIMPLE;
-			printf("\tdetect REDIR_OUTPUT_SIMPLE at i = %d\n", *i);
 			*i += 1;
 			*j += 1;
 		}
@@ -111,7 +108,6 @@ void	is_redir(t_var *v, int *i, int *j, int *redir_status, t_prompt *prompt)
 		if (v->s_split[*i + 1] != NULL && ft_strchr("~%^{}:; |\\", v->s_split[*i + 1][0]) == 0)
 		{
 			*redir_status = REDIR_INPUT;
-			printf("\tdetect REDIR_INPUT at i = %d\n", *i);
 			*i += 1;
 			*j += 1;
 		}
