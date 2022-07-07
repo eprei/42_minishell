@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:32:22 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/07 14:32:41 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/07 15:21:19 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,10 @@ int	read_list(t_prompt *s_pr)
 	if (s_pr->cmds != NULL)
 	{
 		cur_cmd = s_pr->cmds;
-		if (cur_cmd->exec_stat == 1)
-		{
-			if (s_pr->n_cmds == 1)
-				res = exec_single(s_pr, cur_cmd, i);
-			else
-				res = exec_multiple(s_pr, cur_cmd, i);
-		}
+		if (s_pr->n_cmds == 1)
+			res = exec_single(s_pr, cur_cmd, i);
 		else
-			builtin_close_redir(cur_cmd);
+			res = exec_multiple(s_pr, cur_cmd, i);
 	}
 	g_exit_status = errno;
 	return (res);
