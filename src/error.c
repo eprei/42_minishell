@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/06 15:57:42 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/08 12:31:04 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ void	fn_echo_error(t_cmd *curr, char *subplit_i, char *err_msg)
 	curr->is_builtin = FALSE;
 	curr->status = ft_strdup(err_msg);
 	curr->exec_stat = -1;
-	g_exit_status = 1;
+	// g_exit_status = 1;
 }

@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/07 10:27:51 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/08 14:53:59 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	fn_parsing(t_var *v, t_prompt *prompt)
 	}
 	create_pipes_pids(prompt);
 	i = 0;
+
 	while (i < prompt->n_cmds && prompt->token_status != FAILED)
 	{
 		if (i == 0)
@@ -49,5 +50,9 @@ void	fn_parsing(t_var *v, t_prompt *prompt)
 			add_t_cmd(prompt);
 		fill_t_cmd(v, prompt, i);
 		i++;
+		// g_exit_status = open_redir_status solo en el ultimo comando
+		// if (i + 1 == prompt->n_cmds)
+			// g_exit_status = 10;
 	}
+	// ft_printf("\n\tg_exit_status after parsing= %d\n", g_exit_status);
 }

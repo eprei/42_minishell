@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:58:25 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/07 10:27:51 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/08 14:34:19 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,13 @@ char	**cd_expantion_home(t_cmd *curr, char **envp)
 {
 	char	**aux;
 
+
 	tab_free(curr->full_cmd);
 	aux = malloc(sizeof(char *) * 3);
 	aux[0] = ft_strdup("cd");
 	aux[1] = get_env("HOME", envp);
+	if (aux[1] == NULL)
+		curr->status = ft_strdup("HOME not set");
 	aux[2] = NULL;
 	return (aux);
 }
