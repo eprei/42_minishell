@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:36:37 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/06 16:59:16 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/11 14:48:47 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	init_path(t_prompt *s_p)
 	char	*tmp;
 
 	i = 0;
-	while (s_p->envp[i] != 0)
+	while (s_p->envp != NULL && s_p->envp[i] != 0)
 	{
 		if (ft_strncmp(s_p->envp[i], "PATH=", 5) == 0)
 		{

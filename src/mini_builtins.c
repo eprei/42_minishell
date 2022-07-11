@@ -6,13 +6,13 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:56:37 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/06 17:00:17 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/11 15:57:42 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	pwd_builtin(char **my_env, int fd)
+	int	pwd_builtin(char **my_env, int fd)
 {
 	char	*buffer;
 
@@ -51,15 +51,21 @@ int	cd_builtin(t_cmd *cmd, t_prompt *s_pr)
 	int		len;
 	int		res;
 
-	len = ft_strlen(cmd->full_cmd[1]);
-	if (ft_strncmp(cmd->full_cmd[1], "-", len) == 0)
+	res = 1;
+	if (cmd->full_cmd[1] != NULL)
 	{
-		dest = get_env("OLDPWD", s_pr->envp);
-		if (dest == NULL)
-			dest = get_env("PWD", s_pr->envp);
+		len = ft_strlen(cmd->full_cmd[1]);
+		if (ft_strncmp(cmd->full_cmd[1], "-", len) == 0)
+		{
+			dest = get_env("OLDPWD", s_pr->envp);
+			if (dest == NULL)
+				dest = get_env("PWD", s_pr->envp);
+			if (dest == NULL)
+				return (res);
+		}
+		else
+			dest = ft_strdup(cmd->full_cmd[1]);
+		res = exec_cd(dest, s_pr);
 	}
-	else
-		dest = ft_strdup(cmd->full_cmd[1]);
-	res = exec_cd(dest, s_pr);
 	return (res);
 }

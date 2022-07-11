@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 08:51:32 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/07 10:33:26 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/11 17:12:22 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,16 @@ char	**export_builtin(t_cmd *cmd, t_prompt *s_pr)
 	char	*value;	
 
 	i = 0;
-	while (cmd->full_cmd[1][i] && cmd->full_cmd[1][i] != '=')
-		i++;
-	if (i < ft_strlen(cmd->full_cmd[1]))
+	if (cmd->full_cmd[1] != NULL)
 	{
-		name = ft_substr(cmd->full_cmd[1], 0, i);
-		value = ft_substr(cmd->full_cmd[1], i + 1, ft_strlen(cmd->full_cmd[1]));
-		s_pr->envp = set_env(name, value, s_pr);
+		while (cmd->full_cmd[1][i] && cmd->full_cmd[1][i] != '=')
+			i++;
+		if (i < ft_strlen(cmd->full_cmd[1]))
+		{
+			name = ft_substr(cmd->full_cmd[1], 0, i);
+			value = ft_substr(cmd->full_cmd[1], i + 1, ft_strlen(cmd->full_cmd[1]));
+			s_pr->envp = set_env(name, value, s_pr);
+		}
 	}
 	return (s_pr->envp);
 }
@@ -37,7 +40,7 @@ char	**unset_builtin(char *name, t_prompt *s_pr)
 	int		len;
 
 	ret = NULL;
-	if (s_pr->envp == 0)
+	if (s_pr == NULL || s_pr->envp == 0)
 		return (NULL);
 	len = tablen(s_pr->envp);
 	is_var = env_var_exist(name, s_pr->envp);

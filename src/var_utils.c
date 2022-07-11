@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:21:06 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/07 10:34:36 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/11 17:04:13 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,20 @@ int	env_var_exist(char *name, char **my_env)
 	char	*var;
 
 	i = 0;
-	var = ft_strjoin(name, "=");
-	while (my_env && my_env[i])
+	if (name != NULL)
 	{
-		if (ft_strncmp(my_env[i], var, ft_strlen(var)) == 0)
+		var = ft_strjoin(name, "=");
+		while (my_env && my_env[i])
 		{
-			free(var);
-			return (i);
+			if (ft_strncmp(my_env[i], var, ft_strlen(var)) == 0)
+			{
+				free(var);
+				return (i);
+			}
+			i++;
 		}
-		i++;
+		free(var);
 	}
-	free(var);
 	return (-1);
 }
 
