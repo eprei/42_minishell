@@ -26,8 +26,8 @@ LIBFTPATH = ../libft
 all: $(NAME)
 
 .c.o:
- mac 42
-#	$(CC) -I /Users/$(USER)/.brew/Cellar/readline/8.1.2/include $(CFLAGS) $(DEBUG_FLAG) -c $^ -o $@
+# mac 42
+	$(CC) -I /Users/$(USER)/.brew/Cellar/readline/8.1.2/include $(CFLAGS) $(DEBUG_FLAG) -c $^ -o $@
 # home mac
 #	$(CC) -I $(CPPFLAGS) $(CFLAGS) $(DEBUG_FLAG) -c $^ -o $@
 
