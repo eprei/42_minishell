@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/08 14:53:59 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/09 16:06:06 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,4 @@ void	fn_parsing(t_var *v, t_prompt *prompt)
 		// if (i + 1 == prompt->n_cmds)
 			// g_exit_status = 10;
 	}
-	// ft_printf("\n\tg_exit_status after parsing= %d\n", g_exit_status);
 }

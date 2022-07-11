@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   node_t_cmd_fill.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/08 16:29:44 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/09 17:06:52 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,12 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt, int k)
 	}
 	while (v->s_split[i] != NULL && v->s_split[i][0] != '|' && curr->exec_stat == EXECUTABLE)
 	{
-		print_tab_with_str_name(v->s_split, "v subsplit");
 		redir_status = FALSE;
 		is_redir(v, &i, &j, &redir_status, prompt);
-		printf("i = %d\tj = %d\n", i, j);
 		if (redir_status != FALSE)
-		{
 			fill_cmd_with_redir(v, &i, redir_status, curr, &open_redir_status);
-		printf("v->s_split[%d + 1] = %p\n", i, v->s_split[i + 1]);
-			if (v->s_split[i + 1] == NULL)
-{				curr->exec_stat = NON_EXECUTABLE; printf("excec status = %d\n", curr->exec_stat);}
-		}
 		else if (curr->exec_stat == EXECUTABLE)
 		{
-			write(1, "is_builtin_is_exit", 19); print_list(prompt); // << TO DELETE: it's just to print the list
 			curr->full_cmd = tab_add(curr->full_cmd, v->s_split[i]);
 			is_builtin_is_exit(curr, prompt, i, v);
 		}
@@ -71,18 +63,12 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt, int k)
 		else
 			fn_echo_error(curr, v->s_split[i - j], "No such file or directory");
 	}
-	else if (curr->infile != -1 && curr->exec_stat == EXECUTABLE)
-	{	write(1, "creating path\n", 15);
-		if (curr->full_cmd != NULL && curr->is_builtin == FALSE)
-		{
+	else if (curr->infile != -1 && curr->exec_stat == EXECUTABLE && curr->full_cmd != NULL)
+	{
+		if (curr->is_builtin == FALSE)
 			curr->full_path = create_path(prompt->paths, curr->full_cmd[0]);
-			write(1, "\t1\n", 4);
-		}
 		if (curr->full_path == NULL && curr->is_builtin == FALSE)
-		{
 			fn_echo_error(curr, v->s_split[i - j], "command not found");
-			write(1, "\t2\n", 4);
-		}
 	}
 	if (v->s_split[i] == NULL)
 		i = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtin_and_redir.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/08 16:23:08 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/09 14:03:11 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	is_builtin_is_exit(t_cmd *curr, t_prompt *prompt, int i, t_var *v)
 			if (v->s_split[i + 1] && ft_atoi(v->s_split[i + 1]) <= INT_MAX \
 				&& ft_atoi(v->s_split[i + 1]) >= INT_MIN)
 				g_exit_status = ft_atoi(v->s_split[i + 1]);
-				printf("g_exit_status = %d\n", g_exit_status);
 		}
 		curr->exec_stat = NON_EXECUTABLE;
 	}
