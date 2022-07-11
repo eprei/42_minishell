@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:53:57 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/07 12:31:37 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/11 13:02:13 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 void	wait_status(int exitstatus)
 {
+	int	status;
+
 	if (WIFEXITED(exitstatus))
 	{
-		g_exit_status = WEXITSTATUS(exitstatus);
-		if (g_exit_status != 0)
+		status = WEXITSTATUS(exitstatus);
+		if (status != 0)
 		{
-			if (g_exit_status != 255) //sort et CTRL + \ ou CTRL + c
-			perror("Error with arguments");
+			if (status != 255) //sort et CTRL + \ ou CTRL + c
+				perror("Error with arguments");
 		}
 	}
 }
@@ -31,17 +33,24 @@ void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd)
 	int		exec_res;
 
 	//printf("in fd et out fd: %d - %d \n", cur_cmd->infile, cur_cmd->outfile);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	dup_res[0] = dup2(cur_cmd->outfile, STDOUT_FILENO);
 	dup_res[1] = dup2(cur_cmd->infile, STDIN_FILENO);
 	if (dup_res[0] < 0 || dup_res[1] < 0)
+	{
 		perror("Error with dup cmd");
-//	close_pipes(s_pr);
-	builtin_close_redir(cur_cmd);
-	exec_res = execve(cur_cmd->full_path, cur_cmd->full_cmd, s_pr->envp);
+		exit (1);
+	}
+	else
+	{
+		builtin_close_redir(cur_cmd);
+		exec_res = execve(cur_cmd->full_path, cur_cmd->full_cmd, s_pr->envp);
+	}
 	if (exec_res == -1)
 	{
 		perror("Failure with command");
-		g_exit_status = errno;
+		//g_exit_status = errno;
 	}
 }
 
@@ -53,6 +62,7 @@ void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 	if (s_pr->pid[num] < 0)
 	{
 		perror("Error fork");
+		g_exit_status = 1;
 		return ;
 	}
 	if (s_pr->pid[num] == 0)
@@ -62,6 +72,7 @@ void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 		waitpid(s_pr->pid[num], &exitstatus, 0);
 		wait_status(exitstatus);
 	}
+	//printf("errno exec value: %d\n", errno);
 	if (cur_cmd->outfile != 1)
 		close(cur_cmd->outfile);
 	if (cur_cmd->infile != 0)

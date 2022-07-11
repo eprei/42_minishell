@@ -31,7 +31,7 @@ int	exec_cd(char *path, t_prompt *s_pr)
 	cur_dir = getcwd(NULL, 0);
 	if (chdir(path) != 0)
 	{	
-		g_exit_status = errno;
+		//g_exit_status = errno;
 		perror("Error: cd failed. ");
 	}
 	else
