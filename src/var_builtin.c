@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 08:51:32 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/12 11:59:48 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:37:56 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,22 @@ char	**export_builtin(t_cmd *cmd, t_prompt *s_pr)
 	char	*value;	
 
 	i = 0;
-	if (cmd->full_cmd[1] != NULL)
+	if (cmd->full_cmd[1] && s_pr)
 	{
 		while (cmd->full_cmd[1][i] && cmd->full_cmd[1][i] != '=')
 			i++;
 		if (i < ft_strlen(cmd->full_cmd[1]))
 		{
 			name = ft_substr(cmd->full_cmd[1], 0, i);
-			value = ft_substr(cmd->full_cmd[1], i + 1, ft_strlen(cmd->full_cmd[1]));
+			value = ft_substr(cmd->full_cmd[1], i + 1, \
+			ft_strlen(cmd->full_cmd[1]));
 			if (name != NULL && value != NULL)
 				s_pr->envp = set_env(name, value, s_pr);
 		}
+		return (s_pr->envp);
 	}
-	return (s_pr->envp);
+	else
+		return (NULL);
 }
 
 char	**unset_builtin(char *name, t_prompt *s_pr)
@@ -71,7 +74,7 @@ void	echo_builtin(t_cmd *cmd)
 	int	len;
 	int	i;
 
-	if (cmd  && cmd->full_cmd)
+	if (cmd && cmd->full_cmd)
 	{
 		len = tablen(cmd->full_cmd);
 		i = 1;

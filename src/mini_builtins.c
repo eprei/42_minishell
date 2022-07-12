@@ -52,7 +52,7 @@ int	cd_builtin(t_cmd *cmd, t_prompt *s_pr)
 	int		res;
 
 	res = 1;
-	if (cmd->full_cmd[1] != NULL)
+	if (cmd->full_cmd[1] && s_pr)
 	{
 		len = ft_strlen(cmd->full_cmd[1]);
 		if (ft_strncmp(cmd->full_cmd[1], "-", len) == 0)

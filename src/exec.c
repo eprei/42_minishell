@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:53:57 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/12 11:25:34 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:30:27 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,11 @@ void	wait_status(int exitstatus)
 		status = WEXITSTATUS(exitstatus);
 		if (status != 0)
 		{
-			if (status != 255) //sort et CTRL + \ ou CTRL + c
+			if (status != 255 || errno != 2)
+			{
 				perror("Error with arguments");
+				printf("errno: %d\n", errno);
+			}
 		}
 	}
 }
@@ -32,9 +35,8 @@ void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd)
 	int		dup_res[2];
 	int		exec_res;
 
-	//printf("in fd et out fd: %d - %d \n", cur_cmd->infile, cur_cmd->outfile);
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	echo_strl_off();
+	signals_default();
 	dup_res[0] = dup2(cur_cmd->outfile, STDOUT_FILENO);
 	dup_res[1] = dup2(cur_cmd->infile, STDIN_FILENO);
 	if (dup_res[0] < 0 || dup_res[1] < 0)
@@ -48,12 +50,9 @@ void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd)
 		exec_res = execve(cur_cmd->full_path, cur_cmd->full_cmd, s_pr->envp);
 	}
 	if (exec_res == -1)
-	{
 		perror("Failure with command");
-		//g_exit_status = errno;
-	}
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, signal_handler1);
+	signals_at_start();
+	echo_ctrl_on();
 }
 
 void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num)
