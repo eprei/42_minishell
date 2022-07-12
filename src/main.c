@@ -6,7 +6,7 @@
 /*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:33 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/09 17:10:15 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/07/12 11:06:09 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	free_t_cmd(t_cmd **cmd)
 
 void	init_mini_vars(t_var *v, t_prompt *prompt, char **envp)
 {
-	g_exit_status = 0;
+	// g_exit_status = 0;
 	init_t_var_main(v);
 	init_t_prompt(prompt, envp);
 }
@@ -88,22 +88,19 @@ int	main(int argc, char **argv, char **envp)
 	struct termios	termios_save;
 	struct termios	termios_new;
 
-	// int i = 0;
 	(void)argv;
 	(void)argc;
 	init_mini_vars(&v, &prompt, envp);
-	signal(SIGQUIT, SIG_IGN); // ctrl + '\'
 	while (prompt.stop == FALSE)
 	{
-		printf("pid proces = "); printf("%ld\n", (long)getpid());
-		printf("pid father = "); printf("%ld\n", (long)getppid());
+		g_exit_status = 0;
+		signal(SIGQUIT, SIG_IGN); // ctrl + '\'
 		signal(SIGINT, signal_handler1); // ctrl + C
 		tcgetattr(0, &termios_save);
 		termios_new = termios_save;
 		termios_new.c_lflag &= ~ECHOCTL;
 		tcsetattr(0, 0, &termios_new);
 		v.line = readline(prompt.prompt_text);
-		// printf("pre \tv.line = %s\t i = %d\n", v.line, i);
 		tcsetattr(0, 0, &termios_save);
 		if (!v.line)
 			prompt.stop = TRUE;
@@ -117,16 +114,12 @@ int	main(int argc, char **argv, char **envp)
 				fn_parsing(&v, &prompt);
 				if (prompt.token_status != FAILED)
 				{
-					print_list(&prompt); // << TO DELETE: it's just to print the list
+					// print_list(&prompt); // << TO DELETE: it's just to print the list
 					read_list(&prompt);
 				}
 			}
 		}
-		// write(1, "\nend of boucle\n\n", 17);
 		free_all_tabs_and_prompt(&v, &prompt);
-		// i++;
-		// printf("after\tv.line = %s\t i = %d\n", v.line, i);
-		// sleep(3);
 	}
 	write(1, "exit\n", 6);
 	exit (g_exit_status);

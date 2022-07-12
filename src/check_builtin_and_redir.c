@@ -6,7 +6,7 @@
 /*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/09 14:03:11 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/07/11 10:26:26 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,8 @@ void	is_builtin_is_exit(t_cmd *curr, t_prompt *prompt, int i, t_var *v)
 		if (i == 0)
 		{
 			prompt->stop = TRUE;
-			if (v->s_split[i + 1] && ft_atoi(v->s_split[i + 1]) <= INT_MAX \
-				&& ft_atoi(v->s_split[i + 1]) >= INT_MIN)
-				g_exit_status = ft_atoi(v->s_split[i + 1]);
+			if (v->s_split[i + 1])
+				g_exit_status = ft_atoi(v->s_split[i + 1]) % 256;
 		}
 		curr->exec_stat = NON_EXECUTABLE;
 	}

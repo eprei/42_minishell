@@ -6,7 +6,7 @@
 /*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/09 17:06:52 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/07/12 11:09:30 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,23 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt, int k)
 
 void	fill_cmd_with_redir(t_var *v, int *i, int redir_status, t_cmd *curr, int *open_redir_status)
 {
+	struct termios	termios_save;
+	struct termios	termios_new;
+
 	*open_redir_status = FALSE;
 	if (redir_status == REDIR_OUTPUT_APPEND)
 		*open_redir_status = open_outfiles(v->s_split[*i], TRUE, curr);
 	else if (redir_status == REDIR_OUTPUT_SIMPLE)
 		*open_redir_status = open_outfiles(v->s_split[*i], FALSE, curr);
 	else if (redir_status == HERE_DOC)
+	{
+		tcgetattr(0, &termios_save);
+		termios_new = termios_save;
+		termios_new.c_lflag &= ~ECHOCTL;
+		tcsetattr(0, 0, &termios_new);
 		*open_redir_status = open_in_files(NULL, v->s_split[*i], curr);
+		tcsetattr(0, 0, &termios_save);
+	}
 	else if (redir_status == REDIR_INPUT)
 		*open_redir_status = open_in_files(v->s_split[*i], NULL, curr);
 	if (*open_redir_status == FALSE)
