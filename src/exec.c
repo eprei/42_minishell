@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:53:57 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/12 16:30:27 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:50:11 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd)
 	int		dup_res[2];
 	int		exec_res;
 
-	echo_strl_off();
+	echo_ctrl_off();
 	signals_default();
 	dup_res[0] = dup2(cur_cmd->outfile, STDOUT_FILENO);
 	dup_res[1] = dup2(cur_cmd->infile, STDIN_FILENO);

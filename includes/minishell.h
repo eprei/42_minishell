@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/12 16:42:22 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:49:48 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,13 +269,6 @@ int		redir_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 int		fork_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 void	builtin_close_redir(t_cmd *cur_cmd);
 int		builtin_is_redir(t_prompt *s_pr, t_cmd *cur_cmd, int num);
-
-/* ******************************** test  ********************************* */
-
-void	single_child_cmd(t_cmd *cmd, t_prompt *s_p);
-void	child_cmd1(t_cmd *cmd, t_prompt *s_p);
-void	prep_child2(t_cmd *curr, t_prompt *s_p);
-int		test_complete_cmd(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 
 /* ******************************** termios  ****************************** */
 
