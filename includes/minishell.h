@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/07 14:43:58 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:42:22 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ void	ft_new_prompt(int sig);
 
 void	signal_handler1(int sig);
 void	signal_handler2(int sig);
+void	signals_default(void);
+void	signals_at_start(void);
 
 /* *****************************  split.c  ********************************** */
 
@@ -161,7 +163,7 @@ void	print_tab_with_str_name(char **tab, char *tab_name);
 void	fn_expander(t_var *v, t_prompt *prompt);
 int		search_charset_index_inside_str(char *str, char *set);
 char	*get_var_name(char *str, t_prompt *prompt);
-char	*get_var_name_double_quotes(char *str, t_prompt *prompt, int *idx_after);
+char	*get_var_name_dquotes(char *str, t_prompt *prompt, int *idx_after);
 char	*expand_vars(char *s_split_i, t_prompt *prompt);
 
 /* ***************************  expander_utils.c  *************************** */
@@ -274,5 +276,10 @@ void	single_child_cmd(t_cmd *cmd, t_prompt *s_p);
 void	child_cmd1(t_cmd *cmd, t_prompt *s_p);
 void	prep_child2(t_cmd *curr, t_prompt *s_p);
 int		test_complete_cmd(t_prompt *s_pr, t_cmd *cur_cmd, int num);
+
+/* ******************************** termios  ****************************** */
+
+void	echo_ctrl_on(void);
+void	echo_ctrl_off(void);
 
 #endif

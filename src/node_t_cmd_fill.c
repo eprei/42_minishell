@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/07 14:35:34 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:39:17 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt, int k)
 		}
 		i++;
 	}
-	while (v->s_split[i] != NULL && v->s_split[i][0] != '|')
+	while (v->s_split[i] != NULL && v->s_split[i][0] != '|' && curr->exec_stat == EXECUTABLE)
 	{
 		redir_status = FALSE;
 		is_redir(v, &i, &j, &redir_status, prompt);
 		if (redir_status != FALSE)
 			fill_cmd_with_redir(v, &i, redir_status, curr, &open_redir_status);
-		else
+		else if (curr->exec_stat == EXECUTABLE)
 		{
 			curr->full_cmd = tab_add(curr->full_cmd, v->s_split[i]);
 			is_builtin_is_exit(curr, prompt, i, v);
@@ -53,19 +53,22 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt, int k)
 		j++;
 		i++;
 	}
-	if (ft_strncmp(curr->full_cmd[0], "cd", 2) == 0 && \
+	if (curr->full_cmd && ft_strncmp(curr->full_cmd[0], "cd", 2) == 0 && \
 		ft_strlen(curr->full_cmd[0]) == 2 && curr->full_cmd[1] == NULL)
 		curr->full_cmd = cd_expantion_home(curr, prompt->envp);
-	else if (curr->full_cmd[0][0] == '/')
+	else if (curr->full_cmd && curr->full_cmd[0][0] == '/')
 	{
 		if (access(curr->full_cmd[0], F_OK) == 0)
 			fn_echo_error(curr, v->s_split[i - j], "is a directory");
 		else
+		{
 			fn_echo_error(curr, v->s_split[i - j], "No such file or directory");
+			g_exit_status = 127;
+		}
 	}
-	if (curr->infile != -1 && curr->exec_stat == EXECUTABLE)
+	else if (curr->infile != -1 && curr->exec_stat == EXECUTABLE && curr->full_cmd != NULL)
 	{
-		if (curr->full_cmd != NULL && curr->is_builtin == FALSE)
+		if (curr->is_builtin == FALSE)
 			curr->full_path = create_path(prompt->paths, curr->full_cmd[0]);
 		if (curr->full_path == NULL && curr->is_builtin == FALSE)
 			fn_echo_error(curr, v->s_split[i - j], "command not found");
@@ -76,17 +79,23 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt, int k)
 
 void	fill_cmd_with_redir(t_var *v, int *i, int redir_status, t_cmd *curr, int *open_redir_status)
 {
+	struct termios	termios_save;
+	struct termios	termios_new;
+
 	*open_redir_status = FALSE;
 	if (redir_status == REDIR_OUTPUT_APPEND)
-	{
 		*open_redir_status = open_outfiles(v->s_split[*i], TRUE, curr);
-		if (*open_redir_status == FALSE)
-			fn_echo_error(curr, v->s_split[*i], "No such a file or directory");
-	}
 	else if (redir_status == REDIR_OUTPUT_SIMPLE)
 		*open_redir_status = open_outfiles(v->s_split[*i], FALSE, curr);
 	else if (redir_status == HERE_DOC)
+	{
+		tcgetattr(0, &termios_save);
+		termios_new = termios_save;
+		termios_new.c_lflag &= ~ECHOCTL;
+		tcsetattr(0, 0, &termios_new);
 		*open_redir_status = open_in_files(NULL, v->s_split[*i], curr);
+		tcsetattr(0, 0, &termios_save);
+	}
 	else if (redir_status == REDIR_INPUT)
 		*open_redir_status = open_in_files(v->s_split[*i], NULL, curr);
 	if (*open_redir_status == FALSE)

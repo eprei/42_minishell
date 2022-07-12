@@ -6,13 +6,13 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:01:32 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/07 10:27:51 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:39:31 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	check_quotes_and_delete(t_prompt *prompt, t_var *v, int i) //check if it's possible to increment k at other place
+void	check_quotes_and_delete(t_prompt *prompt, t_var *v, int i)
 {
 	char			*aux;
 	int				k;
@@ -51,6 +51,7 @@ void	print_error(t_prompt *prompt)
 	if (prompt->error_msg == SYNTAX_ERROR_NEAR_UNEXPECTED_TOKEN)
 		ft_printf("minishell: syntax error\n");
 	prompt->error_msg = NO_ERROR;
+	g_exit_status = 258;
 }
 
 void	fn_delete_quotes(t_var *v, t_prompt *prompt)
@@ -75,6 +76,7 @@ void	print_error_token(t_var *v)
 	ft_printf("Error token\n");
 	free(v->line);
 	v->line = NULL;
+	g_exit_status = 258;
 }
 
 void	fn_lexer(t_var *v, t_prompt *prompt)
@@ -83,7 +85,7 @@ void	fn_lexer(t_var *v, t_prompt *prompt)
 
 	ret = 0;
 	prompt->token_status = TRUE;
-	v->split = ft_split_str_with_spaces_and_quotes(v->line, prompt); //this functions return NULL if ther's a quote inconsistence <<USE the new print_error function
+	v->split = ft_split_str_with_spaces_and_quotes(v->line, prompt);
 	if (v->split == NULL)
 	{
 		print_error_token(v);

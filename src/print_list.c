@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/06 11:33:00 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/12 15:18:08 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ void	print_list(t_prompt *prompt)
 
 	i = 0;
 	curr = prompt->cmds;
-	ft_printf("\n\t**** PRINTING LIST OF COMMANDS ****\n\n");
+	ft_printf("\n\t**** PRINTING LIST OF COMMANDS ****\n");
+	ft_printf("\n\t\tg_status at start = %d\n", g_exit_status);
 	while (curr != NULL)
 	{
-		ft_printf("cmd_[%d] \t address = %p\n", i, curr);
+		ft_printf("\ncmd_[%d] \t address = %p\n", i, curr);
 		print_tab_with_str_name(curr->full_cmd, "cmd->full_cmd");
 		ft_printf("\tfull_path = %s\n", curr->full_path);
 		ft_printf("\tinfile = %d\n", curr->infile);
@@ -32,6 +33,7 @@ void	print_list(t_prompt *prompt)
 		ft_printf("\texec_status = %d\n", curr->exec_stat);
 		ft_printf("\tprev = %p\n", curr->prev);
 		ft_printf("\tnext = %p\n", curr->next);
+		ft_printf("\tg_exit_status = %d\n", g_exit_status);
 		curr = curr->next;
 		i++;
 	}
