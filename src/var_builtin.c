@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 08:51:32 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/11 17:12:22 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/12 11:59:48 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ char	**export_builtin(t_cmd *cmd, t_prompt *s_pr)
 		{
 			name = ft_substr(cmd->full_cmd[1], 0, i);
 			value = ft_substr(cmd->full_cmd[1], i + 1, ft_strlen(cmd->full_cmd[1]));
-			s_pr->envp = set_env(name, value, s_pr);
+			if (name != NULL && value != NULL)
+				s_pr->envp = set_env(name, value, s_pr);
 		}
 	}
 	return (s_pr->envp);
@@ -52,6 +53,7 @@ char	**unset_builtin(char *name, t_prompt *s_pr)
 		ret = tab_delone(s_pr->envp, ret, is_var);
 		tab_free(s_pr->envp);
 		free(s_pr->envp);
+		s_pr->envp = NULL;
 		return (ret);
 	}
 	else
@@ -60,7 +62,8 @@ char	**unset_builtin(char *name, t_prompt *s_pr)
 
 void	env_builtin(t_prompt *s_pr)
 {
-	print_tab(s_pr->envp);
+	if (s_pr && s_pr->envp)
+		print_tab(s_pr->envp);
 }
 
 void	echo_builtin(t_cmd *cmd)
@@ -68,18 +71,21 @@ void	echo_builtin(t_cmd *cmd)
 	int	len;
 	int	i;
 
-	len = tablen(cmd->full_cmd);
-	i = 1;
-	while (i < len && ft_strncmp(cmd->full_cmd[i], "-n", 3) == 0)
-		i++;
-	while (cmd->full_cmd[i] != NULL)
+	if (cmd  && cmd->full_cmd)
 	{
-		ft_putstr_fd(cmd->full_cmd[i], 1);
-		if (++i < len)
-			ft_putstr_fd(" ", 1);
+		len = tablen(cmd->full_cmd);
+		i = 1;
+		while (i < len && ft_strncmp(cmd->full_cmd[i], "-n", 3) == 0)
+			i++;
+		while (cmd->full_cmd[i] != NULL)
+		{
+			ft_putstr_fd(cmd->full_cmd[i], 1);
+			if (++i < len)
+				ft_putstr_fd(" ", 1);
+		}
+		if (cmd->full_cmd[1] == NULL)
+			ft_putendl_fd("", 1);
+		else if (ft_strncmp(cmd->full_cmd[1], "-n", 3) != 0)
+			ft_putendl_fd("", 1);
 	}
-	if (cmd->full_cmd[1] == NULL)
-		ft_putendl_fd("", 1);
-	else if (ft_strncmp(cmd->full_cmd[1], "-n", 3) != 0)
-		ft_putendl_fd("", 1);
 }

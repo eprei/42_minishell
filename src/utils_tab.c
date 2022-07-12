@@ -68,7 +68,7 @@ void	print_tab(char **tab)
 	int	i;
 
 	i = 0;
-	while (tab[i] != 0)
+	while (tab && tab[i] != 0)
 	{
 		ft_putstr_fd(tab[i++], 1);
 		ft_putchar_fd('\n', 1);

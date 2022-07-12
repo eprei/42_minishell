@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:53:57 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/11 13:35:58 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/12 11:25:34 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd)
 		perror("Failure with command");
 		//g_exit_status = errno;
 	}
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, signal_handler1);
 }
 
 void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num)

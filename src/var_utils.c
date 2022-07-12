@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:21:06 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/11 17:04:13 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/12 11:53:13 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,21 @@ char	**set_env(char *name, char *value, t_prompt *s_pr)
 	int		is_var;
 	char	*temp;
 
-	temp = ft_strjoin(name, "=");
-	is_var = env_var_exist(name, s_pr->envp);
-	if (is_var == -1)
+	if (name && value && s_pr)
 	{
-		s_pr->envp = tab_add(s_pr->envp, ft_strjoin(temp, value));
+		temp = ft_strjoin(name, "=");
+		is_var = env_var_exist(name, s_pr->envp);
+		if (is_var == -1)
+		{
+			s_pr->envp = tab_add(s_pr->envp, ft_strjoin(temp, value));
+		}
+		else
+		{
+			free(s_pr->envp[is_var]);
+			s_pr->envp[is_var] = ft_strjoin(temp, value);
+		}
+		free(temp);
+		return (s_pr->envp);
 	}
-	else
-	{
-		free(s_pr->envp[is_var]);
-		s_pr->envp[is_var] = ft_strjoin(temp, value);
-	}
-	free(temp);
-	return (s_pr->envp);
+	return (NULL);
 }
