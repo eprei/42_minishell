@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/09 16:06:06 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:30:23 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	fn_parsing(t_var *v, t_prompt *prompt)
 		{
 			prompt->token_status = FAILED;
 			prompt->error_msg = SYNTAX_ERROR_NEAR_UNEXPECTED_TOKEN;
-			g_exit_status = 258;
 			print_error(prompt);
 			return ;
 		}
@@ -35,13 +34,11 @@ void	fn_parsing(t_var *v, t_prompt *prompt)
 	{
 		prompt->token_status = FAILED;
 		prompt->error_msg = SYNTAX_ERROR_NEAR_UNEXPECTED_TOKEN;
-		g_exit_status = 258;
 		print_error(prompt);
 		return ;
 	}
 	create_pipes_pids(prompt);
 	i = 0;
-
 	while (i < prompt->n_cmds && prompt->token_status != FAILED)
 	{
 		if (i == 0)
@@ -50,8 +47,5 @@ void	fn_parsing(t_var *v, t_prompt *prompt)
 			add_t_cmd(prompt);
 		fill_t_cmd(v, prompt, i);
 		i++;
-		// g_exit_status = open_redir_status solo en el ultimo comando
-		// if (i + 1 == prompt->n_cmds)
-			// g_exit_status = 10;
 	}
 }

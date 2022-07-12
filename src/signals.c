@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 11:44:35 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/12 11:58:07 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:30:33 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,16 @@ void	signal_handler2(int sig)
 		rl_replace_line("", 1);
 		g_exit_status = 1;
 	}
+}
+
+void	signals_default(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+
+void	signals_at_start(void)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, signal_handler1);
 }

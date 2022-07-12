@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   node_t_cmd_fill.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/12 11:09:30 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:39:17 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt, int k)
 		if (access(curr->full_cmd[0], F_OK) == 0)
 			fn_echo_error(curr, v->s_split[i - j], "is a directory");
 		else
+		{
 			fn_echo_error(curr, v->s_split[i - j], "No such file or directory");
+			g_exit_status = 127;
+		}
 	}
 	else if (curr->infile != -1 && curr->exec_stat == EXECUTABLE && curr->full_cmd != NULL)
 	{

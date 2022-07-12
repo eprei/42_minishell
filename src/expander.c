@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:58:25 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/07 10:27:51 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:33:53 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*get_var_name(char *str, t_prompt *prompt)
 	return (aux);
 }
 
-char	*get_var_name_double_quotes(char *str, t_prompt *prompt, int *idx_after)
+char	*get_var_name_dquotes(char *str, t_prompt *prompt, int *idx_after)
 {
 	char	*aux;
 	char	*variable_name;
@@ -110,7 +110,7 @@ char	*expand_vars(char *s_split_i, t_prompt *prompt)
 			if (ft_strncmp(name, "?", 1) == 0 && ft_strlen(name) == 1)
 			{
 				free(name);
-				name = ft_strdup(ft_itoa(g_exit_status));
+				name = ft_itoa(g_exit_status);
 			}
 			free(s_split_i);
 			s_split_i = ft_strjoin(tmp, name);
@@ -122,7 +122,7 @@ char	*expand_vars(char *s_split_i, t_prompt *prompt)
 		{
 			idx_after = 0;
 			tmp = ft_substr(s_split_i, 0, q.i); // string before '$'
-			name = get_var_name_double_quotes(&s_split_i[q.i], prompt, &idx_after);
+			name = get_var_name_dquotes(&s_split_i[q.i], prompt, &idx_after);
 			if (name == NULL)
 				name = ft_strdup("");
 			if (ft_strncmp(name, "?", 1) == 0 && ft_strlen(name) == 1)

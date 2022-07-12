@@ -6,7 +6,7 @@ SRCS = main.c signals.c split.c subsplit.c init_data.c var_builtin.c \
 	utils_tab.c lexer.c lexer_utils.c expander.c var_utils.c pipes_pids.c \
 	exec.c open_files.c mini_builtins.c parsing.c prepare_exec.c \
 	prep_builtin_exec.c error.c check_builtin_and_redir.c expander_utils.c \
-	node_t_cmd_create.c node_t_cmd_fill.c print_list.c
+	node_t_cmd_create.c node_t_cmd_fill.c print_list.c termios.c
 
 
 OBJ = $(SRCS:.c=.o)

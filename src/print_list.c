@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/08 12:20:18 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/12 15:18:08 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	print_list(t_prompt *prompt)
 		ft_printf("\texec_status = %d\n", curr->exec_stat);
 		ft_printf("\tprev = %p\n", curr->prev);
 		ft_printf("\tnext = %p\n", curr->next);
-		ft_printf("\tg_status = %d\n", g_exit_status);
+		ft_printf("\tg_exit_status = %d\n", g_exit_status);
 		curr = curr->next;
 		i++;
 	}
