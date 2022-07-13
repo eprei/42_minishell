@@ -59,13 +59,16 @@ int	cd_builtin(t_cmd *cmd, t_prompt *s_pr)
 		{
 			dest = get_env("OLDPWD", s_pr->envp);
 			if (dest == NULL)
-				dest = get_env("PWD", s_pr->envp);
-			if (dest == NULL)
+			{
+				perror("minishell cd: OLDPWD not set");
 				return (res);
+			}
 		}
 		else
 			dest = ft_strdup(cmd->full_cmd[1]);
 		res = exec_cd(dest, s_pr);
+		if (ft_strncmp(cmd->full_cmd[1], "-", len) == 0)
+			pwd_builtin(s_pr->envp, cmd->outfile);
 	}
 	return (res);
 }

@@ -36,7 +36,7 @@ int	search_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 				s_pr->envp = unset_builtin(cur_cmd->full_cmd[1], s_pr);
 		}
 	}
-    printf("errno builtin value: %d\n", errno);
+//    printf("errno builtin value: %d\n", errno);
 	return (res);
 }
 
