@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/13 15:19:06 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/13 18:00:19 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_quote_parsing
 	int		i;
 	int		str_idx;
 	int		tab_index;
-}	t_quote_parsing;
+}	t_q_pars;
 
 typedef struct s_cmd
 {
@@ -140,7 +140,7 @@ void	init_count_words_struct(t_count_words *w);
 int		ft_count_words(const char *str, char *caracter);
 char	**ft_split_str_with_spaces_and_quotes(char const *s, t_prompt *prompt);
 void	ft_fill_split(char **splited, char const *str, char *caracter);
-void	init_quote_parsing_struct(t_quote_parsing *q, char const *str);
+void	init_q_pars_struct(t_q_pars *q, char const *str);
 
 /* ****************************  s_split.c  ******************************** */
 
@@ -164,16 +164,21 @@ void	print_tab_with_str_name(char **tab, char *tab_name);
 
 void	fn_expander(t_var *v, t_prompt *prompt);
 int		search_charset_index_inside_str(char *str, char *set);
-char	*get_var_name(char *str, t_prompt *prompt);
-char	*get_var_name_dquotes(char *str, t_prompt *prompt, int *idx_after);
 char	*expand_vars(char *s_split_i, t_prompt *prompt);
 
-/* ***************************  expander_utils.c  *************************** */
+/* ***************************  expander_utils_1.c  ************************* */
 
-void	update_quote_status(char *s_split_i, t_quote_parsing *q);
+void	update_quote_status(char *s_split_i, t_q_pars *q);
 char	*expand_path(char *s_split_i, char *str_home);
 void	pars_expand_status(char *s_split_i, int *expand_status);
 char	**cd_expantion_home(t_cmd *curr, char **envp);
+
+/* ***************************  expander_utils_2.c  ************************* */
+
+char	*get_var_name(char *str, t_prompt *prompt);
+char	*get_var_name_dquotes(char *str, t_prompt *prompt, int *idx_after);
+char	*var_between_dquotes(char *s_split_i, t_prompt *prompt, t_q_pars *q);
+char	*var_between_squotes(char *s_split_i, t_prompt *prompt, t_q_pars *q);
 
 /* **************************  parsing.c  *********************************** */
 

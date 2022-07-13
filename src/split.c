@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:52:31 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/13 11:04:18 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:57:52 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	ft_count_words(const char *str, char *caracter)
 	return (w.count);
 }
 
-void	init_quote_parsing_struct(t_quote_parsing *q, char const *str)
+void	init_q_pars_struct(t_q_pars *q, char const *str)
 	{
 	q->i = 0;
 	q->q_simple = CLOSED;
@@ -61,9 +61,9 @@ void	init_quote_parsing_struct(t_quote_parsing *q, char const *str)
 
 void	ft_fill_split(char **splited, char const *str, char *caracter)
 {
-	t_quote_parsing	q;
+	t_q_pars	q;
 
-	init_quote_parsing_struct(&q, str);
+	init_q_pars_struct(&q, str);
 	while (str[q.i] != '\0')
 	{
 		while (str[q.i] == *caracter && str[q.i] != '\0')

@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:33 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/13 12:47:55 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:18:14 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	init_mini_vars(t_var *v, t_prompt *prompt, char **envp)
 {
-	g_exit_status = 0;
 	init_t_var_main(v);
 	init_t_prompt(prompt, envp);
 }

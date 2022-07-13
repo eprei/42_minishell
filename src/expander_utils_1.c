@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander_utils.c                                   :+:      :+:    :+:   */
+/*   expander_utils_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:58:25 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/13 14:02:44 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:57:52 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	update_quote_status(char *s_split_i, t_quote_parsing *q)
+void	update_quote_status(char *s_split_i, t_q_pars *q)
 {
 	q->q_simple = (q->q_simple + \
 	(q->q_double == CLOSED && s_split_i[q->i] == '\'')) % 2;
@@ -23,11 +23,11 @@ void	update_quote_status(char *s_split_i, t_quote_parsing *q)
 char	*expand_path(char *s_split_i, char *str_home)
 {
 	char			*tmp[2];
-	t_quote_parsing	q;
+	t_q_pars	q;
 
 	if (str_home == NULL)
 		str_home = ft_strdup("");
-	init_quote_parsing_struct(&q, NULL);
+	init_q_pars_struct(&q, NULL);
 	while (s_split_i && s_split_i[q.i])
 	{
 		update_quote_status(s_split_i, &q);

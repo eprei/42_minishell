@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:01:32 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/13 13:26:01 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:59:01 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	check_quotes_and_delete(t_prompt *prompt, t_var *v, int i)
 {
-	char			*aux;
-	int				k;
-	t_quote_parsing	q;
+	char		*aux;
+	int			k;
+	t_q_pars	q;
 
-	init_quote_parsing_struct(&q, NULL);
+	init_q_pars_struct(&q, NULL);
 	k = -1;
 	aux = malloc((ft_strlen(v->s_split[i]) + 1) * sizeof(char));
 	if (aux == NULL)
@@ -45,7 +45,7 @@ void	fn_delete_quotes(t_var *v, t_prompt *prompt)
 	int	i;
 
 	i = 0;
-	while (v->s_split[i] != NULL)
+	while (v->s_split[i] && v->s_split[i] != NULL)
 	{
 		check_quotes_and_delete(prompt, v, i);
 		if (prompt->error_msg != NO_ERROR)

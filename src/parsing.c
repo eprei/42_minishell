@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/13 14:47:50 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/13 15:43:15 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	fn_parsing(t_var *v, t_prompt *prompt)
 	count_cmd(v, prompt);
 	ret_pipes_pid = create_pipes_pids(prompt);
 	i = 0;
-	while (i < prompt->n_cmds && i <= ret_pipes_pid && prompt->token_status != FAILED)
+	while (i < prompt->n_cmds && i <= ret_pipes_pid \
+	&& prompt->token_status != FAILED)
 	{
 		if (i == 0)
 			prompt->cmds = start_t_cmd(prompt);

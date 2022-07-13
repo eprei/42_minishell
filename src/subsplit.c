@@ -14,7 +14,7 @@
 
 // TO DO: RENAME FUNCTIONS AND USE MACROS LIKE IN split.c ,
 // SEE IF IT'S POSSIBLE TO USE THE FUNCTION
-//	update_quote_status(char *s_split_i, t_quote_parsing *q)
+//	update_quote_status(char *s_split_i, t_q_pars *q)
 //	FROM expander.c
 
 static int	ft_count_words_old(char *s, char *set, int count)
