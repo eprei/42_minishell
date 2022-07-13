@@ -6,77 +6,35 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:01:32 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/12 16:39:31 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/13 13:50:14 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	check_quotes_and_delete(t_prompt *prompt, t_var *v, int i)
+void	add_sub_splits_to_tab(t_var *v)
 {
-	char			*aux;
-	int				k;
-	t_quote_parsing	q;
-
-	init_quote_parsing_struct(&q, NULL);
-	k = -1;
-	aux = malloc((ft_strlen(v->s_split[i]) + 1) * sizeof(char));
-	if (aux == NULL)
+	v->tmp = ft_cmds_split(v->split[v->i], "<|>");
+	v->j = 0;
+	while (v->tmp[v->j] != NULL)
 	{
-		prompt->error_msg = MALLOC_ERROR;
+		v->s_split = tab_add(v->s_split, v->tmp[v->j]);
+		v->j++;
+	}
+	tab_free(v->tmp);
+	free(v->tmp);
+	v->tmp = NULL;
+}
+
+void	check_pipe_at_start(t_var *v, t_prompt *prompt)
+{
+	if (v->s_split[0][0] == '|')
+	{
+		prompt->error_msg = ERROR_SYNTAX_PIPE_AT_START;
+		print_error(prompt);
 		prompt->token_status = FAILED;
-		return ;
+		g_exit_status = 258;
 	}
-	while (v->s_split[i][q.i] != '\0')
-	{
-		update_quote_status(v->s_split[i], &q);
-		if ((v->s_split[i][q.i] != '\"' || q.q_simple) && \
-		(v->s_split[i][q.i] != '\'' || q.q_double) && ++k >= 0)
-			aux[k] = v->s_split[i][q.i];
-		q.i++;
-	}
-	aux[++k] = '\0';
-	free(v->s_split[i]);
-	v->s_split[i] = aux;
-}
-
-void	print_error(t_prompt *prompt)
-{
-	if (prompt->error_msg == MALLOC_ERROR)
-		ft_printf("minishell: malloc error\n");
-	if (prompt->error_msg == ERROR_TOKEN)
-		ft_printf("Error token\n");
-	if (prompt->error_msg == ERROR_SYNTAX_PIPE_AT_START)
-		ft_printf("minishell: syntax error near unexpected token \'|\'\n");
-	if (prompt->error_msg == SYNTAX_ERROR_NEAR_UNEXPECTED_TOKEN)
-		ft_printf("minishell: syntax error\n");
-	prompt->error_msg = NO_ERROR;
-	g_exit_status = 258;
-}
-
-void	fn_delete_quotes(t_var *v, t_prompt *prompt)
-{
-	int	i;
-
-	i = 0;
-	while (v->s_split[i] != NULL)
-	{
-		check_quotes_and_delete(prompt, v, i);
-		if (prompt->error_msg != NO_ERROR)
-		{
-			print_error(prompt);
-			return ;
-		}
-		i++;
-	}
-}
-
-void	print_error_token(t_var *v)
-{
-	ft_printf("Error token\n");
-	free(v->line);
-	v->line = NULL;
-	g_exit_status = 258;
 }
 
 void	fn_lexer(t_var *v, t_prompt *prompt)
@@ -87,36 +45,23 @@ void	fn_lexer(t_var *v, t_prompt *prompt)
 	prompt->token_status = TRUE;
 	v->split = ft_split_str_with_spaces_and_quotes(v->line, prompt);
 	if (v->split == NULL)
-	{
 		print_error_token(v);
-		return ;
-	}
 	else
 	{
 		v->i = 0;
 		while (v->split[v->i])
 		{
-			v->tmp = ft_cmds_split(v->split[v->i], "<|>");
-			v->j = 0;
-			while (v->tmp[v->j] != NULL)
-			{
-				v->s_split = tab_add(v->s_split, v->tmp[v->j]);
-				v->j++;
-			}
-			tab_free(v->tmp);
-			free(v->tmp);
-			v->tmp = NULL;
+			add_sub_splits_to_tab(v);
 			v->i++;
 		}
-		if (v->s_split[0][0] == '|')
-		{
-			prompt->error_msg = ERROR_SYNTAX_PIPE_AT_START;
-			print_error(prompt);
-			prompt->token_status = FAILED;
-			g_exit_status = 258;
-		}
+		check_pipe_at_start(v, prompt);
 		fn_expander(v, prompt);
 		fn_delete_quotes(v, prompt);
+		if (v->s_split[1] == NULL && ft_strlen(v->s_split[0]) == 0)
+		{
+			free(v->s_split[0]);
+			v->s_split[0] = ft_strdup(" ");
+		}
 		init_path(prompt);
 	}
 }

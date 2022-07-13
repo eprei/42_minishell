@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:34:47 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/07 10:27:51 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/13 13:07:15 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*get_prompt(char **envp)
 	char	*str_prompt;
 
 	str_get_info = get_env("USER", envp);
+	if (str_get_info == NULL)
+		str_get_info = ft_strdup("guest");
 	str_prompt = ft_strjoin(str_get_info, "@minishell42$ ");
 	free(str_get_info);
 	return (str_prompt);
@@ -35,8 +37,16 @@ void	init_t_var_main(t_var *v)
 
 void	init_t_prompt(t_prompt *prompt, char **envp)
 {
-	prompt->cmds = NULL;
+	char	*tmp;
+	char	*pwd;
+
 	prompt->envp = init_envp(envp);
+	pwd = get_env("PWD", prompt->envp);
+	tmp = ft_strjoin(pwd, "/minishell");
+	prompt->cmds = NULL;
+	set_env("SHELL", tmp, prompt);
+	free(tmp);
+	free(pwd);
 	prompt->pipes = NULL;
 	prompt->pid = NULL;
 	prompt->paths = NULL;
@@ -57,7 +67,6 @@ void	print_tab_with_str_name(char **tab, char *tab_name)
 	ft_printf("\n\t Printing %s\n", tab_name);
 	while (tab && tab[i] != NULL)
 	{
-		// ft_printf("\t%s[%d] = %s\taddress = %p\n", tab_name, i, tab[i], tab[i]);
 		ft_printf("\t%s[%d] = %s\n", tab_name, i, tab[i]);
 		i++;
 	}
