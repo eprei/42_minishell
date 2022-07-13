@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:58:25 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/12 16:33:53 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:05:52 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char	*expand_vars(char *s_split_i, t_prompt *prompt)
 		update_quote_status(s_split_i, &q);
 		if (q.q_simple == CLOSED && q.q_double == CLOSED && s_split_i[q.i] == '$')
 		{
-			tmp = ft_substr(s_split_i, 0, q.i); // string before '$'
+			tmp = ft_substr(s_split_i, 0, q.i);
 			name = get_var_name(&s_split_i[q.i], prompt);
 			if (name == NULL)
 				name = ft_strdup("");
@@ -121,7 +121,7 @@ char	*expand_vars(char *s_split_i, t_prompt *prompt)
 		if (q.q_simple == CLOSED && q.q_double == OPEN && s_split_i[q.i] == '$')
 		{
 			idx_after = 0;
-			tmp = ft_substr(s_split_i, 0, q.i); // string before '$'
+			tmp = ft_substr(s_split_i, 0, q.i);
 			name = get_var_name_dquotes(&s_split_i[q.i], prompt, &idx_after);
 			if (name == NULL)
 				name = ft_strdup("");

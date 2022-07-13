@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/12 16:35:22 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:04:44 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,15 @@ void	is_builtin_is_exit(t_cmd *curr, t_prompt *prompt, int i, t_var *v)
 		prompt->stop = FALSE;
 }
 
-void	is_redir(t_var *v, int *i, int *j, int *redir_status, t_prompt *prompt)
+void	is_redir(t_var *v, int *i, int *j, int *redir_stat, t_prompt *prompt)
 {
-	if (v->s_split[*i][0] == '>' && v->s_split[*i + 1] && v->s_split[*i + 1][0] == '>')
+	if (v->s_split[*i][0] == '>' && v->s_split[*i + 1] \
+	&& v->s_split[*i + 1][0] == '>')
 	{
-		if (v->s_split[*i + 2] != NULL && ft_strchr("~%^{}:; |\\", v->s_split[*i + 2][0]) == 0)
+		if (v->s_split[*i + 2] != NULL && \
+		ft_strchr("~%^{}:; |\\", v->s_split[*i + 2][0]) == 0)
 		{
-			*redir_status = REDIR_OUTPUT_APPEND;
+			*redir_stat = REDIR_OUTPUT_APPEND;
 			*i += 2;
 			*j += 2;
 		}
@@ -71,11 +73,13 @@ void	is_redir(t_var *v, int *i, int *j, int *redir_status, t_prompt *prompt)
 		}
 		return ;
 	}
-	if (v->s_split[*i][0] == '<' && v->s_split[*i + 1] && v->s_split[*i + 1][0] == '<')
+	if (v->s_split[*i][0] == '<' && v->s_split[*i + 1] \
+	&& v->s_split[*i + 1][0] == '<')
 	{
-		if (v->s_split[*i + 2] != NULL && ft_strchr("~%^{}:; |\\", v->s_split[*i + 2][0]) == 0)
+		if (v->s_split[*i + 2] != NULL && \
+		ft_strchr("~%^{}:; |\\", v->s_split[*i + 2][0]) == 0)
 		{
-			*redir_status = HERE_DOC;
+			*redir_stat = HERE_DOC;
 			*i += 2;
 			*j += 2;
 		}
@@ -89,9 +93,10 @@ void	is_redir(t_var *v, int *i, int *j, int *redir_status, t_prompt *prompt)
 	}
 	if (v->s_split[*i][0] == '>')
 	{
-		if (v->s_split[*i + 1] != NULL && ft_strchr("~%^{}:; |\\", v->s_split[*i + 1][0]) == 0)
+		if (v->s_split[*i + 1] != NULL && \
+		ft_strchr("~%^{}:; |\\", v->s_split[*i + 1][0]) == 0)
 		{
-			*redir_status = REDIR_OUTPUT_SIMPLE;
+			*redir_stat = REDIR_OUTPUT_SIMPLE;
 			*i += 1;
 			*j += 1;
 		}
@@ -104,9 +109,10 @@ void	is_redir(t_var *v, int *i, int *j, int *redir_status, t_prompt *prompt)
 	}
 	if (v->s_split[*i][0] == '<')
 	{
-		if (v->s_split[*i + 1] != NULL && ft_strchr("~%^{}:; |\\", v->s_split[*i + 1][0]) == 0)
+		if (v->s_split[*i + 1] != NULL && \
+		ft_strchr("~%^{}:; |\\", v->s_split[*i + 1][0]) == 0)
 		{
-			*redir_status = REDIR_INPUT;
+			*redir_stat = REDIR_INPUT;
 			*i += 1;
 			*j += 1;
 		}

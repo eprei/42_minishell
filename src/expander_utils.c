@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:58:25 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/08 14:34:19 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:02:44 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void	update_quote_status(char *s_split_i, t_quote_parsing *q)
 
 char	*expand_path(char *s_split_i, char *str_home)
 {
-	char			*tmp;
-	char			*add_path;
+	char			*tmp[2];
 	t_quote_parsing	q;
 
 	if (str_home == NULL)
@@ -35,14 +34,14 @@ char	*expand_path(char *s_split_i, char *str_home)
 		if (q.q_simple == CLOSED && q.q_double == CLOSED \
 		&& s_split_i[q.i] == '~' && (s_split_i[q.i - 1] != '$'))
 		{
-			tmp = ft_substr(s_split_i, 0, q.i);
-			add_path = ft_strjoin(tmp, str_home);
-			free(tmp);
-			tmp = ft_substr(s_split_i, q.i + 1, ft_strlen(s_split_i));
+			tmp[0] = ft_substr(s_split_i, 0, q.i);
+			tmp[1] = ft_strjoin(tmp[0], str_home);
+			free(tmp[0]);
+			tmp[0] = ft_substr(s_split_i, q.i + 1, ft_strlen(s_split_i));
 			free(s_split_i);
-			s_split_i = ft_strjoin(add_path, tmp);
-			free(tmp);
-			free(add_path);
+			s_split_i = ft_strjoin(tmp[1], tmp[0]);
+			free(tmp[0]);
+			free(tmp[1]);
 		}
 		q.i++;
 	}
@@ -63,7 +62,6 @@ void	pars_expand_status(char *s_split_i, int *expand_status)
 char	**cd_expantion_home(t_cmd *curr, char **envp)
 {
 	char	**aux;
-
 
 	tab_free(curr->full_cmd);
 	aux = malloc(sizeof(char *) * 3);

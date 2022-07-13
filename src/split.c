@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:52:31 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/07 10:26:48 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/13 11:04:18 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ char	**ft_split_str_with_spaces_and_quotes(char const *s, t_prompt *prompt)
 	if (aux == NULL)
 	{
 		perror("failure during the malloc");
-		g_exit_status = errno;
 		prompt->token_status = FAILED;
 		return (NULL);
 	}
