@@ -32,7 +32,7 @@ int	exec_single(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 		ft_print_error(cur_cmd);
 		return (1);
 	}
-	else if (cur_cmd->full_cmd[0] == NULL)
+	else if (cur_cmd->full_cmd == NULL || cur_cmd->full_cmd[0] == NULL)
 		return (1);
 	else if (cur_cmd->exec_stat == 1)
 	{

@@ -108,7 +108,7 @@ int	builtin_is_redir(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 {
 	char	*cmd;
 
-	if (cur_cmd)
+	if (cur_cmd && cur_cmd->full_cmd[0])
 	{
 		cmd = cur_cmd->full_cmd[0];
 		if (ft_strncmp(cmd, "cd", 3) == 0 || \
