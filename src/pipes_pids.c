@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 08:47:28 by olmartin          #+#    #+#             */
-/*   Updated: 2022/06/23 10:42:58 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:42:43 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	tab_int_free(int **tab)
 	}
 }
 
-void	create_pipes_pids(t_prompt *s_pr)
+int	create_pipes_pids(t_prompt *s_pr)
 {
 	int	i;
 
@@ -38,17 +38,20 @@ void	create_pipes_pids(t_prompt *s_pr)
 		s_pr->pipes = (int **)malloc(sizeof(int *) * (s_pr->n_cmds - 1));
 		if (s_pr->pipes == NULL)
 			perror("Error: fail to create pipes");
-		i = 0;
 		while (i < s_pr->n_cmds - 1)
 		{
 			s_pr->pipes[i] = (int *)malloc(sizeof(int) * 2);
 			if (s_pr->pipes[i] == NULL || pipe(s_pr->pipes[i]) != 0)
+			{
 				perror("Error: fail to create pipes");
+				break ;
+			}
 			i++;
 		}
 	}
 	else
 		s_pr->pipes = NULL;
+	return (i);
 }
 
 void	close_pipes(t_prompt *s_pr)  // Pas util ?

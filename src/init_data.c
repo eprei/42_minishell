@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:36:37 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/11 14:48:47 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/13 13:10:28 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,25 @@ char	*create_path(char **paths, char *cmdn)
 {
 	char	*path_cmd;
 
-	path_cmd = ft_strjoin("", cmdn);
-	if (access(path_cmd, X_OK) == 0)
-		return (path_cmd);
-	free(path_cmd);
-	if (paths != NULL)
+	if (cmdn)
 	{
-		while (*paths)
+		path_cmd = ft_strjoin("", cmdn);
+		if (path_cmd != NULL)
 		{
-			path_cmd = ft_strjoin(*paths, cmdn);
 			if (access(path_cmd, X_OK) == 0)
-				return (path_cmd);
-			free(path_cmd);
-			paths++;
+					return (path_cmd);
+		}
+		free(path_cmd);
+		if (paths != NULL)
+		{
+			while (*paths)
+			{
+				path_cmd = ft_strjoin(*paths, cmdn);
+				if (access(path_cmd, X_OK) == 0)
+					return (path_cmd);
+				free(path_cmd);
+				paths++;
+			}
 		}
 	}
 	return (NULL);

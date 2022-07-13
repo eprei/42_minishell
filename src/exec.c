@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:53:57 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/12 16:50:11 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/13 15:13:47 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 {
 	int	exitstatus;
 
+	errno = 0;
 	s_pr->pid[num] = fork();
 	if (s_pr->pid[num] < 0)
 	{
