@@ -68,28 +68,25 @@ int	fork_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 {
 	int	exitstatus;
 	int res;
+	int pid;
 
-	s_pr->pid[num] = fork();
-	if (s_pr->pid[num] < 0)
+	pid = fork();
+	if (pid < 0)
 	{
 		perror("Error fork");
 		return (0);
 	}
-	if (s_pr->pid[num] == 0)
+	if (pid == 0)
 	{
 		res = redir_builtin(s_pr, cur_cmd, num);
 		exit (g_exit_status);
 	}
 	else
 	{
-		waitpid(s_pr->pid[num], &exitstatus, 0);
+		waitpid(pid, &exitstatus, 0);
 		wait_status(exitstatus);
 	}
 	builtin_close_redir(cur_cmd);
-	// if (cur_cmd->infile != 0)
-	// 	close(cur_cmd->infile);
-	// if (cur_cmd->outfile != 1)
-	// 	close(cur_cmd->outfile);
 	return (0);
 }
 

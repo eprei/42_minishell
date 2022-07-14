@@ -58,23 +58,24 @@ void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd)
 void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 {
 	int	exitstatus;
+	int	pid;
 
+	(void)num;
 	errno = 0;
-	s_pr->pid[num] = fork();
-	if (s_pr->pid[num] < 0)
+	pid = fork();
+	if (pid < 0)
 	{
 		perror("Error fork");
 		g_exit_status = 1;
 		return ;
 	}
-	if (s_pr->pid[num] == 0)
+	if (pid == 0)
 		exec_cmd(s_pr, cur_cmd);
 	else
 	{
-		waitpid(s_pr->pid[num], &exitstatus, 0);
+		waitpid(pid, &exitstatus, 0);
 		wait_status(exitstatus);
 	}
-	//printf("errno exec value: %d\n", errno);
 	if (cur_cmd->outfile != 1)
 		close(cur_cmd->outfile);
 	if (cur_cmd->infile != 0)

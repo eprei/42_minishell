@@ -6,12 +6,13 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 08:47:28 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/13 14:42:43 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/14 12:10:19 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/*
 void	tab_int_free(int **tab)
 {
 	int	i;
@@ -24,20 +25,21 @@ void	tab_int_free(int **tab)
 	i++;
 	}
 }
+*/
 
 int	create_pipes_pids(t_prompt *s_pr)
 {
 	int	i;
 
 	i = 0;
-	s_pr->pid = (int *)malloc(sizeof(int) * s_pr->n_cmds);
-	if (s_pr->pid == NULL)
-		perror("Error: fail to create pids");
 	if (s_pr->n_cmds > 1)
 	{
 		s_pr->pipes = (int **)malloc(sizeof(int *) * (s_pr->n_cmds - 1));
 		if (s_pr->pipes == NULL)
+		{
 			perror("Error: fail to create pipes");
+			return (-1);
+		}
 		while (i < s_pr->n_cmds - 1)
 		{
 			s_pr->pipes[i] = (int *)malloc(sizeof(int) * 2);
@@ -54,7 +56,7 @@ int	create_pipes_pids(t_prompt *s_pr)
 	return (i);
 }
 
-void	close_pipes(t_prompt *s_pr)  // Pas util ?
+void	close_pipes(t_prompt *s_pr)
 {
 	int	i;
 	int	e;
