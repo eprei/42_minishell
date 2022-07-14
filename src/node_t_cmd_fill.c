@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/13 14:05:18 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/14 09:05:33 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt, int k)
 	if (curr->full_cmd && ft_strncmp(curr->full_cmd[0], "cd", 2) == 0 && \
 		ft_strlen(curr->full_cmd[0]) == 2 && curr->full_cmd[1] == NULL)
 		curr->full_cmd = cd_expantion_home(curr, prompt->envp);
-	else if (curr->full_cmd && curr->full_cmd[0][0] == '/')
+	else if (curr->full_cmd && (curr->full_cmd[0][0] == '/' || (curr->full_cmd[0][0] == '.')))
 	{
 		dirptr = opendir(curr->full_cmd[0]);
 		if (access(curr->full_cmd[0], F_OK) == 0)

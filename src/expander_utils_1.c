@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:58:25 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/13 17:57:52 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/14 09:09:44 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	update_quote_status(char *s_split_i, t_q_pars *q)
 
 char	*expand_path(char *s_split_i, char *str_home)
 {
-	char			*tmp[2];
+	char		*tmp[2];
 	t_q_pars	q;
 
 	if (str_home == NULL)
