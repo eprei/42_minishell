@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/13 18:00:19 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/14 17:37:15 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,18 +195,23 @@ int		count_cmds(t_prompt *prompt);
 /* ***********************  node_t_cmd_fill.c  **************************** */
 
 void	fill_t_cmd(t_var *v, t_prompt *prompt, int k);
-void	fill_cmd_redir(t_var *v, int *i, int redir_stat, \
-t_cmd *curr, int *op_rdir_stat);
+int		fill_cmd_redir(t_var *v, int *i, int redir_stat, t_cmd *curr);
 
-/* **********************  check_builtin_and_redir.c  *********************** */
+/* **********************  node_t_cmd_fill_redir.c  ************************* */
+
+void	update_index_afer_redir(int redir_stat, int *i, int *j);
+void	fill_pipe(t_var *v, t_prompt *prompt, int *i, int *n_pipe);
+void	fill_t_cmd(t_var *v, t_prompt *prompt, int k);
+
+/* ***************************  check_builtin.c  **************************** */
 
 int		check_builtin(char *cmd);
 void	is_builtin_is_exit(t_cmd *curr, t_prompt *prompt, int i, t_var *v);
-void	is_redir(t_var *v, int *i, int *j, int *redir_stat, t_prompt *prompt);
 
 /* ******************************  error.c  ********************************* */
 
 void	fn_echo_error(t_cmd *curr, char *subplit_i, char *err_msg);
+void	error_redir(t_prompt *prompt);
 
 /* ******************************  print_list.c  **************************** */
 
@@ -253,7 +258,7 @@ char	*create_path(char **paths, char *cmdn);
 /* *****************************  pipes_pid.c  *************************** */
 
 void	tab_int_free(int **tab);
-int		create_pipes_pids(t_prompt *s_pr);
+int		create_pipes(t_prompt *s_pr);
 void	close_pipes(t_prompt *s_pr);
 
 /* *******************************  exec.c  ****************************** */
@@ -299,5 +304,20 @@ void	fn_delete_quotes(t_var *v, t_prompt *prompt);
 
 void	print_error(t_prompt *prompt);
 void	print_error_token(t_var *v);
+
+/* **************************  is_redir.c  ******************************** */
+
+void	is_redir(t_var *v, int *i, int *redir_stat, t_prompt *prompt);
+int		is_output_append(t_var *v, int i);
+int		is_here_doc(t_var *v, int i);
+int		is_output_simple(t_var *v, int i);
+int		is_input(t_var *v, int i);
+
+/* **************************  is_redir_utils.c  ************************** */
+
+void	proces_output_append(t_var *v, int i, int *redir_stat, t_prompt *prompt);
+void	proces_here_doc(t_var *v, int i, int *redir_stat, t_prompt *prompt);
+void	proces_output_simple(t_var *v, int i, int *redir_stat, t_prompt *prompt);
+void	proces_input(t_var *v, int i, int *redir_stat, t_prompt *prompt);
 
 #endif

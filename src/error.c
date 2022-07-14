@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/13 13:25:33 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/14 10:03:18 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,11 @@ void	print_error_token(t_var *v)
 	free(v->line);
 	v->line = NULL;
 	g_exit_status = 258;
+}
+
+void	error_redir(t_prompt *prompt)
+{
+	prompt->token_status = FAILED;
+	prompt->error_msg = SYNTAX_ERROR_NEAR_UNEXPECTED_TOKEN;
+	print_error(prompt);
 }

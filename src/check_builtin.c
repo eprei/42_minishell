@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_builtin_and_redir.c                          :+:      :+:    :+:   */
+/*   check_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/14 10:54:20 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/14 16:30:07 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,44 +51,4 @@ void	is_builtin_is_exit(t_cmd *curr, t_prompt *prompt, int i, t_var *v)
 	}
 	else
 		prompt->stop = FALSE;
-}
-
-void	is_redir(t_var *v, int *i, int *redir_stat, t_prompt *prompt)
-{
-	if (v->s_split[*i][0] == '>' && v->s_split[*i + 1] \
-	&& v->s_split[*i + 1][0] == '>')
-	{
-		if (v->s_split[*i + 2] != NULL && \
-		ft_strchr("~%^{}:; |\\", v->s_split[*i + 2][0]) == 0)
-			*redir_stat = REDIR_OUTPUT_APPEND;
-		else
-			error_redir(prompt);
-		return ;
-	}
-	if (v->s_split[*i][0] == '<' && v->s_split[*i + 1] \
-	&& v->s_split[*i + 1][0] == '<')
-	{
-		if (v->s_split[*i + 2] != NULL && \
-		ft_strchr("~%^{}:; |\\", v->s_split[*i + 2][0]) == 0)
-			*redir_stat = HERE_DOC;
-		else
-			error_redir(prompt);
-		return ;
-	}
-	if (v->s_split[*i][0] == '>')
-	{
-		if (v->s_split[*i + 1] != NULL && \
-		ft_strchr("~%^{}:; |\\", v->s_split[*i + 1][0]) == 0)
-			*redir_stat = REDIR_OUTPUT_SIMPLE;
-		else
-			error_redir(prompt);
-	}
-	if (v->s_split[*i][0] == '<')
-	{
-		if (v->s_split[*i + 1] != NULL && \
-		ft_strchr("~%^{}:; |\\", v->s_split[*i + 1][0]) == 0)
-			*redir_stat = REDIR_INPUT;
-		else
-			error_redir(prompt);
-	}
 }

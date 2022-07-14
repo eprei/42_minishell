@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/13 15:34:04 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/14 12:18:06 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	free_all_tabs_and_prompt(t_var *v, t_prompt *prompt)
 	null_all_tabs_and_prompt(v, prompt);
 	if (prompt->n_cmds > 1)
 	{
-		while (prompt->pipes[i] != NULL)
+		while (prompt->pipes && i < prompt->n_cmds - 1)
 		{
 			free(prompt->pipes[i]);
 			prompt->pipes[i] = NULL;
