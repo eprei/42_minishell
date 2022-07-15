@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/14 10:03:18 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:33:52 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void	fn_echo_error(t_cmd *curr, char *subplit_i, char *err_msg)
 	g_exit_status = 1;
 	if (ft_strncmp(err_msg, "command not found", 17) == 0 \
 	&& ft_strlen(err_msg) == 17)
-		g_exit_status = 127;
+		curr->exec_stat = 127;
 	else if (ft_strncmp(err_msg, "no such a file or directory", 27) == 0 \
 	&& ft_strlen(err_msg) == 27)
-		g_exit_status = 1;
+		curr->exec_stat = 1;
 	else if (ft_strncmp(err_msg, "is a directory", 14) == 0 && \
 	ft_strlen(err_msg) == 14)
-		g_exit_status = 126;
+		curr->exec_stat = 126;
 }
 
 void	print_error(t_prompt *prompt)
