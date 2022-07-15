@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/14 12:18:06 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/15 16:49:52 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void	free_all_tabs_and_prompt(t_var *v, t_prompt *prompt)
 	free_t_cmd(&prompt->cmds);
 	tab_free(prompt->paths);
 	free(prompt->paths);
-	//free(prompt->pid);
 	null_all_tabs_and_prompt(v, prompt);
 	if (prompt->n_cmds > 1)
 	{

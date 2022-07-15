@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/14 17:37:15 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/15 16:50:15 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -315,9 +315,11 @@ int		is_input(t_var *v, int i);
 
 /* **************************  is_redir_utils.c  ************************** */
 
-void	proces_output_append(t_var *v, int i, int *redir_stat, t_prompt *prompt);
+void	proces_output_append(t_var *v, int i, \
+		int *redir_stat, t_prompt *prompt);
 void	proces_here_doc(t_var *v, int i, int *redir_stat, t_prompt *prompt);
-void	proces_output_simple(t_var *v, int i, int *redir_stat, t_prompt *prompt);
+void	proces_output_simple(t_var *v, int i, \
+		int *redir_stat, t_prompt *prompt);
 void	proces_input(t_var *v, int i, int *redir_stat, t_prompt *prompt);
 
 #endif
