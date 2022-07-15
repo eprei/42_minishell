@@ -33,6 +33,7 @@ int	exec_cd(char *path, t_prompt *s_pr)
 	{	
 		//g_exit_status = errno;
 		perror("Error: cd failed. ");
+		return (1);
 	}
 	else
 	{

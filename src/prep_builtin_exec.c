@@ -42,7 +42,8 @@ int	search_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 
 int	redir_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 {
-	int		dup_res;
+	int	dup_res;
+	int	res;	
 
 	dup_res = -1;
 	if (cur_cmd)
@@ -56,10 +57,9 @@ int	redir_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 				return (1);
 			}
 		}
-	//	close_pipes(s_pr);
 		builtin_close_redir(cur_cmd);
-		search_builtin(s_pr, cur_cmd, num);
-		return (0);
+		res = search_builtin(s_pr, cur_cmd, num);
+		return (res);
 	}
 	return (1);
 }
@@ -67,7 +67,7 @@ int	redir_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 int	fork_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 {
 	int	exitstatus;
-	int res;
+	//int res;
 	int pid;
 
 	pid = fork();
@@ -78,7 +78,8 @@ int	fork_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 	}
 	if (pid == 0)
 	{
-		res = redir_builtin(s_pr, cur_cmd, num);
+		if (redir_builtin(s_pr, cur_cmd, num) == 1)
+			g_exit_status = 1;
 		exit (g_exit_status);
 	}
 	else
