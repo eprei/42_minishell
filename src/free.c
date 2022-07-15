@@ -70,7 +70,7 @@ void	free_all_tabs_and_prompt(t_var *v, t_prompt *prompt)
 	free_t_cmd(&prompt->cmds);
 	tab_free(prompt->paths);
 	free(prompt->paths);
-	free(prompt->pid);
+	//free(prompt->pid);
 	null_all_tabs_and_prompt(v, prompt);
 	if (prompt->n_cmds > 1)
 	{

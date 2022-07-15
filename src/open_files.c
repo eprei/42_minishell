@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 11:50:10 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/08 12:11:09 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/14 11:21:54 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,9 @@
 char	*here_input(char *limiter, int fd)
 {
 	char	*str;
-	char	*n_lim;
 	size_t	l_lim;
 
-	n_lim = ft_strjoin(limiter, "\n");
-	l_lim = ft_strlen(n_lim);
-	str = (char *)malloc(sizeof(char) * 90);
+	l_lim = ft_strlen(limiter);
 	str = "";
 	while (str)
 	{
@@ -32,12 +29,14 @@ char	*here_input(char *limiter, int fd)
 			ft_putstr_fd(" should be used as LIMITER\n", 2);
 			break ;
 		}
-		else if (ft_strncmp(str, n_lim, l_lim) == 0 && \
+		else if (ft_strncmp(str, limiter, l_lim) == 0 && \
 			(l_lim == ft_strlen(str)))
 			break ;
 		write(fd, str, ft_strlen(str));
+		free(str);
 	}
 	free(str);
+	free (limiter);
 	return ("tmp_here");
 }
 
@@ -50,7 +49,9 @@ int	open_in_files(char *in_file, char *limiter, t_cmd *cmd)
 	if (limiter != NULL)
 	{
 		fd = open("tmp_here", O_TRUNC | O_CREAT | O_RDWR, 0644);
-		in_file = here_input(limiter, fd);
+		if (fd < 0)
+			return (FALSE);
+		in_file = here_input(ft_strjoin(limiter, "\n"), fd);
 		close(fd);
 	}
 	cmd->infile = open(in_file, O_RDONLY);

@@ -30,7 +30,7 @@ int	exec_single(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 	if (cur_cmd->status != NULL)
 	{
 		ft_print_error(cur_cmd);
-		return (1);
+		return (cur_cmd->exec_stat);
 	}
 	else if (cur_cmd->full_cmd == NULL || cur_cmd->full_cmd[0] == NULL)
 		return (1);
@@ -42,32 +42,19 @@ int	exec_single(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 			prep_exec(s_pr, cur_cmd, num);
 	}
 	builtin_close_redir(cur_cmd);
-	return (0);
+	return (res);
 }
 
 int	exec_multiple(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 {
 	int	res;
 
-	res = 0;
+	res = 1;
 	while (cur_cmd != NULL)
 	{
 		res = exec_single(s_pr, cur_cmd, num);
-/*		if (cur_cmd->status != NULL)
-		{
-			ft_print_error(cur_cmd);
-			return (1);
-		}
-		else if (cur_cmd->full_cmd[0] == NULL)
-			return (1);
-		else if (cur_cmd->exec_stat == 1)
-		{
-			if (cur_cmd->is_builtin == 0)
-				prep_exec(s_pr, cur_cmd, num);
-			else
-				res = builtin_is_redir(s_pr, cur_cmd, num);
-		}
-*/		builtin_close_redir(cur_cmd);
+
+		builtin_close_redir(cur_cmd);
 		cur_cmd = cur_cmd->next;
 		num++;
 	}
@@ -90,6 +77,6 @@ int	read_list(t_prompt *s_pr)
 		else
 			res = exec_multiple(s_pr, cur_cmd, i);
 	}
-	g_exit_status = errno;
+	g_exit_status = res;
 	return (res);
 }

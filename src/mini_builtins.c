@@ -33,6 +33,7 @@ int	exec_cd(char *path, t_prompt *s_pr)
 	{	
 		//g_exit_status = errno;
 		perror("Error: cd failed. ");
+		return (1);
 	}
 	else
 	{
@@ -59,13 +60,16 @@ int	cd_builtin(t_cmd *cmd, t_prompt *s_pr)
 		{
 			dest = get_env("OLDPWD", s_pr->envp);
 			if (dest == NULL)
-				dest = get_env("PWD", s_pr->envp);
-			if (dest == NULL)
+			{
+				perror("minishell cd: OLDPWD not set");
 				return (res);
+			}
 		}
 		else
 			dest = ft_strdup(cmd->full_cmd[1]);
 		res = exec_cd(dest, s_pr);
+		if (ft_strncmp(cmd->full_cmd[1], "-", len) == 0)
+			pwd_builtin(s_pr->envp, cmd->outfile);
 	}
 	return (res);
 }
