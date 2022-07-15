@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:33 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/13 16:18:14 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:22:45 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,14 @@ int	main(__attribute__((unused)) int argc, \
 			signal(SIGINT, signal_handler2);
 			add_history(v.line);
 			fn_lexer(&v, &prompt);
+			print_tab_with_str_name(v.s_split, "s_split");
 			if (v.split != NULL && prompt.token_status != FAILED)
 			{
 				fn_parsing(&v, &prompt);
 				if (prompt.token_status != FAILED)
 					read_list(&prompt);
 			}
+			print_list(&prompt);
 			free_all_tabs_and_prompt(&v, &prompt);
 		}
 	}
