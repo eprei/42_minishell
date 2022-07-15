@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/14 18:00:45 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/15 14:24:52 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	fn_parsing(t_var *v, t_prompt *prompt)
 	int	i;
 	int	ret_pipes_pid;
 
-	print_tab_with_str_name(v->s_split, "s_split");
 	ret_pipes_pid = 0;
 	count_cmd(v, prompt);
 	ret_pipes_pid = create_pipes(prompt);
