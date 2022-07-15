@@ -23,13 +23,21 @@ void	fill_pipe(t_var *v, t_prompt *prompt, int *i, int *n_pipe)
 	{
 		if (curr->prev->outfile == 1)
 		{
-			printf("\nFUNCTION fill_pipe n_pipe = %d\n", *n_pipe);
-			printf("creating pipe if prev outfile == 1\n");
-			printf("s_split[%d]\tpipe prev outfile = %d\tpipe curr infile = %d\n\n", *i, prompt->pipes[*n_pipe][1], prompt->pipes[*n_pipe][0]);
+		//	printf("\nFUNCTION fill_pipe n_pipe = %d\n", *n_pipe);
+		//	printf("creating pipe if prev outfile == 1\n");
+		//	printf("s_split[%d]\tpipe prev outfile = %d\tpipe curr infile = %d\n\n", *i, prompt->pipes[*n_pipe][1], prompt->pipes[*n_pipe][0]);
 			curr->prev->outfile = prompt->pipes[*n_pipe][1];
 			curr->infile = prompt->pipes[*n_pipe][0];
-			*n_pipe = *n_pipe + 1;
 		}
+		else
+		{
+		//	printf("\nFUNCTION fill_pipe n_pipe = %d\n", *n_pipe);
+		//	printf("creating pipe if prev outfile == 1\n");
+		//	printf("s_split[%d]\tpipe prev outfile = %d\tpipe curr infile = %d\n\n", *i, prompt->pipes[*n_pipe][1], prompt->pipes[*n_pipe][0]);
+			close(prompt->pipes[*n_pipe][1]);
+			close(prompt->pipes[*n_pipe][0]);
+		}
+		*n_pipe = *n_pipe + 1;
 		*i += 1;
 	}
 }
