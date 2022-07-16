@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/15 16:50:15 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/16 16:38:25 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,13 +195,17 @@ int		count_cmds(t_prompt *prompt);
 /* ***********************  node_t_cmd_fill.c  **************************** */
 
 void	fill_t_cmd(t_var *v, t_prompt *prompt, int k);
-int		fill_cmd_redir(t_var *v, int *i, int redir_stat, t_cmd *curr);
+void	init_vars_fill_t_cmd(int k, int *j, int *n_pipe, int *i);
+t_cmd	*get_curr_cmd(t_prompt *prompt);
+void	search_path(t_var *v, t_prompt *prompt, int i, int j);
+void	fill_slash_and_point(t_var *v, t_prompt *prompt, int i, int j);
 
 /* **********************  node_t_cmd_fill_redir.c  ************************* */
 
-void	update_index_afer_redir(int redir_stat, int *i, int *j);
+void	fill_redir_and_full_cmd(t_var	*v, t_prompt *prompt, int *i, int *j);
+void	fill_cmd_redir(t_var *v, int *i, int redir_stat, t_cmd *curr);
 void	fill_pipe(t_var *v, t_prompt *prompt, int *i, int *n_pipe);
-void	fill_t_cmd(t_var *v, t_prompt *prompt, int k);
+void	update_index_afer_redir(int redir_stat, int *i, int *j);
 
 /* ***************************  check_builtin.c  **************************** */
 
