@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:01:32 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/13 13:50:14 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/17 16:54:26 by Emiliano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,6 @@ void	check_pipe_at_start(t_var *v, t_prompt *prompt)
 
 void	fn_lexer(t_var *v, t_prompt *prompt)
 {
-	int	ret;
-
-	ret = 0;
 	prompt->token_status = TRUE;
 	v->split = ft_split_str_with_spaces_and_quotes(v->line, prompt);
 	if (v->split == NULL)
