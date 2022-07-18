@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:01:32 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/18 15:54:03 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/18 17:29:04 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	add_sub_splits_to_tab(t_var *v)
 {
-	v->tmp = ft_cmds_split(v->split[v->i], "<|>");
+	v->tmp = ft_cmds_split(v->split[v->i], "<|>()");
 	v->j = 0;
 	while (v->tmp[v->j] != NULL)
 	{
@@ -46,6 +46,7 @@ void	check_pipe_at_start(t_var *v, t_prompt *prompt)
 			print_error(prompt);
 			prompt->token_status = FAILED;
 			g_exit_status = 258;
+			break ;
 		}
 		i++;
 	}
