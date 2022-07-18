@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/18 13:45:25 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/18 16:32:16 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 # define MALLOC_ERROR -42
 # define ERROR_TOKEN -44
 # define ERROR_SYNTAX_PIPE_AT_START -46
-# define SYNTAX_ERROR_NEAR_UNEXPECTED_TOKEN -48
+# define SYNTAX_ERROR -48
 
 # define UNFINISHED 0
 # define FINISHED 1
@@ -131,6 +131,7 @@ void	ft_new_prompt(int sig);
 
 void	signal_handler1(int sig);
 void	signal_handler2(int sig);
+void	signal_handler3(int sig);
 void	signals_default(void);
 void	signals_at_start(void);
 
