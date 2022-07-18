@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/18 12:02:02 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/18 13:45:25 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void	init_q_pars_struct(t_q_pars *q, char const *str);
 /* ****************************  s_split.c  ******************************** */
 
 void	fn_sub_split(t_var *v);
-char	**ft_cmds_split(char const *s, char *set);
+char	**ft_cmds_split(char const *str, char *set);
 
 /* *****************************  lexer.c  ********************************** */
 
@@ -195,13 +195,17 @@ int		count_cmds(t_prompt *prompt);
 /* ***********************  node_t_cmd_fill.c  **************************** */
 
 void	fill_t_cmd(t_var *v, t_prompt *prompt, int k);
-int		fill_cmd_redir(t_var *v, int *i, int redir_stat, t_cmd *curr);
+void	init_vars_fill_t_cmd(int k, int *j, int *n_pipe, int *i);
+t_cmd	*get_curr_cmd(t_prompt *prompt);
+void	search_path(t_var *v, t_prompt *prompt, int i, int j);
+void	fill_slash_and_point(t_var *v, t_prompt *prompt, int i, int j);
 
 /* **********************  node_t_cmd_fill_redir.c  ************************* */
 
-void	update_index_afer_redir(int redir_stat, int *i, int *j);
+void	fill_redir_and_full_cmd(t_var	*v, t_prompt *prompt, int *i, int *j);
+void	fill_cmd_redir(t_var *v, int *i, int redir_stat, t_cmd *curr);
 void	fill_pipe(t_var *v, t_prompt *prompt, int *i, int *n_pipe);
-void	fill_t_cmd(t_var *v, t_prompt *prompt, int k);
+void	update_index_afer_redir(int redir_stat, int *i, int *j);
 
 /* ***************************  check_builtin.c  **************************** */
 
@@ -266,7 +270,7 @@ void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 
 void	print_tab(char **tab);
 
-/* **************************** utils_export_tab.c ****************************** */
+/* ************************ utils_export_tab.c *************************** */
 
 void	print_tab_export(char **tab);
 void	tab_sort(char **tab);
@@ -316,9 +320,11 @@ int		is_input(t_var *v, int i);
 
 /* **************************  is_redir_utils.c  ************************** */
 
-void	proces_output_append(t_var *v, int i, int *redir_stat, t_prompt *prompt);
+void	proces_output_append(t_var *v, int i, \
+		int *redir_stat, t_prompt *prompt);
 void	proces_here_doc(t_var *v, int i, int *redir_stat, t_prompt *prompt);
-void	proces_output_simple(t_var *v, int i, int *redir_stat, t_prompt *prompt);
+void	proces_output_simple(t_var *v, int i, \
+		int *redir_stat, t_prompt *prompt);
 void	proces_input(t_var *v, int i, int *redir_stat, t_prompt *prompt);
 
 #endif

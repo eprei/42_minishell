@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/14 16:30:07 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/15 17:16:01 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	is_builtin_is_exit(t_cmd *curr, t_prompt *prompt, int i, t_var *v)
 			if (v->s_split[i + 1])
 				g_exit_status = ft_atoi(v->s_split[i + 1]) % 256;
 		}
-		curr->exec_stat = NON_EXECUTABLE;
+		prompt->token_status = FAILED ;
 	}
 	else
 		prompt->stop = FALSE;
