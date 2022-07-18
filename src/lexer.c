@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 15:01:32 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/17 16:54:26 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/07/18 15:54:03 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,26 @@ void	add_sub_splits_to_tab(t_var *v)
 
 void	check_pipe_at_start(t_var *v, t_prompt *prompt)
 {
+	int	i;
+
+	i = 0;
 	if (v->s_split[0][0] == '|')
 	{
 		prompt->error_msg = ERROR_SYNTAX_PIPE_AT_START;
 		print_error(prompt);
 		prompt->token_status = FAILED;
 		g_exit_status = 258;
+	}
+	while (v->s_split[i] != NULL)
+	{
+		if (v->s_split[i][0] == '(' || v->s_split[i][0] == ')')
+		{
+			prompt->error_msg = SYNTAX_ERROR;
+			print_error(prompt);
+			prompt->token_status = FAILED;
+			g_exit_status = 258;
+		}
+		i++;
 	}
 }
 

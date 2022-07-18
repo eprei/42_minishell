@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/15 14:24:52 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/18 15:53:11 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	fn_parsing(t_var *v, t_prompt *prompt)
 void	fn_error_token(t_prompt *prompt)
 {
 	prompt->token_status = FAILED;
-	prompt->error_msg = SYNTAX_ERROR_NEAR_UNEXPECTED_TOKEN;
+	prompt->error_msg = SYNTAX_ERROR;
 	print_error(prompt);
 }
 

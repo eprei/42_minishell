@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/15 14:33:52 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/18 15:53:17 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	print_error(t_prompt *prompt)
 		ft_printf("Error token\n");
 	if (prompt->error_msg == ERROR_SYNTAX_PIPE_AT_START)
 		ft_printf("minishell: syntax error near unexpected token \'|\'\n");
-	if (prompt->error_msg == SYNTAX_ERROR_NEAR_UNEXPECTED_TOKEN)
+	if (prompt->error_msg == SYNTAX_ERROR)
 		ft_printf("minishell: syntax error\n");
 	prompt->error_msg = NO_ERROR;
 	g_exit_status = 258;
@@ -61,6 +61,6 @@ void	print_error_token(t_var *v)
 void	error_redir(t_prompt *prompt)
 {
 	prompt->token_status = FAILED;
-	prompt->error_msg = SYNTAX_ERROR_NEAR_UNEXPECTED_TOKEN;
+	prompt->error_msg = SYNTAX_ERROR;
 	print_error(prompt);
 }
