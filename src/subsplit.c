@@ -12,82 +12,81 @@
 
 #include "../includes/minishell.h"
 
-// TO DO: RENAME FUNCTIONS AND USE MACROS LIKE IN split.c ,
-// SEE IF IT'S POSSIBLE TO USE THE FUNCTION
-//	update_quote_status(char *s_split_i, t_q_pars *q)
-//	FROM expander.c
-
-static int	ft_count_words_old(char *s, char *set, int count)
+static int	ft_count_words_with_set(char *str, char *set)
 {
-	int		q[2];
-	int		i;
+	t_count_words	w;
 
-	i = 0;
-	q[0] = 0;
-	q[1] = 0;
-	while (s && s[i] != '\0')
+	init_count_words_struct(&w);
+	while (str && str[w.i] != '\0')
 	{
-		count++;
-		if (!ft_strchr(set, s[i]))
+		w.count++;
+		if (!ft_strchr(set, str[w.i]))
 		{
-			while ((!ft_strchr(set, s[i]) || q[0] || q[1]) && s[i] != '\0')
+			while ((!ft_strchr(set, str[w.i]) || w.q_type != NO_INIT \
+			|| w.q_status == OPEN) && str[w.i] != '\0')
 			{
-				q[0] = (q[0] + (!q[1] && s[i] == '\'')) % 2;
-				q[1] = (q[1] + (!q[0] && s[i] == '\"')) % 2;
-				i++;
+				w.q_type = (w.q_type + (!w.q_status && str[w.i] == '\'')) % 2;
+				w.q_status = (w.q_status + (!w.q_type && str[w.i] == '\"')) % 2;
+				w.i++;
 			}
-			if (q[0] || q[1])
+			if (w.q_type != NO_INIT || w.q_status == OPEN)
 				return (-1);
 		}
 		else
-			i++;
+			w.i++;
 	}
-	return (count);
+	return (w.count);
 }
 
-static char	**ft_fill_array_old(char **aux, char *s, char *set, int i[3])
+void	init_indexs(int index[2])
 {
-	int		q[2];
+	index[0] = 0;
+	index[1] = 0;
+}
 
-	q[0] = 0;
-	q[1] = 0;
-	while (s && s[i[0]] != '\0')
+static char	**ft_fill_subsplit(char **aux, char *str, char *set)
+{
+	t_q_pars	q;
+	int			index[2];
+
+	init_indexs(index);
+	init_q_pars_struct(&q, str);
+	while (str && str[q.i] != '\0')
 	{
-		i[1] = i[0];
-		if (!ft_strchr(set, s[i[0]]))
+		index[0] = q.i;
+		if (!ft_strchr(set, str[q.i]))
 		{
-			while ((!ft_strchr(set, s[i[0]]) || q[0] || q[1]) && s[i[0]])
+			while ((ft_strchr(set, str[q.i]) == 0 || \
+			q.q_simple == OPEN || q.q_double == OPEN) && str[q.i])
 			{
-				q[0] = (q[0] + (!q[1] && s[i[0]] == '\'')) % 2;
-				q[1] = (q[1] + (!q[0] && s[i[0]] == '\"')) % 2;
-				i[0]++;
+				q.q_simple = (q.q_simple + \
+				(!q.q_double && str[q.i] == '\'')) % 2;
+				q.q_double = (q.q_double + \
+				(!q.q_simple && str[q.i] == '\"')) % 2;
+				q.i++;
 			}
 		}
 		else
-			i[0]++;
-		aux[i[2]++] = ft_substr(s, i[1], i[0] - i[1]);
+			q.i++;
+		aux[index[1]++] = ft_substr(str, index[0], q.i - index[0]);
 	}
 	return (aux);
 }
 
-char	**ft_cmds_split(char const *s, char *set)
+char	**ft_cmds_split(char const *str, char *set)
 {
 	char	**aux;
 	int		nwords;
-	int		i[3];
 
-	i[0] = 0;
-	i[1] = 0;
-	i[2] = 0;
-	if (!s)
+	if (!str)
 		return (NULL);
-	nwords = ft_count_words_old((char *)s, set, 0);
+	nwords = ft_count_words_with_set((char *)str, set);
 	if (nwords == -1)
 		return (NULL);
 	aux = malloc((nwords + 1) * sizeof(char *));
 	if (aux == NULL)
 		return (NULL);
-	aux = ft_fill_array_old(aux, (char *)s, set, i);
+	aux = ft_fill_subsplit(aux, (char *)str, set);
 	aux[nwords] = NULL;
 	return (aux);
 }

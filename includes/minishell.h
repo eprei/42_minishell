@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/16 16:38:25 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/07/18 11:44:15 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void	init_q_pars_struct(t_q_pars *q, char const *str);
 /* ****************************  s_split.c  ******************************** */
 
 void	fn_sub_split(t_var *v);
-char	**ft_cmds_split(char const *s, char *set);
+char	**ft_cmds_split(char const *str, char *set);
 
 /* *****************************  lexer.c  ********************************** */
 
