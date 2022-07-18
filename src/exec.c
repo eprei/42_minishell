@@ -6,13 +6,13 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 11:29:54 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/18 11:29:57 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/18 16:33:33 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	wait_status(int exitstatus)
+int	wait_status(int exitstatus)
 {
 	int	status;
 
@@ -21,13 +21,15 @@ void	wait_status(int exitstatus)
 		status = WEXITSTATUS(exitstatus);
 		if (status != 0)
 		{
-			if (status != 255 || errno != 2)
+			if (status != 255 && errno != 2 && errno != 0)
 			{
 				perror("Error with arguments");
 				printf("errno: %d\n", errno);
+				return (errno);
 			}
 		}
 	}
+	return (1);
 }
 
 void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd)
@@ -55,29 +57,31 @@ void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd)
 	echo_ctrl_on();
 }
 
-void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num)
+int	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 {
 	int	exitstatus;
 	int	pid;
+	int	res;
 
 	(void)num;
+	res = 0;
 	errno = 0;
 	pid = fork();
 	if (pid < 0)
 	{
 		perror("Error fork");
-		g_exit_status = 1;
-		return ;
+		return (1);
 	}
 	if (pid == 0)
 		exec_cmd(s_pr, cur_cmd);
 	else
 	{
 		waitpid(pid, &exitstatus, 0);
-		wait_status(exitstatus);
+		res = wait_status(exitstatus);
 	}
 	if (cur_cmd->outfile != 1)
 		close(cur_cmd->outfile);
 	if (cur_cmd->infile != 0)
 		close(cur_cmd->infile);
+	return (res);
 }

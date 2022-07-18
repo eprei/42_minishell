@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/18 13:45:25 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/18 16:24:10 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,9 +262,9 @@ int		create_pipes(t_prompt *s_pr);
 
 /* *******************************  exec.c  ****************************** */
 
-void	wait_status(int exitstatus);
+int		wait_status(int exitstatus);
 void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd);
-void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num);
+int		prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 
 /* **************************** utils_tab.c ****************************** */
 
@@ -274,7 +274,7 @@ void	print_tab(char **tab);
 
 void	print_tab_export(char **tab);
 void	tab_sort(char **tab);
-char	**tab_dup(char **tab);
+char	**tab_dup(char **tab, int tablen);
 
 /* **************************** prepare_exec.c **************************** */
 

@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 09:36:39 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/18 11:22:10 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/18 15:20:16 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,12 @@ void	tab_sort(char **tab)
 	}
 }
 
-char	**tab_dup(char **tab)
+char	**tab_dup(char **tab, int len)
 {
 	int		i;
-	int		len;
 	char	**dest;
 
 	i = 0;
-	len = tablen(tab);
 	dest = (char **)malloc(sizeof(char *) * (len + 1));
 	if (dest == NULL)
 		return (tab);

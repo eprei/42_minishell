@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:32:22 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/18 11:41:32 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/18 16:25:30 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,5 @@ int	read_list(t_prompt *s_pr)
 		else
 			res = exec_multiple(s_pr, cur_cmd, i);
 	}
-	g_exit_status = res;
 	return (res);
 }

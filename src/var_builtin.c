@@ -6,21 +6,32 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 08:51:32 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/18 11:26:16 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/18 16:11:14 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	export_no_arg1(char **my_env)
+char	**export_no_arg1(char **my_env, t_cmd *cmd, int type)
 {
 	char	**env_dup;
 
-	env_dup = tab_dup(my_env);
-	tab_sort(env_dup);
-	print_tab_export(env_dup);
-	tab_free(env_dup);
-	free(env_dup);
+	if (type == 2)
+	{
+		env_dup = tab_dup(cmd->full_cmd, 2);
+		tab_free(cmd->full_cmd);
+		free(cmd->full_cmd);
+		return (env_dup);
+	}
+	else
+	{
+		env_dup = tab_dup(my_env, tablen(my_env));
+		tab_sort(env_dup);
+		print_tab_export(env_dup);
+		tab_free(env_dup);
+		free(env_dup);
+	}
+	return (NULL);
 }
 
 char	**export_builtin(t_cmd *cmd, t_prompt *s_pr)
@@ -31,13 +42,17 @@ char	**export_builtin(t_cmd *cmd, t_prompt *s_pr)
 
 	i = 0;
 	if (!cmd->full_cmd[1])
-		export_no_arg1(s_pr->envp);
+		export_no_arg1(s_pr->envp, cmd, 1);
 	else
 	{
+		if (cmd->full_cmd[2])
+			cmd->full_cmd = export_no_arg1(s_pr->envp, cmd, 2);
 		while (cmd->full_cmd[1][i] && cmd->full_cmd[1][i] != '=')
 			i++;
 		if (i < ft_strlen(cmd->full_cmd[1]))
 		{
+			if (cmd->full_cmd[2])
+				cmd->full_cmd = export_no_arg1(s_pr->envp, cmd, 2);
 			name = ft_substr(cmd->full_cmd[1], 0, i);
 			value = ft_substr(cmd->full_cmd[1], i + 1, \
 			ft_strlen(cmd->full_cmd[1]));
