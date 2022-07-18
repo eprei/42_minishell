@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 15:57:08 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/12 16:23:48 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/18 11:34:48 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	search_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 				s_pr->envp = unset_builtin(cur_cmd->full_cmd[1], s_pr);
 		}
 	}
-//    printf("errno builtin value: %d\n", errno);
 	return (res);
 }
 
@@ -67,8 +66,7 @@ int	redir_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 int	fork_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 {
 	int	exitstatus;
-	//int res;
-	int pid;
+	int	pid;
 
 	pid = fork();
 	if (pid < 0)
@@ -109,8 +107,7 @@ int	builtin_is_redir(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 	if (cur_cmd && cur_cmd->full_cmd[0])
 	{
 		cmd = cur_cmd->full_cmd[0];
-		if (ft_strncmp(cmd, "cd", 3) == 0 || \
-		ft_strncmp(cmd, "export", 7) == 0 || ft_strncmp(cmd, "unset", 6) == 0)
+		if (ft_strncmp(cmd, "cd", 3) == 0 || ft_strncmp(cmd, "unset", 6) == 0)
 		{
 			builtin_close_redir(cur_cmd);
 			return (search_builtin(s_pr, cur_cmd, num));

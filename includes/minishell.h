@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/14 17:37:15 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/18 12:02:02 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,12 +254,7 @@ int		cd_builtin(t_cmd *cmd, t_prompt *s_pr);
 char	**init_envp(char **envp);
 void	init_path(t_prompt *s_p);
 char	*create_path(char **paths, char *cmdn);
-
-/* *****************************  pipes_pid.c  *************************** */
-
-void	tab_int_free(int **tab);
 int		create_pipes(t_prompt *s_pr);
-void	close_pipes(t_prompt *s_pr);
 
 /* *******************************  exec.c  ****************************** */
 
@@ -270,6 +265,12 @@ void	prep_exec(t_prompt *s_pr, t_cmd *cur_cmd, int num);
 /* **************************** utils_tab.c ****************************** */
 
 void	print_tab(char **tab);
+
+/* **************************** utils_export_tab.c ****************************** */
+
+void	print_tab_export(char **tab);
+void	tab_sort(char **tab);
+char	**tab_dup(char **tab);
 
 /* **************************** prepare_exec.c **************************** */
 

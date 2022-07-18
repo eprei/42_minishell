@@ -6,11 +6,22 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 08:51:32 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/12 16:37:56 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/18 11:26:16 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	export_no_arg1(char **my_env)
+{
+	char	**env_dup;
+
+	env_dup = tab_dup(my_env);
+	tab_sort(env_dup);
+	print_tab_export(env_dup);
+	tab_free(env_dup);
+	free(env_dup);
+}
 
 char	**export_builtin(t_cmd *cmd, t_prompt *s_pr)
 {
@@ -19,7 +30,9 @@ char	**export_builtin(t_cmd *cmd, t_prompt *s_pr)
 	char	*value;	
 
 	i = 0;
-	if (cmd->full_cmd[1] && s_pr)
+	if (!cmd->full_cmd[1])
+		export_no_arg1(s_pr->envp);
+	else
 	{
 		while (cmd->full_cmd[1][i] && cmd->full_cmd[1][i] != '=')
 			i++;
@@ -30,11 +43,11 @@ char	**export_builtin(t_cmd *cmd, t_prompt *s_pr)
 			ft_strlen(cmd->full_cmd[1]));
 			if (name != NULL && value != NULL)
 				s_pr->envp = set_env(name, value, s_pr);
+			free(name);
+			free(value);
 		}
-		return (s_pr->envp);
 	}
-	else
-		return (NULL);
+	return (s_pr->envp);
 }
 
 char	**unset_builtin(char *name, t_prompt *s_pr)

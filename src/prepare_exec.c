@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:32:22 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/11 14:20:48 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/18 11:41:32 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	ft_print_error(t_cmd *cur_cmd)
 	ft_putstr_fd(cur_cmd->full_cmd[0], 2);
 	ft_putstr_fd(" : ", 2);
 	ft_putendl_fd(cur_cmd->status, 2);
-	//g_exit_status = 1;
-	//printf("errno print error value: %d\n", errno);
 }
 
 int	exec_single(t_prompt *s_pr, t_cmd *cur_cmd, int num)
@@ -53,7 +51,6 @@ int	exec_multiple(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 	while (cur_cmd != NULL)
 	{
 		res = exec_single(s_pr, cur_cmd, num);
-
 		builtin_close_redir(cur_cmd);
 		cur_cmd = cur_cmd->next;
 		num++;
@@ -67,7 +64,7 @@ int	read_list(t_prompt *s_pr)
 	int		i;
 	int		res;
 
-	i = 0; //inutile ? 
+	i = 0;
 	res = 1;
 	if (s_pr != NULL && s_pr->cmds != NULL)
 	{

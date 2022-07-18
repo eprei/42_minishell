@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/14 16:36:37 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/13 13:10:28 by olmartin         ###   ########.fr       */
+/*   Created: 2022/07/18 11:28:52 by olmartin          #+#    #+#             */
+/*   Updated: 2022/07/18 12:00:03 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*create_path(char **paths, char *cmdn)
 		if (path_cmd != NULL)
 		{
 			if (access(path_cmd, X_OK) == 0)
-					return (path_cmd);
+				return (path_cmd);
 		}
 		free(path_cmd);
 		if (paths != NULL)
@@ -89,4 +89,33 @@ char	*create_path(char **paths, char *cmdn)
 		}
 	}
 	return (NULL);
+}
+
+int	create_pipes(t_prompt *s_pr)
+{
+	int	i;
+
+	i = 0;
+	if (s_pr->n_cmds > 1)
+	{
+		s_pr->pipes = (int **)malloc(sizeof(int *) * (s_pr->n_cmds - 1));
+		if (s_pr->pipes == NULL)
+		{
+			perror("Error: fail to create pipes");
+			return (-1);
+		}
+		while (i < s_pr->n_cmds - 1)
+		{
+			s_pr->pipes[i] = (int *)malloc(sizeof(int) * 2);
+			if (s_pr->pipes[i] == NULL || pipe(s_pr->pipes[i]) != 0)
+			{
+				perror("Error: fail to create pipes");
+				break ;
+			}
+			i++;
+		}
+	}
+	else
+		s_pr->pipes = NULL;
+	return (i);
 }

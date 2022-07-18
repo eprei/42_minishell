@@ -6,13 +6,13 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 13:56:37 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/11 15:57:42 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/18 08:56:07 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-	int	pwd_builtin(char **my_env, int fd)
+int	pwd_builtin(char **my_env, int fd)
 {
 	char	*buffer;
 
@@ -31,7 +31,6 @@ int	exec_cd(char *path, t_prompt *s_pr)
 	cur_dir = getcwd(NULL, 0);
 	if (chdir(path) != 0)
 	{	
-		//g_exit_status = errno;
 		perror("Error: cd failed. ");
 		return (1);
 	}
@@ -41,8 +40,8 @@ int	exec_cd(char *path, t_prompt *s_pr)
 		free(cur_dir);
 		cur_dir = getcwd(NULL, 0);
 		s_pr->envp = set_env("PWD", cur_dir, s_pr);
-		free(cur_dir);
 	}
+	free(cur_dir);
 	return (0);
 }
 

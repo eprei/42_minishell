@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/13 15:21:06 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/12 11:53:13 by olmartin         ###   ########.fr       */
+/*   Created: 2022/07/18 11:47:57 by olmartin          #+#    #+#             */
+/*   Updated: 2022/07/18 11:47:59 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,22 @@ char	**set_env(char *name, char *value, t_prompt *s_pr)
 {
 	int		is_var;
 	char	*temp;
+	char	*temp2;
 
 	if (name && value && s_pr)
 	{
 		temp = ft_strjoin(name, "=");
 		is_var = env_var_exist(name, s_pr->envp);
+		temp2 = ft_strjoin(temp, value);
 		if (is_var == -1)
-		{
-			s_pr->envp = tab_add(s_pr->envp, ft_strjoin(temp, value));
-		}
+			s_pr->envp = tab_add(s_pr->envp, temp2);
 		else
 		{
 			free(s_pr->envp[is_var]);
-			s_pr->envp[is_var] = ft_strjoin(temp, value);
+			s_pr->envp[is_var] = ft_strdup(temp2);
 		}
 		free(temp);
+		free(temp2);
 		return (s_pr->envp);
 	}
 	return (NULL);
