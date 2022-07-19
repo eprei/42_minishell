@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 11:29:54 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/19 13:42:37 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/19 13:55:12 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	wait_status(int exitstatus)
 	if (WIFEXITED(exitstatus))
 	{
 		status = WEXITSTATUS(exitstatus);
-		printf("exitstatus: %d  status: %d\n", exitstatus, status);
 		if (status != 0)
 		{
 			if (status != 255 && errno != 2 && errno != 0)
