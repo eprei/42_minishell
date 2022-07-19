@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:01:49 by Emiliano          #+#    #+#             */
-/*   Updated: 2022/07/18 16:51:33 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/19 09:30:03 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,7 @@ char	**set_env(char *name, char *var, t_prompt *s_pr);
 
 /* *****************************  var_builtin.c  **************************** */
 
-char	**export_builtin(t_cmd *cmd, t_prompt *s_pr);
+char	**export_builtin(t_cmd *cmd, t_prompt *s_pr, size_t i);
 char	**unset_builtin(char *name, t_prompt *s_pr);
 void	env_builtin(t_prompt *s_pr);
 void	echo_builtin(t_cmd *cmd);

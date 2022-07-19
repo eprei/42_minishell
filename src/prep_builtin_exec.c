@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 15:57:08 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/18 16:25:34 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/19 09:32:14 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	search_builtin(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 		else if (s_pr)
 		{
 			if (ft_strncmp(cur_cmd->full_cmd[0], "export", 7) == 0)
-				s_pr->envp = export_builtin(cur_cmd, s_pr);
+				s_pr->envp = export_builtin(cur_cmd, s_pr, 0);
 			else if (ft_strncmp(cur_cmd->full_cmd[0], "pwd", 4) == 0)
 				res = pwd_builtin(s_pr->envp, 1);
 			else if (ft_strncmp(cur_cmd->full_cmd[0], "unset", 6) == 0)

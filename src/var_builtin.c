@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 08:51:32 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/18 16:11:14 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/19 09:31:21 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,11 @@ char	**export_no_arg1(char **my_env, t_cmd *cmd, int type)
 	return (NULL);
 }
 
-char	**export_builtin(t_cmd *cmd, t_prompt *s_pr)
+char	**export_builtin(t_cmd *cmd, t_prompt *s_pr, size_t i)
 {
-	size_t	i;
 	char	*name;
 	char	*value;	
 
-	i = 0;
 	if (!cmd->full_cmd[1])
 		export_no_arg1(s_pr->envp, cmd, 1);
 	else
