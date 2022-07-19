@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   node_t_cmd_fill_redir.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/16 16:36:40 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/07/19 12:30:03 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ void	fill_redir_and_full_cmd(t_var	*v, t_prompt *prompt, int *i, int *j)
 		update_index_afer_redir(redir_stat, i, j);
 		fill_cmd_redir(v, i, redir_stat, curr);
 	}
-	else if (curr->exec_stat == EXECUTABLE && \
-	!ft_strchr(">|<", v->s_split[*i][0]))
+	else if (curr->exec_stat == EXECUTABLE)
 	{
 		curr->full_cmd = tab_add(curr->full_cmd, v->s_split[*i]);
 		is_builtin_is_exit(curr, prompt, *i, v);
