@@ -6,7 +6,7 @@
 /*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/18 15:53:11 by epresa-c         ###   ########.fr       */
+/*   Updated: 2022/07/19 13:04:36 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,16 @@ void	count_cmd(t_var *v, t_prompt *prompt)
 	i = 0;
 	while (v->s_split[i] && v->s_split[i + 1] != NULL)
 	{
-		if ((v->s_split[i][0] == '|' && v->s_split[i + 1][0] == '|'))
+		if (ft_strncmp(v->s_split[i], "|", 2) == 0 && \
+		(ft_strncmp(v->s_split[i + 1], "|", 2) == 0))
 		{
 			fn_error_token(prompt);
 			return ;
 		}
-		if (v->s_split[i][0] == '|')
+		if (ft_strncmp(v->s_split[i], "|", 2) == 0)
 			prompt->n_cmds++;
 		i++;
 	}
-	if (v->s_split[i][0] == '|')
+	if (ft_strncmp(v->s_split[i], "|", 2) == 0)
 		fn_error_token(prompt);
 }
