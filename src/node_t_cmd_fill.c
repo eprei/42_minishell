@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   node_t_cmd_fill.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Emiliano <Emiliano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: epresa-c <epresa-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 10:25:09 by epresa-c          #+#    #+#             */
-/*   Updated: 2022/07/16 16:36:11 by Emiliano         ###   ########.fr       */
+/*   Updated: 2022/07/19 11:24:27 by epresa-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	fill_t_cmd(t_var *v, t_prompt *prompt, int k)
 	init_vars_fill_t_cmd(k, &j, &n_pipe, &i);
 	curr = get_curr_cmd(prompt);
 	fill_pipe(v, prompt, &i, &n_pipe);
-	while (v->s_split[i] != NULL && v->s_split[i][0] != '|' && \
-	curr->exec_stat == EXECUTABLE && prompt->token_status != FAILED)
+	while (v->s_split[i] != NULL && (ft_strncmp(v->s_split[i], "|", 2) != 0 && \
+	curr->exec_stat == EXECUTABLE && prompt->token_status != FAILED))
 		fill_redir_and_full_cmd(v, prompt, &i, &j);
 	if (curr->full_cmd && ft_strncmp(curr->full_cmd[0], "cd", 2) == 0 && \
 		ft_strlen(curr->full_cmd[0]) == 2 && curr->full_cmd[1] == NULL)
