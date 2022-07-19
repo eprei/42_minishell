@@ -64,6 +64,7 @@ char	**cd_expantion_home(t_cmd *curr, char **envp)
 	char	**aux;
 
 	tab_free(curr->full_cmd);
+	free(curr->full_cmd);
 	aux = malloc(sizeof(char *) * 3);
 	aux[0] = ft_strdup("cd");
 	aux[1] = get_env("HOME", envp);
