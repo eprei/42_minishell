@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 11:29:54 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/18 16:33:33 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/19 13:42:37 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@ int	wait_status(int exitstatus)
 {
 	int	status;
 
+	status = exitstatus;
 	if (WIFEXITED(exitstatus))
 	{
 		status = WEXITSTATUS(exitstatus);
+		printf("exitstatus: %d  status: %d\n", exitstatus, status);
 		if (status != 0)
 		{
 			if (status != 255 && errno != 2 && errno != 0)
@@ -29,7 +31,7 @@ int	wait_status(int exitstatus)
 			}
 		}
 	}
-	return (1);
+	return (status);
 }
 
 void	exec_cmd(t_prompt *s_pr, t_cmd *cur_cmd)

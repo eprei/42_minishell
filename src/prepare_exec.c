@@ -6,7 +6,7 @@
 /*   By: olmartin <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:32:22 by olmartin          #+#    #+#             */
-/*   Updated: 2022/07/19 09:08:17 by olmartin         ###   ########.fr       */
+/*   Updated: 2022/07/19 13:41:37 by olmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	exec_single(t_prompt *s_pr, t_cmd *cur_cmd, int num)
 		if (cur_cmd->is_builtin == 1)
 			res = builtin_is_redir(s_pr, cur_cmd, num);
 		else
-			prep_exec(s_pr, cur_cmd, num);
+			res = prep_exec(s_pr, cur_cmd, num);
 	}
 	builtin_close_redir(cur_cmd);
 	return (res);
